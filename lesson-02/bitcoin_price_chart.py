@@ -17,49 +17,48 @@ import numpy as np
 
 class BitcoinPriceChart:
     def __init__(self):
-        """비트코인 가격 차트 생성기 초기화"""
+        """Initialize Bitcoin price chart generator"""
         self.base_url = "https://api.coingecko.com/api/v3"
         self.session = requests.Session()
         
-        # User-Agent 설정
+        # User-Agent setup
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
         
-        # matplotlib 한글 폰트 설정
-        self.setup_korean_font()
+        # matplotlib font setup
+        self.setup_font()
         
-        # 차트 스타일 설정
-        plt.style.use('seaborn-v0_8')
-        
-    def setup_korean_font(self):
-        """한글 폰트 설정"""
+        # chart style setup
         try:
-            # Windows 기본 한글 폰트 설정
-            font_path = 'C:/Windows/Fonts/malgun.ttf'  # 맑은 고딕
-            if not font_manager.findfont(font_manager.FontProperties(fname=font_path)):
-                # 맑은 고딕이 없으면 기본 폰트 사용
-                plt.rcParams['font.family'] = 'DejaVu Sans'
-            else:
-                font_prop = font_manager.FontProperties(fname=font_path)
-                plt.rcParams['font.family'] = font_prop.get_name()
+            plt.style.use('default')
+        except:
+            pass
+        
+    def setup_font(self):
+        """Font setup for English text"""
+        try:
+            # Use system default fonts
+            plt.rcParams['font.family'] = 'sans-serif'
+            plt.rcParams['axes.unicode_minus'] = False
+            plt.rcParams['font.size'] = 10
                 
-            print("한글 폰트가 설정되었습니다.")
+            print("Font setup completed successfully.")
         except Exception as e:
-            print(f"한글 폰트 설정 중 오류: {e}")
-            print("기본 폰트를 사용합니다.")
+            print(f"Font setup error: {e}")
+            print("Using default font.")
             plt.rcParams['font.family'] = 'DejaVu Sans'
     
     def get_bitcoin_price_history(self, days: int = 30, currency: str = "krw") -> Optional[List[Tuple[datetime, float]]]:
         """
-        비트코인의 과거 가격 데이터를 조회합니다.
+        Retrieve Bitcoin historical price data.
         
         Args:
-            days: 조회할 일수 (기본값: 30일)
-            currency: 통화 (기본값: "krw")
+            days: Number of days to retrieve (default: 30 days)
+            currency: Currency (default: "krw")
             
         Returns:
-            (시간, 가격) 튜플의 리스트 또는 None (오류 시)
+            List of (time, price) tuples or None (on error)
         """
         try:
             endpoint = "/coins/bitcoin/market_chart"
@@ -69,7 +68,7 @@ class BitcoinPriceChart:
                 "interval": "daily"
             }
             
-            print(f"비트코인 {days}일 가격 데이터 조회 중... (통화: {currency.upper()})")
+            print(f"Retrieving Bitcoin {days}-day price data... (Currency: {currency.upper()})")
             
             url = f"{self.base_url}{endpoint}"
             response = self.session.get(url, params=params, timeout=15)
@@ -78,40 +77,40 @@ class BitcoinPriceChart:
                 data = response.json()
                 
                 if "prices" in data and data["prices"]:
-                    # 가격 데이터 파싱
+                    # Parse price data
                     price_data = []
                     for timestamp_ms, price in data["prices"]:
                         dt = datetime.fromtimestamp(timestamp_ms / 1000)
                         price_data.append((dt, price))
                     
-                    print(f"총 {len(price_data)}개의 가격 데이터를 수집했습니다.")
+                    print(f"Collected {len(price_data)} price data points.")
                     return price_data
                 else:
-                    print("가격 데이터를 찾을 수 없습니다.")
+                    print("Price data not found.")
                     return None
             else:
-                print(f"API 요청 실패: HTTP {response.status_code}")
+                print(f"API request failed: HTTP {response.status_code}")
                 return None
                 
         except requests.exceptions.Timeout:
-            print("요청 시간 초과")
+            print("Request timeout")
             return None
         except requests.exceptions.RequestException as e:
-            print(f"요청 오류: {e}")
+            print(f"Request error: {e}")
             return None
         except Exception as e:
-            print(f"데이터 조회 중 오류 발생: {e}")
+            print(f"Error occurred while retrieving data: {e}")
             return None
     
     def get_current_bitcoin_price(self, currency: str = "krw") -> Optional[float]:
         """
-        비트코인의 현재 가격을 조회합니다.
+        Retrieve current Bitcoin price.
         
         Args:
-            currency: 통화 (기본값: "krw")
+            currency: Currency (default: "krw")
             
         Returns:
-            현재 가격 또는 None (오류 시)
+            Current price or None (on error)
         """
         try:
             endpoint = "/simple/price"
@@ -131,27 +130,27 @@ class BitcoinPriceChart:
             return None
             
         except Exception as e:
-            print(f"현재 가격 조회 오류: {e}")
+            print(f"Current price retrieval error: {e}")
             return None
     
     def format_price(self, price: float, currency: str = "krw") -> str:
         """
-        가격을 사용자 친화적인 형식으로 포맷팅합니다.
+        Format price in user-friendly format.
         
         Args:
-            price: 가격
-            currency: 통화
+            price: Price value
+            currency: Currency
             
         Returns:
-            포맷팅된 가격 문자열
+            Formatted price string
         """
         if currency.lower() == "krw":
             if price >= 1000000:
-                return f"{price/1000000:.1f}백만원"
+                return f"{price/1000000:.1f}M KRW"
             elif price >= 1000:
-                return f"{price/1000:.1f}천원"
+                return f"{price/1000:.1f}K KRW"
             else:
-                return f"{price:,.0f}원"
+                return f"{price:,.0f} KRW"
         elif currency.lower() == "usd":
             if price >= 1000000:
                 return f"${price/1000000:.1f}M"
@@ -165,126 +164,124 @@ class BitcoinPriceChart:
     def create_price_chart(self, price_data: List[Tuple[datetime, float]], 
                           currency: str = "krw", days: int = 30):
         """
-        비트코인 가격 차트를 생성합니다.
+        Create Bitcoin price chart.
         
         Args:
-            price_data: (시간, 가격) 튜플의 리스트
-            currency: 통화
-            days: 조회한 일수
+            price_data: List of (time, price) tuples
+            currency: Currency
+            days: Number of days retrieved
         """
         if not price_data:
-            print("차트를 그릴 데이터가 없습니다.")
+            print("No data available to create chart.")
             return
         
-        # 데이터 분리
+        # Separate data
         dates = [item[0] for item in price_data]
         prices = [item[1] for item in price_data]
         
-        # 현재 가격 조회
+        # Get current price
         current_price = self.get_current_bitcoin_price(currency)
         
-        # 차트 생성
+        # Create chart
         fig, ax = plt.subplots(figsize=(14, 8))
         
-        # 선 그래프 그리기
+        # Draw line graph
         line = ax.plot(dates, prices, linewidth=2.5, color='#f7931a', 
                       marker='o', markersize=4, markerfacecolor='white', 
                       markeredgecolor='#f7931a', markeredgewidth=1.5)
         
-        # 현재 가격 강조 표시
+        # Highlight current price
         if current_price:
             ax.axhline(y=current_price, color='red', linestyle='--', alpha=0.7, 
-                      linewidth=1.5, label=f'현재 가격: {self.format_price(current_price, currency)}')
+                      linewidth=1.5, label=f'Current Price: {self.format_price(current_price, currency)}')
         
-        # 최고가/최저가 표시
+        # Show highest/lowest prices
         max_price = max(prices)
         min_price = min(prices)
         max_date = dates[prices.index(max_price)]
         min_date = dates[prices.index(min_price)]
         
-        # 최고가 포인트
+        # Highest price point
         ax.scatter(max_date, max_price, color='red', s=100, zorder=5, 
-                  label=f'최고가: {self.format_price(max_price, currency)}')
-        ax.annotate(f'최고가\n{self.format_price(max_price, currency)}', 
+                  label=f'Highest: {self.format_price(max_price, currency)}')
+        ax.annotate(f'Highest\n{self.format_price(max_price, currency)}', 
                    xy=(max_date, max_price), xytext=(10, 10),
                    textcoords='offset points', ha='left', va='bottom',
                    bbox=dict(boxstyle='round,pad=0.3', facecolor='red', alpha=0.7),
                    fontsize=10, color='white', weight='bold')
         
-        # 최저가 포인트
+        # Lowest price point
         ax.scatter(min_date, min_price, color='blue', s=100, zorder=5,
-                  label=f'최저가: {self.format_price(min_price, currency)}')
-        ax.annotate(f'최저가\n{self.format_price(min_price, currency)}', 
+                  label=f'Lowest: {self.format_price(min_price, currency)}')
+        ax.annotate(f'Lowest\n{self.format_price(min_price, currency)}', 
                    xy=(min_date, min_price), xytext=(10, -10),
                    textcoords='offset points', ha='left', va='top',
                    bbox=dict(boxstyle='round,pad=0.3', facecolor='blue', alpha=0.7),
                    fontsize=10, color='white', weight='bold')
         
-        # 차트 스타일링
-        ax.set_title(f'비트코인 가격 변동 추이 ({days}일)', 
+        # Chart styling
+        ax.set_title(f'Bitcoin Price Movement ({days} days)', 
                     fontsize=20, fontweight='bold', pad=20, color='#2c3e50')
         
-        # x축 설정
-        ax.set_xlabel('날짜', fontsize=14, fontweight='bold', color='#2c3e50')
+        # X-axis setup
+        ax.set_xlabel('Date', fontsize=14, fontweight='bold', color='#2c3e50')
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
         ax.xaxis.set_major_locator(mdates.DayLocator(interval=max(1, days//10)))
         plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
         
-        # y축 설정
-        ax.set_ylabel(f'가격 ({currency.upper()})', fontsize=14, fontweight='bold', color='#2c3e50')
+        # Y-axis setup
+        ax.set_ylabel(f'Price ({currency.upper()})', fontsize=14, fontweight='bold', color='#2c3e50')
         
-        # 그리드 설정
+        # Grid setup
         ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
         ax.set_axisbelow(True)
         
-        # 범례 설정
+        # Legend setup
         ax.legend(loc='upper left', fontsize=12, framealpha=0.9)
         
-        # 통계 정보 추가
+        # Add statistics info
         price_change = ((prices[-1] - prices[0]) / prices[0]) * 100
-        change_symbol = "📈" if price_change >= 0 else "📉"
+        change_symbol = "▲" if price_change >= 0 else "▼"
         change_color = 'green' if price_change >= 0 else 'red'
         
-        stats_text = f"""
-        📊 통계 정보
-        • 시작 가격: {self.format_price(prices[0], currency)}
-        • 현재 가격: {self.format_price(prices[-1], currency)}
-        • {days}일 변화율: {change_symbol} {price_change:+.2f}%
-        • 최고가: {self.format_price(max_price, currency)}
-        • 최저가: {self.format_price(min_price, currency)}
-        • 평균 가격: {self.format_price(np.mean(prices), currency)}
-        """
+        stats_text = f"""Statistics
+Start Price: {self.format_price(prices[0], currency)}
+Current Price: {self.format_price(prices[-1], currency)}
+{days}-day Change: {change_symbol} {price_change:+.2f}%
+Highest: {self.format_price(max_price, currency)}
+Lowest: {self.format_price(min_price, currency)}
+Average: {self.format_price(np.mean(prices), currency)}"""
         
-        # 통계 정보를 차트 우측에 표시
+        # Display statistics on chart
         ax.text(0.98, 0.02, stats_text, transform=ax.transAxes, 
                fontsize=11, verticalalignment='bottom', horizontalalignment='right',
                bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.8),
                fontfamily='monospace')
         
-        # 배경색 설정
+        # Background color setup
         ax.set_facecolor('#f8f9fa')
         fig.patch.set_facecolor('white')
         
-        # 레이아웃 조정
+        # Layout adjustment
         plt.tight_layout()
         
-        # 차트 표시
+        # Show chart
         plt.show()
         
-        # 차트 저장
+        # Save chart
         filename = f"bitcoin_price_chart_{currency}_{days}days_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
         plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='white')
-        print(f"차트가 '{filename}' 파일로 저장되었습니다.")
+        print(f"Chart saved as '{filename}'.")
         
         return fig
     
     def create_multiple_currency_chart(self, currencies: List[str] = ["krw", "usd"], days: int = 30):
         """
-        여러 통화의 비트코인 가격을 비교하는 차트를 생성합니다.
+        Create chart comparing Bitcoin prices in multiple currencies.
         
         Args:
-            currencies: 비교할 통화 리스트
-            days: 조회할 일수
+            currencies: List of currencies to compare
+            days: Number of days to retrieve
         """
         fig, ax = plt.subplots(figsize=(16, 10))
         
@@ -296,17 +293,17 @@ class BitcoinPriceChart:
                 dates = [item[0] for item in price_data]
                 prices = [item[1] for item in price_data]
                 
-                # 가격을 첫 번째 가격 대비 상대적 변화율로 정규화
+                # Normalize prices to relative change rate compared to first price
                 normalized_prices = [(price / prices[0]) * 100 for price in prices]
                 
                 ax.plot(dates, normalized_prices, linewidth=2.5, 
                        color=colors[i % len(colors)], marker='o', markersize=3,
-                       label=f'{currency.upper()} (기준: 100%)')
+                       label=f'{currency.upper()} (Base: 100%)')
         
-        ax.set_title(f'비트코인 가격 변화율 비교 ({days}일)', 
+        ax.set_title(f'Bitcoin Price Change Rate Comparison ({days} days)', 
                     fontsize=20, fontweight='bold', pad=20, color='#2c3e50')
-        ax.set_xlabel('날짜', fontsize=14, fontweight='bold')
-        ax.set_ylabel('상대적 변화율 (%)', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Date', fontsize=14, fontweight='bold')
+        ax.set_ylabel('Relative Change Rate (%)', fontsize=14, fontweight='bold')
         
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
         ax.xaxis.set_major_locator(mdates.DayLocator(interval=max(1, days//10)))
@@ -319,73 +316,73 @@ class BitcoinPriceChart:
         plt.show()
 
 def main():
-    """메인 함수"""
+    """Main function"""
     print("=" * 70)
-    print("matplotlib을 사용한 비트코인 가격 차트 생성 프로그램")
+    print("Bitcoin Price Chart Generator using matplotlib")
     print("=" * 70)
     
-    # 차트 생성기 초기화
+    # Initialize chart generator
     chart_generator = BitcoinPriceChart()
     
     try:
-        # 사용자 입력 받기
-        print("\n📊 차트 옵션을 선택하세요:")
-        print("1. 단일 통화 가격 차트 (기본: KRW, 30일)")
-        print("2. 다중 통화 비교 차트")
-        print("3. 사용자 정의 설정")
+        # Get user input
+        print("\n📊 Select chart option:")
+        print("1. Single currency price chart (default: KRW, 30 days)")
+        print("2. Multiple currency comparison chart")
+        print("3. Custom settings")
         
-        choice = input("\n선택 (1-3, 기본값: 1): ").strip() or "1"
+        choice = input("\nSelect (1-3, default: 1): ").strip() or "1"
         
         if choice == "1":
-            # 기본 차트 생성
-            print("\n🔄 기본 차트 생성 중...")
+            # Create default chart
+            print("\n🔄 Creating default chart...")
             price_data = chart_generator.get_bitcoin_price_history(30, "krw")
             if price_data:
                 chart_generator.create_price_chart(price_data, "krw", 30)
             else:
-                print("❌ 데이터를 가져올 수 없습니다.")
+                print("❌ Unable to retrieve data.")
                 
         elif choice == "2":
-            # 다중 통화 비교 차트
-            print("\n🔄 다중 통화 비교 차트 생성 중...")
+            # Multiple currency comparison chart
+            print("\n🔄 Creating multiple currency comparison chart...")
             chart_generator.create_multiple_currency_chart(["krw", "usd"], 30)
             
         elif choice == "3":
-            # 사용자 정의 설정
-            print("\n⚙️ 사용자 정의 설정")
+            # Custom settings
+            print("\n⚙️ Custom settings")
             
-            # 통화 선택
-            currency = input("통화 (krw/usd/eur, 기본값: krw): ").strip().lower() or "krw"
+            # Currency selection
+            currency = input("Currency (krw/usd/eur, default: krw): ").strip().lower() or "krw"
             
-            # 일수 선택
+            # Days selection
             try:
-                days = int(input("조회할 일수 (1-365, 기본값: 30): ").strip() or "30")
+                days = int(input("Number of days (1-365, default: 30): ").strip() or "30")
                 days = max(1, min(365, days))
             except ValueError:
                 days = 30
-                print(f"잘못된 입력으로 기본값 {days}일을 사용합니다.")
+                print(f"Invalid input. Using default {days} days.")
             
-            print(f"\n🔄 {currency.upper()} 기준 {days}일 차트 생성 중...")
+            print(f"\n🔄 Creating {currency.upper()} {days}-day chart...")
             price_data = chart_generator.get_bitcoin_price_history(days, currency)
             if price_data:
                 chart_generator.create_price_chart(price_data, currency, days)
             else:
-                print("❌ 데이터를 가져올 수 없습니다.")
+                print("❌ Unable to retrieve data.")
         
         else:
-            print("❌ 잘못된 선택입니다. 기본 차트를 생성합니다.")
+            print("❌ Invalid selection. Creating default chart.")
             price_data = chart_generator.get_bitcoin_price_history(30, "krw")
             if price_data:
                 chart_generator.create_price_chart(price_data, "krw", 30)
         
-        print("\n✅ 프로그램이 성공적으로 완료되었습니다!")
+        print("\n✅ Program completed successfully!")
         
     except KeyboardInterrupt:
-        print("\n\n⏹️ 사용자에 의해 프로그램이 중단되었습니다.")
+        print("\n\n⏹️ Program interrupted by user.")
     except Exception as e:
-        print(f"\n❌ 프로그램 실행 중 오류가 발생했습니다: {e}")
+        print(f"\n❌ Error occurred during program execution: {e}")
     finally:
-        print("\n👋 프로그램을 종료합니다.")
+        print("\n👋 Exiting program.")
 
 if __name__ == "__main__":
     main()

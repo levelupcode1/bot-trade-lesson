@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-실시간 자동 업데이트 비트코인 가격 차트
-1시간마다 자동으로 가격을 업데이트하고 그래프가 자동으로 바뀝니다.
+Real-time Auto-updating Bitcoin Price Chart
+Automatically updates price every hour and the graph changes automatically.
 """
 
 import requests
@@ -11,6 +11,9 @@ import time
 import threading
 from datetime import datetime, timedelta
 from typing import List, Tuple, Optional, Dict, Any
+import matplotlib
+# Backend setup - for stable rendering on Windows
+matplotlib.use('TkAgg')  # Use Tkinter backend
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib import font_manager
@@ -21,48 +24,55 @@ import csv
 
 class LiveBitcoinPriceChart:
     def __init__(self):
-        """실시간 비트코인 가격 차트 생성기 초기화"""
+        """Initialize real-time Bitcoin price chart generator"""
         self.base_url = "https://api.coingecko.com/api/v3"
         self.session = requests.Session()
         
-        # User-Agent 설정
+        # User-Agent setup
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
         
-        # 데이터 저장소
-        self.price_history = []  # (시간, 가격) 튜플의 리스트
+        # Data storage
+        self.price_history = []  # List of (time, price) tuples
         self.currency = "krw"
-        self.update_interval = 3600  # 1시간 (초 단위)
+        self.update_interval = 3600  # 1 hour (in seconds)
         self.is_running = False
         self.data_lock = threading.Lock()
         
-        # matplotlib 한글 폰트 설정
-        self.setup_korean_font()
+        # matplotlib font setup
+        self.setup_font()
         
-        # 차트 스타일 설정
-        plt.style.use('seaborn-v0_8')
+        # Disable matplotlib tooltips globally
+        plt.rcParams['toolbar'] = 'None'
+        plt.rcParams['figure.autolayout'] = True
         
-        # 데이터 파일 설정
+        # Chart style setup - use default style to prevent corruption
+        try:
+            plt.style.use('default')  # Use default style for stability
+        except:
+            pass  # Ignore if style setup fails
+        
+        # Data file setup
         self.data_file = f"bitcoin_live_data_{datetime.now().strftime('%Y%m%d')}.csv"
         self.setup_data_file()
         
-        # 초기 데이터 로드
+        # Load initial data
         self.load_initial_data()
         
     def setup_data_file(self):
-        """데이터 저장 파일 초기 설정"""
+        """Initialize data storage file"""
         try:
             if not os.path.exists(self.data_file):
                 with open(self.data_file, 'w', newline='', encoding='utf-8') as f:
                     writer = csv.writer(f)
                     writer.writerow(['timestamp', 'datetime', 'price', 'currency'])
-                print(f"데이터 파일이 생성되었습니다: {self.data_file}")
+                print(f"Data file created: {self.data_file}")
         except Exception as e:
-            print(f"데이터 파일 생성 오류: {e}")
+            print(f"Data file creation error: {e}")
     
     def save_price_data(self, timestamp: datetime, price: float):
-        """가격 데이터를 CSV 파일에 저장"""
+        """Save price data to CSV file"""
         try:
             with open(self.data_file, 'a', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
@@ -73,48 +83,76 @@ class LiveBitcoinPriceChart:
                     self.currency
                 ])
         except Exception as e:
-            print(f"데이터 저장 오류: {e}")
+            print(f"Data save error: {e}")
     
     def load_initial_data(self):
-        """초기 데이터 로드 (최근 24시간)"""
+        """Load initial data (last 24 hours)"""
         try:
-            print("초기 데이터 로딩 중...")
-            initial_data = self.get_bitcoin_price_history(1, self.currency)  # 1일
+            print("Loading initial data...")
+            initial_data = self.get_bitcoin_price_history(1, self.currency)  # 1 day
             if initial_data:
                 with self.data_lock:
                     self.price_history = initial_data
-                    # 데이터 저장
+                    # Save data
                     for timestamp, price in initial_data:
                         self.save_price_data(timestamp, price)
-                print(f"초기 {len(initial_data)}개 데이터 로드 완료")
+                print(f"Initial {len(initial_data)} data points loaded")
             else:
-                # 초기 데이터가 없으면 현재 가격으로 시작
+                # If no initial data, start with current price
                 current_price = self.get_current_bitcoin_price(self.currency)
                 if current_price:
                     now = datetime.now()
                     with self.data_lock:
                         self.price_history = [(now, current_price)]
                         self.save_price_data(now, current_price)
-                    print("현재 가격으로 초기화 완료")
+                    print("Initialized with current price")
         except Exception as e:
-            print(f"초기 데이터 로드 오류: {e}")
+            print(f"Initial data load error: {e}")
     
-    def setup_korean_font(self):
-        """한글 폰트 설정"""
+    def setup_font(self):
+        """Font setup optimized for Windows environment"""
         try:
-            font_path = 'C:/Windows/Fonts/malgun.ttf'
-            if not font_manager.findfont(font_manager.FontProperties(fname=font_path)):
-                plt.rcParams['font.family'] = 'DejaVu Sans'
+            # Try Windows-compatible fonts
+            font_candidates = [
+                'Arial',  # Windows default font
+                'Calibri',  # Windows modern font
+                'Segoe UI',  # Windows UI font
+                'DejaVu Sans',  # Default font
+                'sans-serif'  # System default sans-serif
+            ]
+            
+            # Find available fonts
+            available_fonts = [f.name for f in font_manager.fontManager.ttflist]
+            
+            for font in font_candidates:
+                if font in available_fonts:
+                    plt.rcParams['font.family'] = font
+                    print(f"Font set successfully: {font}")
+                    break
             else:
-                font_prop = font_manager.FontProperties(fname=font_path)
-                plt.rcParams['font.family'] = font_prop.get_name()
-            print("한글 폰트가 설정되었습니다.")
+                # Use default font if none found
+                plt.rcParams['font.family'] = 'DejaVu Sans'
+                print("Using default font: DejaVu Sans")
+            
+            # Prevent minus sign corruption
+            plt.rcParams['axes.unicode_minus'] = False
+            
+            # Font size settings
+            plt.rcParams['font.size'] = 10
+            plt.rcParams['axes.titlesize'] = 14
+            plt.rcParams['axes.labelsize'] = 12
+            plt.rcParams['xtick.labelsize'] = 10
+            plt.rcParams['ytick.labelsize'] = 10
+            plt.rcParams['legend.fontsize'] = 10
+            
         except Exception as e:
-            print(f"한글 폰트 설정 중 오류: {e}")
+            print(f"Font setup error: {e}")
+            # Use default settings on error
             plt.rcParams['font.family'] = 'DejaVu Sans'
+            plt.rcParams['axes.unicode_minus'] = False
     
     def get_bitcoin_price_history(self, days: int = 1, currency: str = "krw") -> Optional[List[Tuple[datetime, float]]]:
-        """비트코인의 과거 가격 데이터를 조회합니다."""
+        """Retrieve Bitcoin historical price data."""
         try:
             endpoint = "/coins/bitcoin/market_chart"
             params = {
@@ -139,11 +177,11 @@ class LiveBitcoinPriceChart:
             return None
                 
         except Exception as e:
-            print(f"가격 데이터 조회 오류: {e}")
+            print(f"Price data retrieval error: {e}")
             return None
     
     def get_current_bitcoin_price(self, currency: str = "krw") -> Optional[float]:
-        """비트코인의 현재 가격을 조회합니다."""
+        """Retrieve current Bitcoin price."""
         try:
             endpoint = "/simple/price"
             params = {
@@ -161,49 +199,49 @@ class LiveBitcoinPriceChart:
             return None
             
         except Exception as e:
-            print(f"현재 가격 조회 오류: {e}")
+            print(f"Current price retrieval error: {e}")
             return None
     
     def update_price_data(self):
-        """가격 데이터를 업데이트합니다."""
+        """Update price data."""
         try:
             current_price = self.get_current_bitcoin_price(self.currency)
             if current_price:
                 now = datetime.now()
                 
                 with self.data_lock:
-                    # 중복 데이터 방지 (1분 이내)
+                    # Prevent duplicate data (within 1 minute)
                     if (not self.price_history or 
                         (now - self.price_history[-1][0]).total_seconds() > 60):
                         
                         self.price_history.append((now, current_price))
                         self.save_price_data(now, current_price)
                         
-                        # 최근 24시간 데이터만 유지
+                        # Keep only last 24 hours of data
                         cutoff_time = now - timedelta(hours=24)
                         self.price_history = [
                             (t, p) for t, p in self.price_history 
                             if t > cutoff_time
                         ]
                         
-                        print(f"[{now.strftime('%H:%M:%S')}] 가격 업데이트: {self.format_price(current_price, self.currency)}")
+                        print(f"[{now.strftime('%H:%M:%S')}] Price update: {self.format_price(current_price, self.currency)}")
                     else:
-                        print(f"[{now.strftime('%H:%M:%S')}] 업데이트 스킵 (최근 데이터 존재)")
+                        print(f"[{now.strftime('%H:%M:%S')}] Update skipped (recent data exists)")
             else:
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] 가격 조회 실패")
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] Price retrieval failed")
                 
         except Exception as e:
-            print(f"데이터 업데이트 오류: {e}")
+            print(f"Data update error: {e}")
     
     def format_price(self, price: float, currency: str = "krw") -> str:
-        """가격을 사용자 친화적인 형식으로 포맷팅합니다."""
+        """Format price in user-friendly format."""
         if currency.lower() == "krw":
             if price >= 1000000:
-                return f"{price/1000000:.1f}백만원"
+                return f"{price/1000000:.1f}M KRW"
             elif price >= 1000:
-                return f"{price/1000:.1f}천원"
+                return f"{price/1000:.1f}K KRW"
             else:
-                return f"{price:,.0f}원"
+                return f"{price:,.0f} KRW"
         elif currency.lower() == "usd":
             if price >= 1000000:
                 return f"${price/1000000:.1f}M"
@@ -215,161 +253,172 @@ class LiveBitcoinPriceChart:
             return f"{price:,.2f} {currency.upper()}"
     
     def data_collection_worker(self):
-        """백그라운드 데이터 수집 작업자"""
+        """Background data collection worker"""
         while self.is_running:
             try:
                 self.update_price_data()
                 time.sleep(self.update_interval)
             except Exception as e:
-                print(f"데이터 수집 작업자 오류: {e}")
-                time.sleep(60)  # 오류 시 1분 후 재시도
+                print(f"Data collection worker error: {e}")
+                time.sleep(60)  # Retry after 1 minute on error
     
     def start_data_collection(self):
-        """데이터 수집을 시작합니다."""
+        """Start data collection."""
         if not self.is_running:
             self.is_running = True
             self.collection_thread = threading.Thread(target=self.data_collection_worker, daemon=True)
             self.collection_thread.start()
-            print("자동 데이터 수집이 시작되었습니다.")
+            print("Automatic data collection has started.")
     
     def stop_data_collection(self):
-        """데이터 수집을 중지합니다."""
+        """Stop data collection."""
         self.is_running = False
-        print("자동 데이터 수집이 중지되었습니다.")
+        print("Automatic data collection has stopped.")
     
     def create_live_chart(self):
-        """실시간 업데이트 차트를 생성합니다."""
-        # 차트 초기화
+        """Create real-time updating chart."""
+        # Initialize chart
         self.fig, self.ax = plt.subplots(figsize=(16, 10))
-        self.fig.suptitle('실시간 비트코인 가격 차트 (1시간마다 자동 업데이트)', 
-                         fontsize=16, fontweight='bold')
+        self.fig.suptitle('Real-time Bitcoin Price Chart (Auto-update every hour)', 
+                         fontsize=16, fontweight='bold', fontfamily='sans-serif')
         
-        # 애니메이션 함수
+        # Disable matplotlib tooltips to prevent character corruption
+        self.fig.canvas.mpl_connect('motion_notify_event', lambda event: None)
+        
+        # Additional tooltip prevention
+        plt.rcParams['toolbar'] = 'None'  # Disable toolbar
+        plt.rcParams['figure.autolayout'] = True  # Auto layout
+        
+        # Animation function
         def animate(frame):
             try:
                 with self.data_lock:
                     if self.price_history:
-                        # 데이터 분리
+                        # Separate data
                         dates = [item[0] for item in self.price_history]
                         prices = [item[1] for item in self.price_history]
                         
-                        # 차트 클리어
+                        # Clear chart
                         self.ax.clear()
                         
-                        # 선 그래프 그리기
+                        # Draw line graph - simplified to prevent tooltip issues
                         self.ax.plot(dates, prices, linewidth=2.5, color='#f7931a', 
-                                   marker='o', markersize=4, markerfacecolor='white', 
-                                   markeredgecolor='#f7931a', markeredgewidth=1.5)
+                                   marker='o', markersize=3, markerfacecolor='white', 
+                                   markeredgecolor='#f7931a', markeredgewidth=1)
                         
-                        # 현재 가격 강조 표시
+                        # Highlight current price
                         if prices:
                             current_price = prices[-1]
                             self.ax.axhline(y=current_price, color='red', linestyle='--', 
                                           alpha=0.7, linewidth=1.5, 
-                                          label=f'현재 가격: {self.format_price(current_price, self.currency)}')
+                                          label=f'Current Price: {self.format_price(current_price, self.currency)}')
                         
-                        # 최고가/최저가 표시
+                        # Show highest/lowest prices
                         if len(prices) > 1:
                             max_price = max(prices)
                             min_price = min(prices)
                             max_date = dates[prices.index(max_price)]
                             min_date = dates[prices.index(min_price)]
                             
-                            # 최고가 포인트
+                            # Highest price point
                             self.ax.scatter(max_date, max_price, color='red', s=100, zorder=5,
-                                          label=f'최고가: {self.format_price(max_price, self.currency)}')
+                                          label=f'Highest: {self.format_price(max_price, self.currency)}')
                             
-                            # 최저가 포인트
+                            # Lowest price point
                             self.ax.scatter(min_date, min_price, color='blue', s=100, zorder=5,
-                                          label=f'최저가: {self.format_price(min_price, self.currency)}')
+                                          label=f'Lowest: {self.format_price(min_price, self.currency)}')
                         
-                        # 차트 스타일링
-                        self.ax.set_title(f'비트코인 실시간 가격 변동 (통화: {self.currency.upper()})', 
-                                        fontsize=14, fontweight='bold', pad=20)
+                        # Chart styling - explicit font family setting
+                        self.ax.set_title(f'Bitcoin Real-time Price Movement (Currency: {self.currency.upper()})', 
+                                        fontsize=14, fontweight='bold', pad=20, fontfamily='sans-serif')
                         
-                        # x축 설정
-                        self.ax.set_xlabel('시간', fontsize=12, fontweight='bold')
+                        # x-axis setup
+                        self.ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily='sans-serif')
                         self.ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
                         self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
-                        plt.setp(self.ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
+                        plt.setp(self.ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily='sans-serif')
                         
-                        # y축 설정
-                        self.ax.set_ylabel(f'가격 ({self.currency.upper()})', fontsize=12, fontweight='bold')
+                        # y-axis setup
+                        self.ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily='sans-serif')
+                        plt.setp(self.ax.yaxis.get_majorticklabels(), fontfamily='sans-serif')
                         
-                        # 그리드 설정
+                        # Grid setup
                         self.ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
                         self.ax.set_axisbelow(True)
                         
-                        # 범례 설정
+                        # Legend setup
                         self.ax.legend(loc='upper left', fontsize=10, framealpha=0.9)
                         
-                        # 통계 정보 추가
+                        # Add statistics info - prevent text corruption
                         if len(prices) > 1:
                             price_change = ((prices[-1] - prices[0]) / prices[0]) * 100
-                            change_symbol = "📈" if price_change >= 0 else "📉"
+                            change_symbol = "▲" if price_change >= 0 else "▼"  # Use unicode characters instead of emojis
                             
-                            stats_text = f"""
-                            📊 실시간 통계
-                            • 시작 가격: {self.format_price(prices[0], self.currency)}
-                            • 현재 가격: {self.format_price(prices[-1], self.currency)}
-                            • 변화율: {change_symbol} {price_change:+.2f}%
-                            • 데이터 포인트: {len(prices)}개
-                            • 마지막 업데이트: {datetime.now().strftime('%H:%M:%S')}
-                            """
+                            # Simple text to prevent corruption
+                            stats_text = f"""Real-time Statistics
+Start: {self.format_price(prices[0], self.currency)}
+Current: {self.format_price(prices[-1], self.currency)}
+Change: {change_symbol} {price_change:+.2f}%
+Points: {len(prices)}
+Update: {datetime.now().strftime('%H:%M:%S')}"""
                             
                             self.ax.text(0.98, 0.02, stats_text, transform=self.ax.transAxes,
-                                       fontsize=10, verticalalignment='bottom', 
+                                       fontsize=9, verticalalignment='bottom', 
                                        horizontalalignment='right',
-                                       bbox=dict(boxstyle='round,pad=0.5', 
-                                               facecolor='lightgray', alpha=0.8),
-                                       fontfamily='monospace')
+                                       bbox=dict(boxstyle='round,pad=0.3', 
+                                               facecolor='lightblue', alpha=0.8),
+                                       fontfamily='sans-serif')
                         
-                        # 배경색 설정
+                        # Background color setup
                         self.ax.set_facecolor('#f8f9fa')
                         self.fig.patch.set_facecolor('white')
                         
-                        # 레이아웃 조정
+                        # Layout adjustment
                         self.fig.tight_layout()
                         
             except Exception as e:
-                print(f"차트 업데이트 오류: {e}")
+                print(f"Chart update error: {e}")
         
-        # 애니메이션 시작
-        self.ani = FuncAnimation(self.fig, animate, interval=5000, blit=False)  # 5초마다 업데이트
+        # Start animation
+        self.ani = FuncAnimation(self.fig, animate, interval=5000, blit=False)  # Update every 5 seconds
         
-        # 차트 표시
+        # Show chart
         plt.show()
         
         return self.fig
     
     def create_manual_chart(self):
-        """수동으로 차트를 생성합니다."""
+        """Create chart manually."""
         with self.data_lock:
             if not self.price_history:
-                print("표시할 데이터가 없습니다.")
+                print("No data to display.")
                 return None
             
-            # 데이터 분리
+            # Separate data
             dates = [item[0] for item in self.price_history]
             prices = [item[1] for item in self.price_history]
             
-            # 차트 생성
+            # Create chart
             fig, ax = plt.subplots(figsize=(14, 8))
             
-            # 선 그래프 그리기
-            ax.plot(dates, prices, linewidth=2.5, color='#f7931a', 
-                   marker='o', markersize=4, markerfacecolor='white', 
-                   markeredgecolor='#f7931a', markeredgewidth=1.5)
+            # Disable tooltips for manual chart
+            fig.canvas.mpl_connect('motion_notify_event', lambda event: None)
             
-            # 차트 스타일링
-            ax.set_title(f'비트코인 가격 변동 (수동 생성)', 
-                        fontsize=16, fontweight='bold', pad=20)
-            ax.set_xlabel('시간', fontsize=12, fontweight='bold')
-            ax.set_ylabel(f'가격 ({self.currency.upper()})', fontsize=12, fontweight='bold')
+            # Draw line graph - simplified to prevent tooltip issues
+            ax.plot(dates, prices, linewidth=2.5, color='#f7931a', 
+                   marker='o', markersize=3, markerfacecolor='white', 
+                   markeredgecolor='#f7931a', markeredgewidth=1)
+            
+            # Chart styling - explicit font family setting
+            ax.set_title(f'Bitcoin Price Movement (Manual)', 
+                        fontsize=16, fontweight='bold', pad=20, fontfamily='sans-serif')
+            ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily='sans-serif')
+            ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily='sans-serif')
             
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
             ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
-            plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
+            plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily='sans-serif')
+            plt.setp(ax.yaxis.get_majorticklabels(), fontfamily='sans-serif')
             
             ax.grid(True, alpha=0.3)
             plt.tight_layout()
@@ -378,96 +427,96 @@ class LiveBitcoinPriceChart:
             return fig
 
 def main():
-    """메인 함수"""
+    """Main function"""
     print("=" * 80)
-    print("실시간 자동 업데이트 비트코인 가격 차트 프로그램")
+    print("Real-time Auto-updating Bitcoin Price Chart Program")
     print("=" * 80)
     
-    # 실시간 차트 생성기 초기화
+    # Initialize real-time chart generator
     live_chart = LiveBitcoinPriceChart()
     
     try:
-        print("\n📊 차트 옵션을 선택하세요:")
-        print("1. 실시간 자동 업데이트 차트 (1시간마다 자동 갱신)")
-        print("2. 수동 차트 생성 (현재 데이터로)")
-        print("3. 데이터 수집만 시작 (백그라운드)")
-        print("4. 설정 변경")
+        print("\n📊 Select chart option:")
+        print("1. Real-time auto-update chart (auto-refresh every hour)")
+        print("2. Manual chart creation (with current data)")
+        print("3. Start data collection only (background)")
+        print("4. Change settings")
         
-        choice = input("\n선택 (1-4, 기본값: 1): ").strip() or "1"
+        choice = input("\nSelect (1-4, default: 1): ").strip() or "1"
         
         if choice == "1":
-            # 실시간 자동 업데이트 차트
-            print("\n🔄 실시간 자동 업데이트 차트를 시작합니다...")
-            print("💡 차트는 5초마다 자동으로 갱신됩니다.")
-            print("💡 가격 데이터는 1시간마다 자동으로 수집됩니다.")
-            print("💡 차트를 닫으면 프로그램이 종료됩니다.")
+            # Real-time auto-update chart
+            print("\n🔄 Starting real-time auto-update chart...")
+            print("💡 Chart will auto-refresh every 5 seconds.")
+            print("💡 Price data will be collected automatically every hour.")
+            print("💡 Program will exit when chart is closed.")
             
-            # 데이터 수집 시작
+            # Start data collection
             live_chart.start_data_collection()
             
-            # 실시간 차트 생성
+            # Create real-time chart
             live_chart.create_live_chart()
             
         elif choice == "2":
-            # 수동 차트 생성
-            print("\n🔄 수동 차트를 생성합니다...")
+            # Manual chart creation
+            print("\n🔄 Creating manual chart...")
             live_chart.create_manual_chart()
             
         elif choice == "3":
-            # 데이터 수집만 시작
-            print("\n🔄 백그라운드 데이터 수집을 시작합니다...")
-            print("💡 데이터는 1시간마다 자동으로 수집됩니다.")
-            print("💡 프로그램을 종료하려면 Ctrl+C를 누르세요.")
+            # Start data collection only
+            print("\n🔄 Starting background data collection...")
+            print("💡 Data will be collected automatically every hour.")
+            print("💡 Press Ctrl+C to exit the program.")
             
             live_chart.start_data_collection()
             
             try:
                 while True:
-                    time.sleep(60)  # 1분마다 상태 출력
+                    time.sleep(60)  # Print status every minute
                     with live_chart.data_lock:
                         if live_chart.price_history:
                             latest = live_chart.price_history[-1]
                             print(f"[{datetime.now().strftime('%H:%M:%S')}] "
-                                  f"최신 데이터: {latest[0].strftime('%H:%M:%S')} - "
+                                  f"Latest data: {latest[0].strftime('%H:%M:%S')} - "
                                   f"{live_chart.format_price(latest[1], live_chart.currency)}")
             except KeyboardInterrupt:
-                print("\n⏹️ 사용자에 의해 중단되었습니다.")
+                print("\n⏹️ Interrupted by user.")
                 live_chart.stop_data_collection()
                 
         elif choice == "4":
-            # 설정 변경
-            print("\n⚙️ 설정 변경")
+            # Change settings
+            print("\n⚙️ Change Settings")
             
-            # 통화 변경
-            new_currency = input(f"통화 (현재: {live_chart.currency}, krw/usd/eur): ").strip().lower()
+            # Change currency
+            new_currency = input(f"Currency (current: {live_chart.currency}, krw/usd/eur): ").strip().lower()
             if new_currency in ['krw', 'usd', 'eur']:
                 live_chart.currency = new_currency
-                print(f"통화가 {new_currency.upper()}로 변경되었습니다.")
+                print(f"Currency changed to {new_currency.upper()}.")
             
-            # 업데이트 간격 변경
+            # Change update interval
             try:
-                new_interval = int(input(f"업데이트 간격 (현재: {live_chart.update_interval//60}분, 분 단위): ").strip())
+                new_interval = int(input(f"Update interval (current: {live_chart.update_interval//60} minutes, in minutes): ").strip())
                 if new_interval > 0:
                     live_chart.update_interval = new_interval * 60
-                    print(f"업데이트 간격이 {new_interval}분으로 변경되었습니다.")
+                    print(f"Update interval changed to {new_interval} minutes.")
             except ValueError:
-                print("잘못된 입력입니다. 기존 설정을 유지합니다.")
+                print("Invalid input. Keeping existing settings.")
         
         else:
-            print("❌ 잘못된 선택입니다. 기본 옵션을 실행합니다.")
+            print("❌ Invalid selection. Running default option.")
             live_chart.start_data_collection()
             live_chart.create_live_chart()
         
-        print("\n✅ 프로그램이 성공적으로 완료되었습니다!")
+        print("\n✅ Program completed successfully!")
         
     except KeyboardInterrupt:
-        print("\n\n⏹️ 사용자에 의해 프로그램이 중단되었습니다.")
+        print("\n\n⏹️ Program interrupted by user.")
         live_chart.stop_data_collection()
     except Exception as e:
-        print(f"\n❌ 프로그램 실행 중 오류가 발생했습니다: {e}")
+        print(f"\n❌ Error occurred during program execution: {e}")
         live_chart.stop_data_collection()
     finally:
-        print("\n👋 프로그램을 종료합니다.")
+        print("\n👋 Exiting program.")
 
 if __name__ == "__main__":
     main()
