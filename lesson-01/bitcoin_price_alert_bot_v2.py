@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 비트코인 가격 5% 상승 시 알림을 보내는 봇 (v2)
-Upbit API를 사용하여 실시간 가격을 모니터링하고 알림을 표시하며,
+Upbit API를 사용하여 실시간 가격을 모니터링하고 matplotlib으로 그래프를 표시하며,
 알림 메시지를 price_alerts.txt 파일에 저장합니다.
 """
 
@@ -10,10 +10,49 @@ import requests
 import time
 import json
 from datetime import datetime
-import tkinter as tk
-from tkinter import messagebox, scrolledtext
+import matplotlib
+matplotlib.use('Qt5Agg')  # Qt5 백엔드 사용 (tkinter 대신)
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
 import threading
 import os
+import platform
+
+# 한글 폰트 설정
+import matplotlib.font_manager as fm
+
+def setup_korean_font():
+    """한글 폰트를 설정합니다."""
+    system = platform.system()
+    
+    if system == "Darwin":  # macOS
+        # macOS에서 사용 가능한 한글 폰트들
+        korean_fonts = ['AppleGothic', 'Malgun Gothic', 'NanumGothic', 'Arial Unicode MS']
+    elif system == "Windows":
+        # Windows에서 사용 가능한 한글 폰트들
+        korean_fonts = ['Malgun Gothic', 'NanumGothic', 'Gulim', 'Dotum', 'Batang']
+    else:  # Linux
+        # Linux에서 사용 가능한 한글 폰트들
+        korean_fonts = ['NanumGothic', 'DejaVu Sans', 'Liberation Sans']
+    
+    # 사용 가능한 폰트 찾기
+    available_fonts = [f.name for f in fm.fontManager.ttflist]
+    
+    for font in korean_fonts:
+        if font in available_fonts:
+            plt.rcParams['font.family'] = font
+            print(f"한글 폰트 설정: {font}")
+            return font
+    
+    # 한글 폰트를 찾지 못한 경우 기본 설정
+    plt.rcParams['font.family'] = 'DejaVu Sans'
+    print("한글 폰트를 찾을 수 없어 기본 폰트를 사용합니다.")
+    return None
+
+# 한글 폰트 설정
+setup_korean_font()
+plt.rcParams['axes.unicode_minus'] = False
 
 class BitcoinPriceAlertBotV2:
     def __init__(self):
@@ -23,6 +62,11 @@ class BitcoinPriceAlertBotV2:
         self.alert_threshold = 5.0  # 알림 임계값 (5%)
         self.is_running = False
         
+        # 가격 데이터 저장용
+        self.price_history = []  # 가격 이력
+        self.time_history = []   # 시간 이력
+        self.max_points = 100    # 최대 표시 포인트 수
+        
         # Upbit API 엔드포인트
         self.api_url = "https://api.upbit.com/v1/ticker"
         self.market = "KRW-BTC"  # 비트코인 마켓
@@ -30,6 +74,10 @@ class BitcoinPriceAlertBotV2:
         # 알림 로그 파일 설정
         self.alert_log_file = "price_alerts.txt"
         self.setup_alert_log_file()
+        
+        # 최근 알림 저장용
+        self.recent_alerts = []
+        self.max_recent_alerts = 10
         
         # GUI 초기화
         self.setup_gui()
@@ -64,83 +112,52 @@ class BitcoinPriceAlertBotV2:
             print(f"알림 파일 저장 오류: {e}")
     
     def setup_gui(self):
-        """사용자 인터페이스 설정"""
-        self.root = tk.Tk()
-        self.root.title("비트코인 가격 알림 봇 v2 (파일 저장 기능 포함)")
-        self.root.geometry("500x400")
+        """그래프 설정"""
+        # matplotlib 그래프 설정
+        self.fig, (self.ax1, self.ax2) = plt.subplots(2, 1, figsize=(12, 10))
         
-        # 메인 프레임
-        main_frame = tk.Frame(self.root, padx=20, pady=20)
-        main_frame.pack(fill=tk.BOTH, expand=True)
+        # 상단 그래프 (가격 차트)
+        current_font = plt.rcParams['font.family']
+        self.ax1.set_title("비트코인 실시간 가격 변화 (v2 - 파일 저장 기능 포함)", 
+                          fontsize=16, fontweight='bold', fontfamily=current_font)
+        self.ax1.set_xlabel("시간", fontsize=12, fontfamily=current_font)
+        self.ax1.set_ylabel("가격 (원)", fontsize=12, fontfamily=current_font)
+        self.ax1.grid(True, alpha=0.3)
         
-        # 제목
-        title_label = tk.Label(main_frame, text="비트코인 가격 알림 봇 v2", 
-                             font=("Arial", 16, "bold"))
-        title_label.pack(pady=(0, 20))
+        # 하단 그래프 (알림 로그)
+        self.ax2.set_title("최근 알림 로그", fontsize=14, fontweight='bold', fontfamily=current_font)
+        self.ax2.set_xlim(0, 1)
+        self.ax2.set_ylim(0, 1)
+        self.ax2.axis('off')
         
-        # 현재 가격 표시
-        self.price_frame = tk.Frame(main_frame)
-        self.price_frame.pack(fill=tk.X, pady=10)
+        # 그래프 창 설정
+        self.fig.canvas.manager.set_window_title("비트코인 가격 알림 봇 v2 - 실시간 그래프")
         
-        tk.Label(self.price_frame, text="현재 가격:", font=("Arial", 12)).pack(side=tk.LEFT)
-        self.current_price_label = tk.Label(self.price_frame, text="로딩 중...", 
-                                          font=("Arial", 12, "bold"), fg="blue")
-        self.current_price_label.pack(side=tk.LEFT, padx=(10, 0))
+        # 키보드 이벤트 바인딩
+        self.fig.canvas.mpl_connect('key_press_event', self.on_key_press)
         
-        # 기준 가격 표시
-        self.base_frame = tk.Frame(main_frame)
-        self.base_frame.pack(fill=tk.X, pady=10)
+        # 상태 정보를 그래프에 텍스트로 표시
+        self.info_text = self.ax1.text(0.02, 0.98, "대기 중...", transform=self.ax1.transAxes, 
+                                     verticalalignment='top', fontsize=10, fontfamily=current_font,
+                                     bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
         
-        tk.Label(self.base_frame, text="기준 가격:", font=("Arial", 12)).pack(side=tk.LEFT)
-        self.base_price_label = tk.Label(self.base_frame, text="설정되지 않음", 
-                                       font=("Arial", 12), fg="gray")
-        self.base_price_label.pack(side=tk.LEFT, padx=(10, 0))
-        
-        # 상승률 표시
-        self.change_frame = tk.Frame(main_frame)
-        self.change_frame.pack(fill=tk.X, pady=10)
-        
-        tk.Label(self.change_frame, text="상승률:", font=("Arial", 12)).pack(side=tk.LEFT)
-        self.change_label = tk.Label(self.change_frame, text="0.00%", 
-                                   font=("Arial", 12))
-        self.change_label.pack(side=tk.LEFT, padx=(10, 0))
-        
-        # 버튼들
-        button_frame = tk.Frame(main_frame)
-        button_frame.pack(fill=tk.X, pady=20)
-        
-        self.start_button = tk.Button(button_frame, text="모니터링 시작", 
-                                    command=self.start_monitoring, 
-                                    bg="green", fg="white", font=("Arial", 12))
-        self.start_button.pack(side=tk.LEFT, padx=(0, 10))
-        
-        self.stop_button = tk.Button(button_frame, text="모니터링 중지", 
-                                   command=self.stop_monitoring, 
-                                   bg="red", fg="white", font=("Arial", 12), 
-                                   state=tk.DISABLED)
-        self.stop_button.pack(side=tk.LEFT, padx=(0, 10))
-        
-        # 로그 파일 열기 버튼
-        self.open_log_button = tk.Button(button_frame, text="로그 파일 열기", 
-                                       command=self.open_log_file, 
-                                       bg="blue", fg="white", font=("Arial", 12))
-        self.open_log_button.pack(side=tk.LEFT)
-        
-        # 상태 표시
-        self.status_label = tk.Label(main_frame, text="대기 중", 
-                                   font=("Arial", 10), fg="gray")
-        self.status_label.pack(pady=10)
-        
-        # 최근 알림 표시 영역
-        log_frame = tk.Frame(main_frame)
-        log_frame.pack(fill=tk.BOTH, expand=True, pady=(10, 0))
-        
-        tk.Label(log_frame, text="최근 알림:", font=("Arial", 12, "bold")).pack(anchor=tk.W)
-        
-        self.log_text = scrolledtext.ScrolledText(log_frame, height=8, width=50)
-        self.log_text.pack(fill=tk.BOTH, expand=True)
-        self.log_text.insert(tk.END, "알림이 발생하면 여기에 표시됩니다.\n")
-        self.log_text.config(state=tk.DISABLED)
+        # 알림 로그 텍스트
+        self.alert_text = self.ax2.text(0.02, 0.98, "알림이 발생하면 여기에 표시됩니다.", 
+                                      transform=self.ax2.transAxes, verticalalignment='top', 
+                                      fontsize=9, fontfamily=current_font,
+                                      bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
+    
+    def on_key_press(self, event):
+        """키보드 이벤트 처리"""
+        if event.key == ' ' and not self.is_running:  # 스페이스바로 시작
+            self.start_monitoring()
+        elif event.key == 'q' and self.is_running:  # q로 중지
+            self.stop_monitoring()
+        elif event.key == 'escape':  # ESC로 종료
+            self.stop_monitoring()
+            plt.close('all')
+        elif event.key == 'l':  # L로 로그 파일 열기
+            self.open_log_file()
         
     def get_bitcoin_price(self):
         """Upbit API에서 비트코인 현재가 조회"""
@@ -166,11 +183,12 @@ class BitcoinPriceAlertBotV2:
     
     def show_alert(self, message):
         """알림 메시지 표시 및 파일 저장"""
-        # 화면 알림 표시
-        messagebox.showwarning("비트코인 가격 알림", message)
-        
         # 콘솔에 출력
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {message}")
+        print("=" * 50)
+        print("🚨 비트코인 가격 알림 🚨")
+        print(message)
+        print("=" * 50)
         
         # 파일에 저장
         self.log_alert_to_file(message)
@@ -181,21 +199,22 @@ class BitcoinPriceAlertBotV2:
     def update_log_display(self, message):
         """GUI 로그 영역 업데이트"""
         try:
-            self.log_text.config(state=tk.NORMAL)
             timestamp = datetime.now().strftime('%H:%M:%S')
-            log_entry = f"[{timestamp}] {message}\n"
+            log_entry = f"[{timestamp}] {message}"
             
-            # 최근 10개 알림만 유지
-            current_content = self.log_text.get("1.0", tk.END)
-            lines = current_content.strip().split('\n')
-            if len(lines) > 20:  # 20줄 이상이면 오래된 것 제거
-                lines = lines[-20:]
-                self.log_text.delete("1.0", tk.END)
-                self.log_text.insert(tk.END, '\n'.join(lines) + '\n')
+            # 최근 알림에 추가
+            self.recent_alerts.append(log_entry)
             
-            self.log_text.insert(tk.END, log_entry)
-            self.log_text.see(tk.END)  # 최신 내용으로 스크롤
-            self.log_text.config(state=tk.DISABLED)
+            # 최대 개수 제한
+            if len(self.recent_alerts) > self.max_recent_alerts:
+                self.recent_alerts.pop(0)
+            
+            # 알림 텍스트 업데이트
+            alert_text = "최근 알림:\n" + "\n".join(self.recent_alerts[-5:])  # 최근 5개만 표시
+            self.alert_text.set_text(alert_text)
+            
+            # 그래프 새로고침
+            self.fig.canvas.draw()
         except Exception as e:
             print(f"로그 표시 업데이트 오류: {e}")
     
@@ -203,32 +222,87 @@ class BitcoinPriceAlertBotV2:
         """로그 파일을 기본 텍스트 에디터로 열기"""
         try:
             if os.path.exists(self.alert_log_file):
-                os.startfile(self.alert_log_file)  # Windows
+                import subprocess
+                import platform
+                
+                system = platform.system()
+                if system == "Darwin":  # macOS
+                    subprocess.run(["open", self.alert_log_file])
+                elif system == "Windows":
+                    os.startfile(self.alert_log_file)
+                else:  # Linux
+                    subprocess.run(["xdg-open", self.alert_log_file])
+                
                 print(f"로그 파일이 열렸습니다: {self.alert_log_file}")
             else:
-                messagebox.showinfo("알림", "아직 알림 로그 파일이 생성되지 않았습니다.")
+                print("아직 알림 로그 파일이 생성되지 않았습니다.")
         except Exception as e:
             print(f"로그 파일 열기 오류: {e}")
-            messagebox.showerror("오류", f"로그 파일을 열 수 없습니다: {e}")
     
     def update_gui(self):
         """GUI 업데이트"""
+        # 상태 정보 텍스트 업데이트
+        status_text = f"상태: {'모니터링 중...' if self.is_running else '대기 중'}\n"
         if self.current_price:
-            self.current_price_label.config(text=f"{self.current_price:,.0f}원")
-        
+            status_text += f"현재 가격: {self.current_price:,.0f}원\n"
         if self.base_price:
-            self.base_price_label.config(text=f"{self.base_price:,.0f}원")
+            status_text += f"기준 가격: {self.base_price:,.0f}원\n"
         
         change_percent = self.calculate_price_change()
-        self.change_label.config(text=f"{change_percent:.2f}%")
+        status_text += f"상승률: {change_percent:.2f}%\n"
+        status_text += "\n키보드 단축키:\n"
+        status_text += "스페이스바: 시작\n"
+        status_text += "Q: 중지\n"
+        status_text += "L: 로그 파일 열기\n"
+        status_text += "ESC: 종료"
         
-        # 상승률에 따른 색상 변경
-        if change_percent >= self.alert_threshold:
-            self.change_label.config(fg="red", font=("Arial", 12, "bold"))
-        elif change_percent > 0:
-            self.change_label.config(fg="green")
-        else:
-            self.change_label.config(fg="black")
+        # 한글 폰트 적용
+        current_font = plt.rcParams['font.family']
+        self.info_text.set_text(status_text)
+        self.info_text.set_fontfamily(current_font)
+    
+    def update_graph(self):
+        """그래프 업데이트"""
+        if len(self.price_history) > 0:
+            # 그래프 클리어
+            self.ax1.clear()
+            
+            # 가격 데이터 플롯
+            self.ax1.plot(self.time_history, self.price_history, 'b-', linewidth=2, label='비트코인 가격')
+            
+            # 기준 가격선 표시
+            if self.base_price:
+                self.ax1.axhline(y=self.base_price, color='gray', linestyle='--', alpha=0.7, label=f'기준가: {self.base_price:,.0f}원')
+                
+                # 5% 상승선 표시
+                alert_price = self.base_price * (1 + self.alert_threshold / 100)
+                self.ax1.axhline(y=alert_price, color='red', linestyle='--', alpha=0.7, label=f'알림선: {alert_price:,.0f}원')
+            
+            # 현재 가격 포인트 강조
+            if self.current_price:
+                self.ax1.scatter(self.time_history[-1], self.price_history[-1], 
+                              color='red', s=100, zorder=5, label=f'현재가: {self.current_price:,.0f}원')
+            
+            # 그래프 설정
+            current_font = plt.rcParams['font.family']
+            self.ax1.set_title("비트코인 실시간 가격 변화 (v2 - 파일 저장 기능 포함)", 
+                              fontsize=14, fontweight='bold', fontfamily=current_font)
+            self.ax1.set_xlabel("시간", fontfamily=current_font)
+            self.ax1.set_ylabel("가격 (원)", fontfamily=current_font)
+            self.ax1.grid(True, alpha=0.3)
+            self.ax1.legend(loc='upper left', prop={'family': current_font})
+            
+            # Y축 포맷팅 (천 단위 구분)
+            self.ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{x:,.0f}'))
+            
+            # X축 시간 포맷팅
+            if len(self.time_history) > 0:
+                self.ax1.set_xticks(self.time_history[::max(1, len(self.time_history)//10)])
+                self.ax1.set_xticklabels([t.strftime('%H:%M:%S') for t in self.time_history[::max(1, len(self.time_history)//10)]], 
+                                      rotation=45)
+            
+            # 그래프 새로고침
+            self.fig.canvas.draw()
     
     def monitoring_loop(self):
         """가격 모니터링 루프"""
@@ -238,6 +312,16 @@ class BitcoinPriceAlertBotV2:
                 new_price = self.get_bitcoin_price()
                 if new_price:
                     self.current_price = new_price
+                    current_time = datetime.now()
+                    
+                    # 가격 이력에 추가
+                    self.price_history.append(new_price)
+                    self.time_history.append(current_time)
+                    
+                    # 최대 포인트 수 제한
+                    if len(self.price_history) > self.max_points:
+                        self.price_history.pop(0)
+                        self.time_history.pop(0)
                     
                     # 기준 가격이 설정되지 않은 경우 현재 가격을 기준으로 설정
                     if self.base_price is None:
@@ -248,7 +332,8 @@ class BitcoinPriceAlertBotV2:
                     change_percent = self.calculate_price_change()
                     
                     # GUI 업데이트
-                    self.root.after(0, self.update_gui)
+                    self.update_gui()
+                    self.update_graph()
                     
                     # 5% 이상 상승 시 알림
                     if change_percent >= self.alert_threshold:
@@ -256,9 +341,9 @@ class BitcoinPriceAlertBotV2:
                         alert_message += f"기준 가격: {self.base_price:,.0f}원\n"
                         alert_message += f"현재 가격: {self.current_price:,.0f}원"
                         
-                        self.root.after(0, lambda: self.show_alert(alert_message))
+                        self.show_alert(alert_message)
                     
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] "
+                    print(f"[{current_time.strftime('%H:%M:%S')}] "
                           f"현재가: {self.current_price:,.0f}원, "
                           f"변화율: {change_percent:.2f}%")
                 
@@ -273,9 +358,6 @@ class BitcoinPriceAlertBotV2:
         """모니터링 시작"""
         if not self.is_running:
             self.is_running = True
-            self.start_button.config(state=tk.DISABLED)
-            self.stop_button.config(state=tk.NORMAL)
-            self.status_label.config(text="모니터링 중...", fg="green")
             
             # 기준 가격 초기화
             self.base_price = None
@@ -285,21 +367,33 @@ class BitcoinPriceAlertBotV2:
             self.monitor_thread.start()
             
             print("모니터링이 시작되었습니다.")
+            self.update_gui()
     
     def stop_monitoring(self):
         """모니터링 중지"""
         self.is_running = False
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
-        self.status_label.config(text="대기 중", fg="gray")
         print("모니터링이 중지되었습니다.")
+        self.update_gui()
     
     def run(self):
         """봇 실행"""
         try:
-            self.root.mainloop()
+            print("\n비트코인 가격 알림 봇 v2가 시작되었습니다!")
+            print("키보드 단축키:")
+            print("  스페이스바: 모니터링 시작")
+            print("  Q: 모니터링 중지")
+            print("  L: 로그 파일 열기")
+            print("  ESC: 프로그램 종료")
+            print("-" * 50)
+            
+            # 초기 GUI 업데이트
+            self.update_gui()
+            
+            # matplotlib 이벤트 루프 시작
+            plt.show()
         except KeyboardInterrupt:
             print("\n봇이 종료되었습니다.")
+            plt.close('all')
 
 def main():
     """메인 함수"""
