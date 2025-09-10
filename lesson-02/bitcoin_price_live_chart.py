@@ -12,8 +12,8 @@ import threading
 from datetime import datetime, timedelta
 from typing import List, Tuple, Optional, Dict, Any
 import matplotlib
-# Backend setup - for stable rendering on Windows
-matplotlib.use('TkAgg')  # Use Tkinter backend
+# Backend setup - for stable rendering across platforms
+matplotlib.use('Qt5Agg')  # Use Qt5 backend instead of Tkinter
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib import font_manager
@@ -110,16 +110,17 @@ class LiveBitcoinPriceChart:
             print(f"Initial data load error: {e}")
     
     def setup_font(self):
-        """Font setup optimized for Windows environment"""
+        """Font setup optimized for cross-platform environment"""
         try:
-            # Try Windows-compatible fonts
-            font_candidates = [
-                'Arial',  # Windows default font
-                'Calibri',  # Windows modern font
-                'Segoe UI',  # Windows UI font
-                'DejaVu Sans',  # Default font
-                'sans-serif'  # System default sans-serif
-            ]
+            import platform
+            system = platform.system()
+            
+            if system == "Darwin":  # macOS
+                font_candidates = ['AppleGothic', 'Malgun Gothic', 'NanumGothic', 'Arial Unicode MS', 'Arial']
+            elif system == "Windows":
+                font_candidates = ['Malgun Gothic', 'NanumGothic', 'Arial', 'Calibri', 'Segoe UI']
+            else:  # Linux
+                font_candidates = ['NanumGothic', 'DejaVu Sans', 'Liberation Sans', 'Arial']
             
             # Find available fonts
             available_fonts = [f.name for f in font_manager.fontManager.ttflist]
@@ -279,8 +280,9 @@ class LiveBitcoinPriceChart:
         """Create real-time updating chart."""
         # Initialize chart
         self.fig, self.ax = plt.subplots(figsize=(16, 10))
+        current_font = plt.rcParams['font.family']
         self.fig.suptitle('Real-time Bitcoin Price Chart (Auto-update every hour)', 
-                         fontsize=16, fontweight='bold', fontfamily='sans-serif')
+                         fontsize=16, fontweight='bold', fontfamily=current_font)
         
         # Disable matplotlib tooltips to prevent character corruption
         self.fig.canvas.mpl_connect('motion_notify_event', lambda event: None)
@@ -328,26 +330,27 @@ class LiveBitcoinPriceChart:
                             self.ax.scatter(min_date, min_price, color='blue', s=100, zorder=5,
                                           label=f'Lowest: {self.format_price(min_price, self.currency)}')
                         
-                        # Chart styling - explicit font family setting
+                        # Chart styling - use current font family
+                        current_font = plt.rcParams['font.family']
                         self.ax.set_title(f'Bitcoin Real-time Price Movement (Currency: {self.currency.upper()})', 
-                                        fontsize=14, fontweight='bold', pad=20, fontfamily='sans-serif')
+                                        fontsize=14, fontweight='bold', pad=20, fontfamily=current_font)
                         
                         # x-axis setup
-                        self.ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily='sans-serif')
+                        self.ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily=current_font)
                         self.ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
                         self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
-                        plt.setp(self.ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily='sans-serif')
+                        plt.setp(self.ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily=current_font)
                         
                         # y-axis setup
-                        self.ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily='sans-serif')
-                        plt.setp(self.ax.yaxis.get_majorticklabels(), fontfamily='sans-serif')
+                        self.ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily=current_font)
+                        plt.setp(self.ax.yaxis.get_majorticklabels(), fontfamily=current_font)
                         
                         # Grid setup
                         self.ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
                         self.ax.set_axisbelow(True)
                         
                         # Legend setup
-                        self.ax.legend(loc='upper left', fontsize=10, framealpha=0.9)
+                        self.ax.legend(loc='upper left', fontsize=10, framealpha=0.9, prop={'family': current_font})
                         
                         # Add statistics info - prevent text corruption
                         if len(prices) > 1:
@@ -367,7 +370,7 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
                                        horizontalalignment='right',
                                        bbox=dict(boxstyle='round,pad=0.3', 
                                                facecolor='lightblue', alpha=0.8),
-                                       fontfamily='sans-serif')
+                                       fontfamily=current_font)
                         
                         # Background color setup
                         self.ax.set_facecolor('#f8f9fa')
@@ -409,16 +412,17 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
                    marker='o', markersize=3, markerfacecolor='white', 
                    markeredgecolor='#f7931a', markeredgewidth=1)
             
-            # Chart styling - explicit font family setting
+            # Chart styling - use current font family
+            current_font = plt.rcParams['font.family']
             ax.set_title(f'Bitcoin Price Movement (Manual)', 
-                        fontsize=16, fontweight='bold', pad=20, fontfamily='sans-serif')
-            ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily='sans-serif')
-            ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily='sans-serif')
+                        fontsize=16, fontweight='bold', pad=20, fontfamily=current_font)
+            ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily=current_font)
+            ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily=current_font)
             
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
             ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
-            plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily='sans-serif')
-            plt.setp(ax.yaxis.get_majorticklabels(), fontfamily='sans-serif')
+            plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily=current_font)
+            plt.setp(ax.yaxis.get_majorticklabels(), fontfamily=current_font)
             
             ax.grid(True, alpha=0.3)
             plt.tight_layout()
