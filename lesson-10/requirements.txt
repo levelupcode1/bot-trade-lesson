@@ -1,0 +1,24 @@
+# 텔레그램 봇 라이브러리 (최신 안정 버전)
+python-telegram-bot==22.4
+
+# 설정 파일 처리
+PyYAML==6.0.1
+
+# 비동기 HTTP 클라이언트
+httpx==0.25.2
+
+# 로깅 및 모니터링
+structlog==23.2.0
+
+# 타입 힌트 지원
+typing-extensions==4.8.0
+
+# 개발 및 테스트 도구 (선택사항)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# 환경 변수 관리
+python-dotenv==1.0.0

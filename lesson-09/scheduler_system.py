@@ -200,18 +200,31 @@ class PriorityDispatcher:
         self._default_retry_policy = default_retry_policy or RetryPolicy()
         self._should_retry = should_retry
 
+        # 통계 카운터 (간단 모니터링용)
+        self._lock = threading.RLock()
+        self._submitted_count = 0
+        self._dropped_count = 0
+        self._completed_count = 0
+        self._failed_count = 0
+
         for idx in range(num_workers):
             t = threading.Thread(target=self._worker_loop, name=f"dispatcher-worker-{idx}", daemon=True)
             t.start()
             self._workers.append(t)
 
-    def submit(self, task: PrioritizedTask) -> None:
+    def submit(self, task: PrioritizedTask) -> bool:
         logger.info("작업 큐 등록: id=%s priority=%d", task.task_id, task.priority)
+        with self._lock:
+            self._submitted_count += 1
         try:
-            # 백프레셔: 꽉 찼으면 최대 2초 대기 후 드롭
-            self._queue.put(task, timeout=2.0)
+            # 백프레셔: 꽉 찼으면 최대 0.1초 대기 후 드롭
+            self._queue.put(task, timeout=0.1)
+            return True
         except queue.Full:
             logger.error("작업 큐 포화로 작업 드롭: id=%s priority=%d", task.task_id, task.priority)
+            with self._lock:
+                self._dropped_count += 1
+            return False
 
     def _worker_loop(self) -> None:
         while not self._stop_event.is_set():
@@ -225,7 +238,7 @@ class PriorityDispatcher:
                 if missing:
                     # 의존성 미충족: 잠시 뒤 재등록(낮은 우선순위 유지)
                     logger.info("의존성 대기: %s -> 대기중: %s", task.task_id, ",".join(missing))
-                    time.sleep(0.5)
+                    time.sleep(1)
                     self._queue.put(task)
                     self._queue.task_done()
                     continue
@@ -236,14 +249,33 @@ class PriorityDispatcher:
                 execute(task.payload)
                 self._dependency_store.mark_completed(task.task_id)
                 logger.info("작업 성공: %s", task.task_id)
+                with self._lock:
+                    self._completed_count += 1
             except Exception as exc:  # noqa: BLE001
                 # 메모리 부족 등 치명적 예외는 즉시 디스패처 중지 신호
                 if isinstance(exc, MemoryError):
                     logger.critical("메모리 부족 감지, 디스패처를 중지합니다: %s", task.task_id, exc_info=exc)
                     self._stop_event.set()
                 logger.exception("작업 실패: %s", task.task_id)
+                with self._lock:
+                    self._failed_count += 1
+                # 재시도 데코레이터에서 예외를 다시 발생시키지 않으므로 여기서 처리
             finally:
                 self._queue.task_done()
+
+    def get_stats(self) -> Dict[str, int]:
+        """현재 디스패처 통계를 반환
+
+        Returns:
+            제출/드롭/성공/실패 카운터 딕셔너리
+        """
+        with self._lock:
+            return {
+                "submitted": self._submitted_count,
+                "dropped": self._dropped_count,
+                "completed": self._completed_count,
+                "failed": self._failed_count,
+            }
 
     def shutdown(self) -> None:
         self._stop_event.set()

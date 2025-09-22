@@ -50,5 +50,5 @@ jobs:
   task: system_health_check
   trigger: interval
   interval:
-    minutes: 1
+    minutes: 5
   priority: 0

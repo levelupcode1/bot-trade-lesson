@@ -1,0 +1,51 @@
+# 텔레그램 봇 기본 설정
+bot:
+  token: "8245175655:AAFTnz7OR_JNzeRd0TyzuXkNPzz-CQV-wKQ"  # 환경변수에서 로드
+  username: "gilbert_ai_bot"
+  description: "암호화폐 자동매매 시스템 알림 봇"
+  
+# 업데이트 수신 방식
+update:
+  use_webhook: false  # 개발 시 false, 운영 시 true
+  webhook_url: "https://yourdomain.com/webhook"
+  webhook_port: 8443
+  polling_interval: 1.0  # 초
+
+# 메시지 설정
+message:
+  parse_mode: "Markdown"
+  disable_web_page_preview: true
+  max_message_length: 4096
+  
+# 레이트 리밋 설정
+rate_limit:
+  max_messages_per_minute: 30
+  max_commands_per_minute: 10
+  burst_limit: 5
+  cooldown_seconds: 60
+
+# 로깅 설정
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/bot.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# 보안 설정
+security:
+  enabled: true
+  allowed_users: []  # 빈 리스트면 모든 사용자 허용
+  admin_users: []    # 관리자 사용자 ID 목록
+  chat_whitelist: [] # 허용된 채팅 ID 목록
+
+# 알림 설정
+notifications:
+  enabled: true
+  trade_execution: true
+  pnl_alerts: true
+  risk_warnings: true
+  system_errors: true
+  daily_reports: true
+  pnl_threshold: 0.05  # 5% 수익률 달성 시 알림
+  loss_threshold: -0.02  # 2% 손실 시 경고
