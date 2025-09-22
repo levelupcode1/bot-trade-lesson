@@ -1,0 +1,1041 @@
+---
+globs: src/**/*.py
+description: 자동매매 시스템 핵심 기능 구현 가이드
+---
+
+# 자동매매 시스템 핵심 기능 구현 가이드
+
+## 🎯 핵심 기능 개요
+
+### 1. 가격 모니터링 (F001)
+- 실시간 가격 데이터 수집 및 분석
+- 기술적 지표 계산
+- 데이터 품질 관리
+
+### 2. 주문 실행 (F002)
+- 매수/매도 주문 자동 실행
+- 주문 상태 추적 및 관리
+- 부분 체결 처리
+
+### 3. 리스크 관리 (F003) - Critical
+- 포지션 크기 관리
+- 손절/익절 자동 실행
+- 일일 손실 한도 관리
+
+### 4. 알림 시스템 (F004)
+- 텔레그램 실시간 알림
+- 거래 및 성과 리포트
+- 오류 및 리스크 알림
+
+### 5. 데이터 관리 (F005)
+- SQLite 데이터베이스 저장
+- 데이터 백업 및 복구
+- 성과 분석 및 리포트
+
+### 6. 설정 관리 (F006)
+- 웹 기반 설정 인터페이스
+- 전략 매개변수 관리
+- API 키 및 보안 설정
+
+## 📊 1. 가격 모니터링 구현
+
+### 1.1 실시간 데이터 수집
+```python
+import asyncio
+import websockets
+import json
+from typing import Dict, List, Callable
+from datetime import datetime
+import logging
+
+class PriceMonitor:
+    """실시간 가격 모니터링 클래스"""
+    
+    def __init__(self, symbols: List[str], callback: Callable):
+        self.symbols = symbols
+        self.callback = callback
+        self.websocket = None
+        self.is_running = False
+        self.logger = logging.getLogger(__name__)
+    
+    async def start_monitoring(self) -> None:
+        """WebSocket을 통한 실시간 시세 수신 시작"""
+        try:
+            # 업비트 WebSocket 연결
+            uri = "wss://api.upbit.com/websocket/v1"
+            self.websocket = await websockets.connect(uri)
+            
+            # 구독 메시지 전송
+            subscribe_message = [
+                {"ticket": "crypto-auto-trader"},
+                {"type": "ticker", "codes": self.symbols},
+                {"format": "SIMPLE"}
+            ]
+            
+            await self.websocket.send(json.dumps(subscribe_message))
+            self.is_running = True
+            
+            # 메시지 수신 루프
+            async for message in self.websocket:
+                await self._process_message(message)
+                
+        except Exception as e:
+            self.logger.error(f"가격 모니터링 오류: {e}")
+            await self._reconnect()
+    
+    async def _process_message(self, message: str) -> None:
+        """수신된 메시지 처리"""
+        try:
+            data = json.loads(message)
+            
+            # 가격 데이터 추출
+            price_data = {
+                'symbol': data['cd'],
+                'price': float(data['tp']),
+                'volume': float(data['tv']),
+                'timestamp': datetime.now(),
+                'change_rate': float(data['c'])
+            }
+            
+            # 콜백 함수 호출
+            await self.callback(price_data)
+            
+        except Exception as e:
+            self.logger.error(f"메시지 처리 오류: {e}")
+    
+    async def _reconnect(self) -> None:
+        """연결 재시도"""
+        retry_count = 0
+        max_retries = 5
+        
+        while retry_count < max_retries:
+            try:
+                await asyncio.sleep(2 ** retry_count)  # 지수 백오프
+                await self.start_monitoring()
+                break
+            except Exception as e:
+                retry_count += 1
+                self.logger.error(f"재연결 시도 {retry_count} 실패: {e}")
+```
+
+### 1.2 기술적 지표 계산
+```python
+import pandas as pd
+import numpy as np
+from typing import List, Dict
+from dataclasses import dataclass
+
+@dataclass
+class TechnicalIndicators:
+    """기술적 지표 데이터 클래스"""
+    sma_5: float
+    sma_20: float
+    ema_12: float
+    ema_26: float
+    rsi: float
+    macd: float
+    macd_signal: float
+    bollinger_upper: float
+    bollinger_lower: float
+    atr: float
+
+class TechnicalAnalyzer:
+    """기술적 분석 클래스"""
+    
+    def __init__(self):
+        self.price_history: List[float] = []
+        self.volume_history: List[float] = []
+    
+    def add_price_data(self, price: float, volume: float) -> None:
+        """가격 데이터 추가"""
+        self.price_history.append(price)
+        self.volume_history.append(volume)
+        
+        # 최대 200개 데이터만 유지
+        if len(self.price_history) > 200:
+            self.price_history.pop(0)
+            self.volume_history.pop(0)
+    
+    def calculate_indicators(self) -> TechnicalIndicators:
+        """기술적 지표 계산"""
+        if len(self.price_history) < 26:
+            raise ValueError("충분한 데이터가 없습니다 (최소 26개 필요)")
+        
+        df = pd.DataFrame({
+            'price': self.price_history,
+            'volume': self.volume_history
+        })
+        
+        # 이동평균 계산
+        sma_5 = df['price'].rolling(window=5).mean().iloc[-1]
+        sma_20 = df['price'].rolling(window=20).mean().iloc[-1]
+        ema_12 = df['price'].ewm(span=12).mean().iloc[-1]
+        ema_26 = df['price'].ewm(span=26).mean().iloc[-1]
+        
+        # RSI 계산
+        rsi = self._calculate_rsi(df['price'], 14)
+        
+        # MACD 계산
+        macd = ema_12 - ema_26
+        macd_signal = df['price'].ewm(span=9).mean().iloc[-1]
+        
+        # 볼린저 밴드 계산
+        bb_std = df['price'].rolling(window=20).std().iloc[-1]
+        bb_middle = sma_20
+        bollinger_upper = bb_middle + (bb_std * 2)
+        bollinger_lower = bb_middle - (bb_std * 2)
+        
+        # ATR 계산
+        atr = self._calculate_atr(df, 14)
+        
+        return TechnicalIndicators(
+            sma_5=sma_5,
+            sma_20=sma_20,
+            ema_12=ema_12,
+            ema_26=ema_26,
+            rsi=rsi,
+            macd=macd,
+            macd_signal=macd_signal,
+            bollinger_upper=bollinger_upper,
+            bollinger_lower=bollinger_lower,
+            atr=atr
+        )
+    
+    def _calculate_rsi(self, prices: pd.Series, period: int = 14) -> float:
+        """RSI 계산"""
+        delta = prices.diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+        rs = gain / loss
+        rsi = 100 - (100 / (1 + rs))
+        return rsi.iloc[-1]
+    
+    def _calculate_atr(self, df: pd.DataFrame, period: int = 14) -> float:
+        """ATR 계산"""
+        high_low = df['price'].diff()
+        high_close = np.abs(df['price'] - df['price'].shift())
+        low_close = np.abs(df['price'] - df['price'].shift())
+        
+        ranges = pd.concat([high_low, high_close, low_close], axis=1)
+        true_range = np.max(ranges, axis=1)
+        atr = true_range.rolling(period).mean()
+        return atr.iloc[-1]
+```
+
+## 💰 2. 주문 실행 구현
+
+### 2.1 주문 관리자
+```python
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from enum import Enum
+from typing import Optional, List
+import asyncio
+import logging
+
+class OrderType(Enum):
+    """주문 유형"""
+    MARKET = "market"
+    LIMIT = "limit"
+    STOP_LOSS = "stop_loss"
+    TAKE_PROFIT = "take_profit"
+
+class OrderSide(Enum):
+    """주문 방향"""
+    BUY = "buy"
+    SELL = "sell"
+
+class OrderStatus(Enum):
+    """주문 상태"""
+    PENDING = "pending"
+    FILLED = "filled"
+    PARTIALLY_FILLED = "partially_filled"
+    CANCELLED = "cancelled"
+    FAILED = "failed"
+
+@dataclass
+class Order:
+    """주문 데이터 클래스"""
+    id: str
+    symbol: str
+    side: OrderSide
+    order_type: OrderType
+    amount: float
+    price: Optional[float] = None
+    status: OrderStatus = OrderStatus.PENDING
+    filled_amount: float = 0.0
+    average_price: float = 0.0
+    created_at: datetime = None
+    updated_at: datetime = None
+
+class OrderExecutor:
+    """주문 실행 클래스"""
+    
+    def __init__(self, exchange_api, risk_manager):
+        self.exchange_api = exchange_api
+        self.risk_manager = risk_manager
+        self.active_orders: Dict[str, Order] = {}
+        self.logger = logging.getLogger(__name__)
+    
+    async def execute_order(self, order: Order) -> Order:
+        """주문 실행"""
+        try:
+            # 리스크 검증
+            if not await self.risk_manager.validate_order(order):
+                order.status = OrderStatus.FAILED
+                self.logger.warning(f"주문 리스크 검증 실패: {order.id}")
+                return order
+            
+            # 주문 실행
+            if order.order_type == OrderType.MARKET:
+                result = await self._execute_market_order(order)
+            elif order.order_type == OrderType.LIMIT:
+                result = await self._execute_limit_order(order)
+            else:
+                raise ValueError(f"지원하지 않는 주문 유형: {order.order_type}")
+            
+            # 결과 처리
+            order.status = result['status']
+            order.filled_amount = result.get('filled_amount', 0.0)
+            order.average_price = result.get('average_price', 0.0)
+            order.updated_at = datetime.now()
+            
+            # 활성 주문에 추가
+            if order.status in [OrderStatus.PENDING, OrderStatus.PARTIALLY_FILLED]:
+                self.active_orders[order.id] = order
+            
+            self.logger.info(f"주문 실행 완료: {order.id} - {order.status}")
+            return order
+            
+        except Exception as e:
+            order.status = OrderStatus.FAILED
+            self.logger.error(f"주문 실행 오류: {e}")
+            return order
+    
+    async def _execute_market_order(self, order: Order) -> Dict:
+        """시장가 주문 실행"""
+        return await self.exchange_api.place_market_order(
+            symbol=order.symbol,
+            side=order.side.value,
+            amount=order.amount
+        )
+    
+    async def _execute_limit_order(self, order: Order) -> Dict:
+        """지정가 주문 실행"""
+        return await self.exchange_api.place_limit_order(
+            symbol=order.symbol,
+            side=order.side.value,
+            amount=order.amount,
+            price=order.price
+        )
+    
+    async def cancel_order(self, order_id: str) -> bool:
+        """주문 취소"""
+        try:
+            result = await self.exchange_api.cancel_order(order_id)
+            if result['success']:
+                if order_id in self.active_orders:
+                    self.active_orders[order_id].status = OrderStatus.CANCELLED
+                    del self.active_orders[order_id]
+                self.logger.info(f"주문 취소 완료: {order_id}")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"주문 취소 오류: {e}")
+            return False
+    
+    async def update_order_status(self, order_id: str) -> Optional[Order]:
+        """주문 상태 업데이트"""
+        try:
+            status = await self.exchange_api.get_order_status(order_id)
+            if order_id in self.active_orders:
+                order = self.active_orders[order_id]
+                order.status = OrderStatus(status['status'])
+                order.filled_amount = status.get('filled_amount', 0.0)
+                order.average_price = status.get('average_price', 0.0)
+                order.updated_at = datetime.now()
+                
+                # 완전 체결된 주문은 활성 목록에서 제거
+                if order.status in [OrderStatus.FILLED, OrderStatus.CANCELLED, OrderStatus.FAILED]:
+                    del self.active_orders[order_id]
+                
+                return order
+        except Exception as e:
+            self.logger.error(f"주문 상태 업데이트 오류: {e}")
+        return None
+```
+
+## ⚠️ 3. 리스크 관리 구현
+
+### 3.1 리스크 관리자
+```python
+from dataclasses import dataclass
+from typing import Dict, List, Optional
+import logging
+from datetime import datetime, timedelta
+
+@dataclass
+class RiskLimits:
+    """리스크 한도 설정"""
+    max_position_size: float = 0.1  # 계좌 대비 최대 포지션 크기 (10%)
+    daily_loss_limit: float = 0.02  # 일일 최대 손실 (2%)
+    max_concurrent_positions: int = 5  # 최대 동시 포지션 수
+    stop_loss_percentage: float = 0.02  # 손절 비율 (2%)
+    take_profit_percentage: float = 0.05  # 익절 비율 (5%)
+
+@dataclass
+class Position:
+    """포지션 데이터"""
+    symbol: str
+    side: str  # 'long' or 'short'
+    amount: float
+    entry_price: float
+    current_price: float
+    unrealized_pnl: float
+    created_at: datetime
+
+class RiskManager:
+    """리스크 관리 클래스"""
+    
+    def __init__(self, account_balance: float, risk_limits: RiskLimits):
+        self.account_balance = account_balance
+        self.risk_limits = risk_limits
+        self.positions: Dict[str, Position] = {}
+        self.daily_pnl = 0.0
+        self.last_reset_date = datetime.now().date()
+        self.logger = logging.getLogger(__name__)
+    
+    async def validate_order(self, order: Order) -> bool:
+        """주문 리스크 검증"""
+        try:
+            # 일일 손실 한도 확인
+            if not self._check_daily_loss_limit():
+                self.logger.warning("일일 손실 한도 초과")
+                return False
+            
+            # 포지션 크기 확인
+            if not self._check_position_size(order):
+                self.logger.warning("포지션 크기 한도 초과")
+                return False
+            
+            # 동시 포지션 수 확인
+            if not self._check_concurrent_positions():
+                self.logger.warning("최대 동시 포지션 수 초과")
+                return False
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"리스크 검증 오류: {e}")
+            return False
+    
+    def _check_daily_loss_limit(self) -> bool:
+        """일일 손실 한도 확인"""
+        # 날짜가 바뀌면 일일 손익 초기화
+        if datetime.now().date() != self.last_reset_date:
+            self.daily_pnl = 0.0
+            self.last_reset_date = datetime.now().date()
+        
+        max_daily_loss = self.account_balance * self.risk_limits.daily_loss_limit
+        return self.daily_pnl >= -max_daily_loss
+    
+    def _check_position_size(self, order: Order) -> bool:
+        """포지션 크기 확인"""
+        order_value = order.amount * (order.price or 0)
+        max_position_value = self.account_balance * self.risk_limits.max_position_size
+        
+        return order_value <= max_position_value
+    
+    def _check_concurrent_positions(self) -> bool:
+        """동시 포지션 수 확인"""
+        return len(self.positions) < self.risk_limits.max_concurrent_positions
+    
+    def update_position(self, symbol: str, side: str, amount: float, 
+                       entry_price: float, current_price: float) -> None:
+        """포지션 업데이트"""
+        unrealized_pnl = self._calculate_unrealized_pnl(
+            side, amount, entry_price, current_price
+        )
+        
+        position = Position(
+            symbol=symbol,
+            side=side,
+            amount=amount,
+            entry_price=entry_price,
+            current_price=current_price,
+            unrealized_pnl=unrealized_pnl,
+            created_at=datetime.now()
+        )
+        
+        self.positions[symbol] = position
+        self._update_daily_pnl()
+    
+    def _calculate_unrealized_pnl(self, side: str, amount: float, 
+                                entry_price: float, current_price: float) -> float:
+        """미실현 손익 계산"""
+        if side == 'long':
+            return (current_price - entry_price) * amount
+        else:  # short
+            return (entry_price - current_price) * amount
+    
+    def _update_daily_pnl(self) -> None:
+        """일일 손익 업데이트"""
+        self.daily_pnl = sum(pos.unrealized_pnl for pos in self.positions.values())
+    
+    def check_stop_loss(self, symbol: str, current_price: float) -> bool:
+        """손절 확인"""
+        if symbol not in self.positions:
+            return False
+        
+        position = self.positions[symbol]
+        loss_percentage = abs(position.unrealized_pnl) / (position.entry_price * position.amount)
+        
+        return loss_percentage >= self.risk_limits.stop_loss_percentage
+    
+    def check_take_profit(self, symbol: str, current_price: float) -> bool:
+        """익절 확인"""
+        if symbol not in self.positions:
+            return False
+        
+        position = self.positions[symbol]
+        profit_percentage = position.unrealized_pnl / (position.entry_price * position.amount)
+        
+        return profit_percentage >= self.risk_limits.take_profit_percentage
+    
+    def get_risk_summary(self) -> Dict:
+        """리스크 요약 정보"""
+        return {
+            'account_balance': self.account_balance,
+            'daily_pnl': self.daily_pnl,
+            'daily_pnl_percentage': (self.daily_pnl / self.account_balance) * 100,
+            'active_positions': len(self.positions),
+            'max_positions': self.risk_limits.max_concurrent_positions,
+            'total_unrealized_pnl': sum(pos.unrealized_pnl for pos in self.positions.values())
+        }
+```
+
+## 📱 4. 알림 시스템 구현
+
+### 4.1 텔레그램 봇
+```python
+import asyncio
+import aiohttp
+import json
+from typing import Dict, List, Optional
+from datetime import datetime
+import logging
+
+class TelegramBot:
+    """텔레그램 봇 클래스"""
+    
+    def __init__(self, bot_token: str, chat_id: str):
+        self.bot_token = bot_token
+        self.chat_id = chat_id
+        self.base_url = f"https://api.telegram.org/bot{bot_token}"
+        self.logger = logging.getLogger(__name__)
+    
+    async def send_message(self, message: str, parse_mode: str = "Markdown") -> bool:
+        """메시지 전송"""
+        try:
+            url = f"{self.base_url}/sendMessage"
+            data = {
+                'chat_id': self.chat_id,
+                'text': message,
+                'parse_mode': parse_mode
+            }
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url, json=data) as response:
+                    if response.status == 200:
+                        self.logger.info("텔레그램 메시지 전송 성공")
+                        return True
+                    else:
+                        self.logger.error(f"텔레그램 메시지 전송 실패: {response.status}")
+                        return False
+                        
+        except Exception as e:
+            self.logger.error(f"텔레그램 메시지 전송 오류: {e}")
+            return False
+    
+    async def send_trade_notification(self, trade_data: Dict) -> bool:
+        """거래 알림 전송"""
+        message = self._format_trade_message(trade_data)
+        return await self.send_message(message)
+    
+    async def send_performance_report(self, report_data: Dict) -> bool:
+        """성과 리포트 전송"""
+        message = self._format_performance_message(report_data)
+        return await self.send_message(message)
+    
+    async def send_error_notification(self, error_data: Dict) -> bool:
+        """오류 알림 전송"""
+        message = self._format_error_message(error_data)
+        return await self.send_message(message)
+    
+    def _format_trade_message(self, trade_data: Dict) -> str:
+        """거래 메시지 포맷팅"""
+        return f"""
+🚀 *거래 실행 알림*
+
+📊 *심볼*: `{trade_data['symbol']}`
+📈 *액션*: `{trade_data['action']}`
+💰 *수량*: `{trade_data['amount']}`
+💵 *가격*: `{trade_data['price']:,}원`
+📅 *시간*: `{trade_data['timestamp']}`
+🎯 *전략*: `{trade_data['strategy']}`
+        """.strip()
+    
+    def _format_performance_message(self, report_data: Dict) -> str:
+        """성과 리포트 메시지 포맷팅"""
+        return f"""
+📊 *성과 리포트*
+
+💰 *총 수익률*: `{report_data['total_return']:.2f}%`
+📈 *승률*: `{report_data['win_rate']:.2f}%`
+📉 *최대 낙폭*: `{report_data['max_drawdown']:.2f}%`
+🎯 *샤프 비율*: `{report_data['sharpe_ratio']:.2f}`
+📅 *기간*: `{report_data['period']}`
+        """.strip()
+    
+    def _format_error_message(self, error_data: Dict) -> str:
+        """오류 메시지 포맷팅"""
+        return f"""
+⚠️ *시스템 오류 알림*
+
+🔍 *오류 유형*: `{error_data['error_type']}`
+📝 *메시지*: `{error_data['message']}`
+📍 *위치*: `{error_data['location']}`
+📅 *시간*: `{error_data['timestamp']}`
+        """.strip()
+```
+
+## 🗄️ 5. 데이터 관리 구현
+
+### 5.1 데이터베이스 관리자
+```python
+import sqlite3
+import json
+from typing import Dict, List, Optional, Any
+from datetime import datetime
+import logging
+
+class DatabaseManager:
+    """데이터베이스 관리 클래스"""
+    
+    def __init__(self, db_path: str):
+        self.db_path = db_path
+        self.logger = logging.getLogger(__name__)
+        self._init_database()
+    
+    def _init_database(self) -> None:
+        """데이터베이스 초기화"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                # 가격 데이터 테이블
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS price_data (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        symbol TEXT NOT NULL,
+                        price REAL NOT NULL,
+                        volume REAL NOT NULL,
+                        timestamp DATETIME NOT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                
+                # 거래 내역 테이블
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS trades (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        order_id TEXT UNIQUE NOT NULL,
+                        symbol TEXT NOT NULL,
+                        side TEXT NOT NULL,
+                        amount REAL NOT NULL,
+                        price REAL NOT NULL,
+                        status TEXT NOT NULL,
+                        strategy TEXT NOT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                
+                # 성과 데이터 테이블
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS performance (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        date DATE NOT NULL,
+                        total_return REAL NOT NULL,
+                        daily_pnl REAL NOT NULL,
+                        win_rate REAL NOT NULL,
+                        max_drawdown REAL NOT NULL,
+                        sharpe_ratio REAL NOT NULL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )
+                """)
+                
+                # 인덱스 생성
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_price_symbol_time ON price_data(symbol, timestamp)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_trades_symbol ON trades(symbol)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_performance_date ON performance(date)")
+                
+                conn.commit()
+                self.logger.info("데이터베이스 초기화 완료")
+                
+        except Exception as e:
+            self.logger.error(f"데이터베이스 초기화 오류: {e}")
+            raise
+    
+    def save_price_data(self, price_data: Dict[str, Any]) -> bool:
+        """가격 데이터 저장"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO price_data (symbol, price, volume, timestamp)
+                    VALUES (?, ?, ?, ?)
+                """, (
+                    price_data['symbol'],
+                    price_data['price'],
+                    price_data['volume'],
+                    price_data['timestamp']
+                ))
+                conn.commit()
+                return True
+        except Exception as e:
+            self.logger.error(f"가격 데이터 저장 오류: {e}")
+            return False
+    
+    def save_trade(self, trade_data: Dict[str, Any]) -> bool:
+        """거래 내역 저장"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT OR REPLACE INTO trades 
+                    (order_id, symbol, side, amount, price, status, strategy, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    trade_data['order_id'],
+                    trade_data['symbol'],
+                    trade_data['side'],
+                    trade_data['amount'],
+                    trade_data['price'],
+                    trade_data['status'],
+                    trade_data['strategy'],
+                    datetime.now()
+                ))
+                conn.commit()
+                return True
+        except Exception as e:
+            self.logger.error(f"거래 내역 저장 오류: {e}")
+            return False
+    
+    def get_price_history(self, symbol: str, days: int = 30) -> List[Dict]:
+        """가격 히스토리 조회"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.row_factory = sqlite3.Row
+                cursor = conn.cursor()
+                cursor.execute("""
+                    SELECT * FROM price_data 
+                    WHERE symbol = ? 
+                    AND timestamp >= datetime('now', '-{} days')
+                    ORDER BY timestamp ASC
+                """.format(days), (symbol,))
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+        except Exception as e:
+            self.logger.error(f"가격 히스토리 조회 오류: {e}")
+            return []
+    
+    def get_trade_history(self, symbol: Optional[str] = None, 
+                         days: int = 30) -> List[Dict]:
+        """거래 히스토리 조회"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.row_factory = sqlite3.Row
+                cursor = conn.cursor()
+                
+                if symbol:
+                    cursor.execute("""
+                        SELECT * FROM trades 
+                        WHERE symbol = ? 
+                        AND created_at >= datetime('now', '-{} days')
+                        ORDER BY created_at DESC
+                    """.format(days), (symbol,))
+                else:
+                    cursor.execute("""
+                        SELECT * FROM trades 
+                        WHERE created_at >= datetime('now', '-{} days')
+                        ORDER BY created_at DESC
+                    """.format(days))
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+        except Exception as e:
+            self.logger.error(f"거래 히스토리 조회 오류: {e}")
+            return []
+    
+    def calculate_performance_metrics(self, days: int = 30) -> Dict[str, float]:
+        """성과 지표 계산"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                # 거래 데이터 조회
+                cursor.execute("""
+                    SELECT side, amount, price, created_at 
+                    FROM trades 
+                    WHERE status = 'filled' 
+                    AND created_at >= datetime('now', '-{} days')
+                    ORDER BY created_at ASC
+                """.format(days))
+                
+                trades = cursor.fetchall()
+                
+                if not trades:
+                    return {
+                        'total_return': 0.0,
+                        'win_rate': 0.0,
+                        'max_drawdown': 0.0,
+                        'sharpe_ratio': 0.0
+                    }
+                
+                # 성과 계산 로직
+                total_return = self._calculate_total_return(trades)
+                win_rate = self._calculate_win_rate(trades)
+                max_drawdown = self._calculate_max_drawdown(trades)
+                sharpe_ratio = self._calculate_sharpe_ratio(trades)
+                
+                return {
+                    'total_return': total_return,
+                    'win_rate': win_rate,
+                    'max_drawdown': max_drawdown,
+                    'sharpe_ratio': sharpe_ratio
+                }
+                
+        except Exception as e:
+            self.logger.error(f"성과 지표 계산 오류: {e}")
+            return {}
+    
+    def _calculate_total_return(self, trades: List) -> float:
+        """총 수익률 계산"""
+        # 구현 로직
+        pass
+    
+    def _calculate_win_rate(self, trades: List) -> float:
+        """승률 계산"""
+        # 구현 로직
+        pass
+    
+    def _calculate_max_drawdown(self, trades: List) -> float:
+        """최대 낙폭 계산"""
+        # 구현 로직
+        pass
+    
+    def _calculate_sharpe_ratio(self, trades: List) -> float:
+        """샤프 비율 계산"""
+        # 구현 로직
+        pass
+```
+
+## ⚙️ 6. 설정 관리 구현
+
+### 6.1 설정 관리자
+```python
+import yaml
+import json
+from typing import Dict, Any, Optional
+from pathlib import Path
+import logging
+
+class ConfigManager:
+    """설정 관리 클래스"""
+    
+    def __init__(self, config_dir: str = "config"):
+        self.config_dir = Path(config_dir)
+        self.config_dir.mkdir(exist_ok=True)
+        self.logger = logging.getLogger(__name__)
+        self._config_cache: Dict[str, Any] = {}
+    
+    def load_config(self, config_name: str) -> Dict[str, Any]:
+        """설정 파일 로드"""
+        try:
+            config_path = self.config_dir / f"{config_name}.yaml"
+            
+            if not config_path.exists():
+                self.logger.warning(f"설정 파일이 존재하지 않습니다: {config_path}")
+                return self._get_default_config(config_name)
+            
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+            
+            self._config_cache[config_name] = config
+            return config
+            
+        except Exception as e:
+            self.logger.error(f"설정 로드 오류: {e}")
+            return self._get_default_config(config_name)
+    
+    def save_config(self, config_name: str, config: Dict[str, Any]) -> bool:
+        """설정 파일 저장"""
+        try:
+            config_path = self.config_dir / f"{config_name}.yaml"
+            
+            with open(config_path, 'w', encoding='utf-8') as f:
+                yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
+            
+            self._config_cache[config_name] = config
+            self.logger.info(f"설정 저장 완료: {config_name}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"설정 저장 오류: {e}")
+            return False
+    
+    def get_config_value(self, config_name: str, key: str, default: Any = None) -> Any:
+        """설정 값 조회"""
+        config = self._config_cache.get(config_name)
+        if not config:
+            config = self.load_config(config_name)
+        
+        keys = key.split('.')
+        value = config
+        
+        for k in keys:
+            if isinstance(value, dict) and k in value:
+                value = value[k]
+            else:
+                return default
+        
+        return value
+    
+    def update_config_value(self, config_name: str, key: str, value: Any) -> bool:
+        """설정 값 업데이트"""
+        try:
+            config = self.load_config(config_name)
+            
+            keys = key.split('.')
+            current = config
+            
+            for k in keys[:-1]:
+                if k not in current:
+                    current[k] = {}
+                current = current[k]
+            
+            current[keys[-1]] = value
+            
+            return self.save_config(config_name, config)
+            
+        except Exception as e:
+            self.logger.error(f"설정 값 업데이트 오류: {e}")
+            return False
+    
+    def _get_default_config(self, config_name: str) -> Dict[str, Any]:
+        """기본 설정 반환"""
+        default_configs = {
+            'main': {
+                'trading': {
+                    'enabled': True,
+                    'symbols': ['KRW-BTC', 'KRW-ETH'],
+                    'max_positions': 5
+                },
+                'risk': {
+                    'max_position_size': 0.1,
+                    'daily_loss_limit': 0.02,
+                    'stop_loss': 0.02,
+                    'take_profit': 0.05
+                },
+                'notification': {
+                    'telegram': {
+                        'enabled': True,
+                        'bot_token': '',
+                        'chat_id': ''
+                    }
+                }
+            },
+            'strategies': {
+                'volatility_breakout': {
+                    'enabled': True,
+                    'k_value': 0.7,
+                    'volume_filter': 1.5,
+                    'rsi_threshold': 30
+                },
+                'ma_crossover': {
+                    'enabled': False,
+                    'short_period': 5,
+                    'long_period': 20
+                }
+            }
+        }
+        
+        return default_configs.get(config_name, {})
+```
+
+## 🧪 테스트 구현 예시
+
+### 단위 테스트
+```python
+import pytest
+from unittest.mock import Mock, patch
+from src.risk.risk_manager import RiskManager, RiskLimits
+from src.order.order_executor import OrderExecutor, Order, OrderSide, OrderType
+
+class TestRiskManager:
+    """리스크 관리자 테스트"""
+    
+    def setup_method(self):
+        """테스트 설정"""
+        self.risk_limits = RiskLimits(
+            max_position_size=0.1,
+            daily_loss_limit=0.02,
+            max_concurrent_positions=5
+        )
+        self.risk_manager = RiskManager(1000000, self.risk_limits)
+    
+    def test_daily_loss_limit_check(self):
+        """일일 손실 한도 확인 테스트"""
+        # Given
+        self.risk_manager.daily_pnl = -25000  # 2.5% 손실
+        
+        # When
+        result = self.risk_manager._check_daily_loss_limit()
+        
+        # Then
+        assert result is False  # 2% 한도 초과
+    
+    def test_position_size_check(self):
+        """포지션 크기 확인 테스트"""
+        # Given
+        order = Order(
+            id="test_order",
+            symbol="KRW-BTC",
+            side=OrderSide.BUY,
+            order_type=OrderType.MARKET,
+            amount=0.001,
+            price=50000000  # 5만원
+        )
+        
+        # When
+        result = self.risk_manager._check_position_size(order)
+        
+        # Then
+        assert result is True  # 5만원은 10% 한도 내
+    
+    def test_concurrent_positions_check(self):
+        """동시 포지션 수 확인 테스트"""
+        # Given
+        for i in range(5):
+            self.risk_manager.positions[f"position_{i}"] = Mock()
+        
+        # When
+        result = self.risk_manager._check_concurrent_positions()
+        
+        # Then
+        assert result is False  # 최대 5개 초과
+```
+
+이 구현 가이드는 PRD.md의 요구사항을 기반으로 실제 개발에 바로 사용할 수 있는 구체적인 코드 예시를 제공합니다. 각 기능별로 명확한 인터페이스와 구현 방법을 제시하여 개발자가 일관성 있게 코드를 작성할 수 있도록 도와줍니다.

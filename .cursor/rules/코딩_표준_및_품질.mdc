@@ -1,0 +1,550 @@
+---
+globs: *.py
+description: Python 코딩 표준 및 코드 품질 가이드라인
+---
+
+# Python 코딩 표준 및 코드 품질 가이드라인
+
+## 🐍 Python 코딩 규칙
+
+### 기본 규칙
+- **Python 3.8+** 문법 사용 (f-string, walrus operator 등 활용)
+- **PEP 8** 스타일 가이드 준수
+- **Type hints** 필수 사용 (함수, 클래스, 변수)
+- **Docstring** 필수 작성 (Google 스타일)
+- **한글 주석** 사용 (사용자 요구사항)
+
+### 명명 규칙
+```python
+# 클래스: PascalCase
+class VolatilityBreakoutStrategy:
+    """변동성 돌파 전략 클래스"""
+    pass
+
+# 함수/변수: snake_case
+def calculate_volatility(price_data: List[float]) -> float:
+    """변동성 계산 함수"""
+    pass
+
+# 상수: UPPER_SNAKE_CASE
+MAX_POSITION_SIZE = 0.1
+DAILY_LOSS_LIMIT = 0.02
+
+# 파일명: snake_case
+# price_monitor.py, order_executor.py
+```
+
+### Type Hints 사용법
+```python
+from typing import List, Dict, Optional, Union, Tuple
+from datetime import datetime
+
+def process_trade_data(
+    trades: List[Dict[str, Union[str, float]]],
+    start_date: datetime,
+    end_date: Optional[datetime] = None
+) -> Tuple[float, float]:
+    """거래 데이터 처리 함수"""
+    pass
+
+class TradingSystem:
+    """트레이딩 시스템 클래스"""
+    
+    def __init__(self, config: Dict[str, str]) -> None:
+        self.config = config
+        self.is_running: bool = False
+```
+
+### Docstring 작성 규칙
+```python
+def calculate_rsi(prices: List[float], period: int = 14) -> float:
+    """RSI(상대강도지수) 계산
+    
+    Args:
+        prices: 가격 데이터 리스트
+        period: RSI 계산 기간 (기본값: 14)
+        
+    Returns:
+        계산된 RSI 값 (0-100)
+        
+    Raises:
+        ValueError: prices가 비어있거나 period가 0 이하일 때
+        
+    Example:
+        >>> prices = [100, 102, 101, 103, 105]
+        >>> rsi = calculate_rsi(prices, 14)
+        >>> print(f"RSI: {rsi:.2f}")
+    """
+    if not prices or period <= 0:
+        raise ValueError("잘못된 입력값입니다")
+    
+    # RSI 계산 로직
+    pass
+```
+
+## 🔧 코드 품질 도구
+
+### 필수 도구
+```bash
+# 코드 스타일 검사
+flake8 src/ --max-line-length=88 --extend-ignore=E203,W503
+
+# 코드 포맷팅
+black src/ --line-length=88
+
+# 타입 검사
+mypy src/ --strict
+
+# 테스트 실행
+pytest tests/ -v --cov=src
+```
+
+### 설정 파일 예시
+
+#### .flake8
+```ini
+[flake8]
+max-line-length = 88
+extend-ignore = E203, W503
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .pytest_cache,
+    .mypy_cache
+```
+
+#### pyproject.toml
+```toml
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+```
+
+## 🏗️ 클래스 설계 원칙
+
+### 1. 단일 책임 원칙 (SRP)
+```python
+# 좋은 예: 각 클래스가 하나의 책임만 가짐
+class PriceMonitor:
+    """가격 모니터링만 담당"""
+    def monitor_prices(self) -> None:
+        pass
+
+class OrderExecutor:
+    """주문 실행만 담당"""
+    def execute_order(self, order: Order) -> None:
+        pass
+
+class RiskManager:
+    """리스크 관리만 담당"""
+    def check_risk(self, position: Position) -> bool:
+        pass
+
+# 나쁜 예: 여러 책임을 가진 클래스
+class TradingSystem:
+    def monitor_prices(self) -> None: pass
+    def execute_orders(self) -> None: pass
+    def manage_risk(self) -> None: pass
+    def send_notifications(self) -> None: pass
+```
+
+### 2. 의존성 역전 원칙 (DIP)
+```python
+from abc import ABC, abstractmethod
+
+class ExchangeAPI(ABC):
+    """거래소 API 인터페이스"""
+    
+    @abstractmethod
+    def get_price(self, symbol: str) -> float:
+        pass
+    
+    @abstractmethod
+    def place_order(self, order: Order) -> OrderResult:
+        pass
+
+class UpbitAPI(ExchangeAPI):
+    """업비트 API 구현"""
+    
+    def get_price(self, symbol: str) -> float:
+        # 업비트 API 호출
+        pass
+    
+    def place_order(self, order: Order) -> OrderResult:
+        # 업비트 주문 실행
+        pass
+
+class TradingStrategy(ABC):
+    """전략 인터페이스"""
+    
+    def __init__(self, exchange: ExchangeAPI):
+        self.exchange = exchange  # 구체적인 클래스가 아닌 인터페이스에 의존
+```
+
+### 3. 인터페이스 분리 원칙 (ISP)
+```python
+# 좋은 예: 작은 인터페이스들로 분리
+class PriceProvider(ABC):
+    @abstractmethod
+    def get_current_price(self, symbol: str) -> float:
+        pass
+
+class OrderPlacer(ABC):
+    @abstractmethod
+    def place_buy_order(self, symbol: str, amount: float) -> OrderResult:
+        pass
+    
+    @abstractmethod
+    def place_sell_order(self, symbol: str, amount: float) -> OrderResult:
+        pass
+
+# 나쁜 예: 모든 기능을 포함한 큰 인터페이스
+class ExchangeAPI(ABC):
+    @abstractmethod
+    def get_price(self, symbol: str) -> float: pass
+    
+    @abstractmethod
+    def place_buy_order(self, symbol: str, amount: float) -> OrderResult: pass
+    
+    @abstractmethod
+    def place_sell_order(self, symbol: str, amount: float) -> OrderResult: pass
+    
+    @abstractmethod
+    def get_account_info(self) -> AccountInfo: pass
+    
+    @abstractmethod
+    def get_order_history(self) -> List[Order]: pass
+```
+
+## 🧪 테스트 작성 규칙
+
+### 단위 테스트
+```python
+import pytest
+from unittest.mock import Mock, patch
+from src.strategy.volatility_breakout import VolatilityBreakoutStrategy
+
+class TestVolatilityBreakoutStrategy:
+    """변동성 돌파 전략 테스트"""
+    
+    def setup_method(self):
+        """각 테스트 전에 실행"""
+        self.strategy = VolatilityBreakoutStrategy(
+            k_value=0.7,
+            stop_loss=-0.02,
+            take_profit=0.05
+        )
+    
+    def test_generate_buy_signal(self):
+        """매수 신호 생성 테스트"""
+        # Given
+        price_data = [100, 102, 101, 103, 105, 107, 106, 108]
+        
+        # When
+        signal = self.strategy.generate_signal(price_data)
+        
+        # Then
+        assert signal in ["BUY", "SELL", "HOLD"]
+    
+    def test_calculate_position_size(self):
+        """포지션 크기 계산 테스트"""
+        # Given
+        account_balance = 1000000  # 100만원
+        risk_percentage = 0.02  # 2%
+        
+        # When
+        position_size = self.strategy.calculate_position_size(
+            account_balance, risk_percentage
+        )
+        
+        # Then
+        assert position_size == 20000  # 2만원
+    
+    @patch('src.exchange.upbit_api.UpbitAPI.get_price')
+    def test_strategy_with_mock_api(self, mock_get_price):
+        """Mock API를 사용한 전략 테스트"""
+        # Given
+        mock_get_price.return_value = 50000000  # 5천만원
+        
+        # When
+        price = self.strategy.exchange.get_price("KRW-BTC")
+        
+        # Then
+        assert price == 50000000
+        mock_get_price.assert_called_once_with("KRW-BTC")
+```
+
+### 통합 테스트
+```python
+import pytest
+from src.trading_system import TradingSystem
+from src.config.config_manager import ConfigManager
+
+class TestTradingSystemIntegration:
+    """트레이딩 시스템 통합 테스트"""
+    
+    def test_full_trading_cycle(self):
+        """전체 거래 사이클 테스트"""
+        # Given
+        config = ConfigManager.load_config("test_config.yaml")
+        system = TradingSystem(config)
+        
+        # When
+        system.start()
+        
+        # Then
+        assert system.is_running is True
+        assert system.strategies is not None
+        assert system.risk_manager is not None
+        
+        # Cleanup
+        system.stop()
+```
+
+## 📝 로깅 규칙
+
+### 로깅 설정
+```python
+import logging
+import json
+from datetime import datetime
+from typing import Dict, Any
+
+class StructuredLogger:
+    """구조화된 로깅 클래스"""
+    
+    def __init__(self, name: str):
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.INFO)
+        
+        # JSON 포맷터 설정
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    
+    def log_trade(self, trade_data: Dict[str, Any]) -> None:
+        """거래 로그 기록"""
+        log_entry = {
+            "event_type": "trade",
+            "timestamp": datetime.now().isoformat(),
+            "data": trade_data
+        }
+        self.logger.info(json.dumps(log_entry, ensure_ascii=False))
+    
+    def log_error(self, error: Exception, context: Dict[str, Any]) -> None:
+        """오류 로그 기록"""
+        log_entry = {
+            "event_type": "error",
+            "timestamp": datetime.now().isoformat(),
+            "error": str(error),
+            "context": context
+        }
+        self.logger.error(json.dumps(log_entry, ensure_ascii=False))
+```
+
+### 로깅 사용 예시
+```python
+from src.utils.logger import StructuredLogger
+
+logger = StructuredLogger("trading_system")
+
+# 거래 실행 로그
+logger.log_trade({
+    "action": "BUY",
+    "symbol": "KRW-BTC",
+    "amount": 0.001,
+    "price": 50000000,
+    "strategy": "volatility_breakout"
+})
+
+# 오류 로그
+try:
+    # 위험한 작업
+    pass
+except Exception as e:
+    logger.log_error(e, {
+        "function": "execute_order",
+        "order_id": "12345",
+        "symbol": "KRW-BTC"
+    })
+```
+
+## 🔒 보안 코딩 규칙
+
+### API 키 관리
+```python
+import os
+from cryptography.fernet import Fernet
+from typing import Optional
+
+class SecureConfig:
+    """보안 설정 관리 클래스"""
+    
+    def __init__(self):
+        self.encryption_key = os.getenv("ENCRYPTION_KEY")
+        if not self.encryption_key:
+            raise ValueError("ENCRYPTION_KEY 환경변수가 설정되지 않았습니다")
+        
+        self.cipher = Fernet(self.encryption_key.encode())
+    
+    def encrypt_api_key(self, api_key: str) -> str:
+        """API 키 암호화"""
+        return self.cipher.encrypt(api_key.encode()).decode()
+    
+    def decrypt_api_key(self, encrypted_key: str) -> str:
+        """API 키 복호화"""
+        return self.cipher.decrypt(encrypted_key.encode()).decode()
+    
+    def get_api_key(self, key_name: str) -> Optional[str]:
+        """암호화된 API 키 조회"""
+        encrypted_key = os.getenv(f"{key_name}_ENCRYPTED")
+        if encrypted_key:
+            return self.decrypt_api_key(encrypted_key)
+        return None
+```
+
+### 입력 검증
+```python
+from typing import Union
+import re
+
+class InputValidator:
+    """입력 검증 클래스"""
+    
+    @staticmethod
+    def validate_symbol(symbol: str) -> bool:
+        """거래 심볼 검증"""
+        pattern = r'^[A-Z]{3}-[A-Z]{3}$'
+        return bool(re.match(pattern, symbol))
+    
+    @staticmethod
+    def validate_amount(amount: Union[int, float]) -> bool:
+        """거래 수량 검증"""
+        return isinstance(amount, (int, float)) and amount > 0
+    
+    @staticmethod
+    def validate_price(price: Union[int, float]) -> bool:
+        """가격 검증"""
+        return isinstance(price, (int, float)) and price > 0
+    
+    @staticmethod
+    def sanitize_string(input_str: str) -> str:
+        """문자열 정리 (SQL 인젝션 방지)"""
+        # 특수 문자 제거
+        sanitized = re.sub(r'[<>"\';]', '', input_str)
+        return sanitized.strip()
+```
+
+## 📊 성능 최적화 규칙
+
+### 메모리 효율성
+```python
+from typing import Generator, List
+import gc
+
+class DataProcessor:
+    """메모리 효율적인 데이터 처리"""
+    
+    def process_large_dataset(self, data: List[Dict]) -> Generator[Dict, None, None]:
+        """대용량 데이터를 제너레이터로 처리"""
+        for item in data:
+            # 데이터 처리
+            processed_item = self._process_item(item)
+            yield processed_item
+            
+            # 메모리 정리
+            if len(data) > 1000:
+                gc.collect()
+    
+    def _process_item(self, item: Dict) -> Dict:
+        """개별 아이템 처리"""
+        # 처리 로직
+        return item
+```
+
+### 비동기 처리
+```python
+import asyncio
+import aiohttp
+from typing import List, Dict
+
+class AsyncDataCollector:
+    """비동기 데이터 수집"""
+    
+    async def collect_multiple_prices(self, symbols: List[str]) -> Dict[str, float]:
+        """여러 심볼의 가격을 비동기로 수집"""
+        async with aiohttp.ClientSession() as session:
+            tasks = [
+                self._fetch_price(session, symbol) 
+                for symbol in symbols
+            ]
+            results = await asyncio.gather(*tasks)
+            
+            return dict(zip(symbols, results))
+    
+    async def _fetch_price(self, session: aiohttp.ClientSession, symbol: str) -> float:
+        """개별 가격 조회"""
+        url = f"https://api.upbit.com/v1/ticker?markets={symbol}"
+        async with session.get(url) as response:
+            data = await response.json()
+            return float(data[0]['trade_price'])
+```
+
+## ⚠️ 주의사항
+
+### 1. 메모리 누수 방지
+- 큰 데이터 구조 사용 후 명시적으로 삭제
+- 제너레이터 사용으로 메모리 효율성 향상
+- 정기적인 가비지 컬렉션 실행
+
+### 2. 예외 처리
+- 구체적인 예외 타입 처리
+- 로깅을 통한 오류 추적
+- 적절한 복구 메커니즘 구현
+
+### 3. 동시성 처리
+- 스레드 안전성 고려
+- 락(lock) 사용 시 데드락 방지
+- 비동기 처리 적절히 활용
+
+### 4. 보안 고려사항
+- 민감한 정보 로그에 기록 금지
+- 입력값 검증 및 정리
+- SQL 인젝션 방지

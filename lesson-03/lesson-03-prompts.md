@@ -48,6 +48,7 @@ API를 통한 주문 실행, 주문 상태 확인,
   - 일일 OHLC 데이터 수집 및 돌파선 계산
   - 매수/매도 신호 생성 및 포지션 관리
   - 백테스팅 기능 및 성과 분석
+
 - **의존성**: `requirements.txt`
 - **실행 방법**: `python volatility_breakout_strategy.py`
 

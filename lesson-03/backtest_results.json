@@ -1,0 +1,26 @@
+{
+  "initial_capital": 10000000,
+  "final_capital": 10011529.933928171,
+  "total_pnl": 11529.93392817146,
+  "total_return": 0.1152993392817146,
+  "total_trades": 1,
+  "winning_trades": 1,
+  "losing_trades": 0,
+  "win_rate": 100.0,
+  "avg_win": 11529.93392817146,
+  "avg_loss": 0,
+  "max_loss": 11529.93392817146,
+  "sharpe_ratio": 0,
+  "trades": [
+    {
+      "entry_time": "2025-09-20T17:31:53.642549",
+      "exit_time": "2025-09-20T17:31:53.645313",
+      "entry_price": 158220290.37215158,
+      "exit_price": 161868829.3603256,
+      "quantity": 0.00316015094412951,
+      "pnl": 11529.93392817146,
+      "pnl_ratio": 2.3059867856342953,
+      "reason": "백테스팅 종료"
+    }
+  ]
+}

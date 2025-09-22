@@ -1,0 +1,54 @@
+jobs:
+- id: start_trading_daily
+  task: start_trading
+  trigger: cron
+  cron:
+    hour: 9
+    minute: 0
+    second: 0
+  priority: 1
+- id: stop_trading_daily
+  task: stop_trading
+  trigger: cron
+  cron:
+    hour: 23
+    minute: 0
+    second: 0
+  priority: 1
+- id: evaluate_conditions_every_5m
+  task: evaluate_conditions
+  trigger: interval
+  interval:
+    minutes: 5
+  priority: 3
+  depends_on:
+  - start_trading_daily
+  payload:
+    symbols:
+    - KRW-BTC
+    - KRW-ETH
+- id: hourly_status_report
+  task: hourly_status_report
+  trigger: cron
+  cron:
+    minute: 0
+    second: 5
+  priority: 5
+  payload:
+    detail: summary
+- id: midnight_maintenance
+  task: midnight_maintenance
+  trigger: cron
+  cron:
+    hour: 0
+    minute: 0
+    second: 10
+  priority: 2
+  depends_on:
+  - stop_trading_daily
+- id: system_health_check
+  task: system_health_check
+  trigger: interval
+  interval:
+    minutes: 1
+  priority: 0

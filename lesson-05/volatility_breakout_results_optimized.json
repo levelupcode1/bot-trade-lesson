@@ -1,0 +1,31 @@
+{
+  "initial_capital": 10000000,
+  "final_capital": 9992332.901008256,
+  "total_pnl": -7667.098991744433,
+  "total_return": -0.07667098991744434,
+  "total_trades": 1,
+  "winning_trades": 0,
+  "losing_trades": 1,
+  "win_rate": 0.0,
+  "avg_win": 0,
+  "avg_loss": -7667.098991744433,
+  "max_loss": -7667.098991744433,
+  "max_drawdown": 0.0,
+  "sharpe_ratio": 0.0,
+  "profit_factor": 0.0,
+  "avg_trade_duration": 8.400000000000001e-07,
+  "trades": [
+    {
+      "entry_time": "2025-09-20T20:56:07.924216",
+      "exit_time": "2025-09-20T20:56:07.927240",
+      "entry_price": 155184672.80230883,
+      "exit_price": 152805040.30555528,
+      "quantity": 0.0032219676787085447,
+      "pnl": -7667.098991744433,
+      "pnl_ratio": -1.5334197983488895,
+      "reason": "손절",
+      "volume_ratio": 1.0,
+      "rsi_value": 50.0
+    }
+  ]
+}

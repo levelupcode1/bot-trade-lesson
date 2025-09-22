@@ -1,21 +1,17 @@
 # 업비트 API 키 설정
-# 실제 사용 시 .env 파일로 복사하고 실제 키 값으로 변경하세요
+# 실제 사용 시 이 파일을 .env로 복사하고 실제 키를 입력하세요
 
-# 업비트 API 키 (필수)
+# 업비트 API Access Key
 UPBIT_ACCESS_KEY=your_access_key_here
+
+# 업비트 API Secret Key  
 UPBIT_SECRET_KEY=your_secret_key_here
 
-# API 기본 URL (선택사항)
-UPBIT_API_BASE_URL=https://api.upbit.com
-UPBIT_WEBSOCKET_URL=wss://api.upbit.com/websocket/v1
+# API 기본 URL (변경하지 마세요)
+UPBIT_BASE_URL=https://api.upbit.com
 
-# 로깅 설정 (선택사항)
-LOG_LEVEL=INFO
+# 요청 타임아웃 (초)
+UPBIT_TIMEOUT=30
 
-# Rate Limit 설정 (선택사항)
-RATE_LIMIT_PER_SECOND=10
-RATE_LIMIT_PER_MINUTE=600
-
-# 보안 설정 (선택사항)
-MAX_FAILED_ATTEMPTS=5
-ENABLE_SECURITY_MONITORING=true
+# 최대 재시도 횟수
+UPBIT_MAX_RETRIES=3

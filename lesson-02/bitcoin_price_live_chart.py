@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Real-time Auto-updating Bitcoin Price Chart
-Automatically updates price every hour and the graph changes automatically.
+Automatically updates price every 5 minutes and the graph changes automatically.
 """
 
 import requests
@@ -13,7 +13,13 @@ from datetime import datetime, timedelta
 from typing import List, Tuple, Optional, Dict, Any
 import matplotlib
 # Backend setup - for stable rendering across platforms
-matplotlib.use('Qt5Agg')  # Use Qt5 backend instead of Tkinter
+try:
+    matplotlib.use('TkAgg')  # Use TkAgg backend for better compatibility
+except ImportError:
+    try:
+        matplotlib.use('Qt5Agg')  # Fallback to Qt5Agg
+    except ImportError:
+        matplotlib.use('Agg')  # Fallback to Agg for headless systems
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib import font_manager
@@ -36,9 +42,10 @@ class LiveBitcoinPriceChart:
         # Data storage
         self.price_history = []  # List of (time, price) tuples
         self.currency = "krw"
-        self.update_interval = 3600  # 1 hour (in seconds)
+        self.update_interval = 300  # 5 minutes (in seconds)
         self.is_running = False
         self.data_lock = threading.Lock()
+        self.manual_update_mode = False
         
         # matplotlib font setup
         self.setup_font()
@@ -211,9 +218,9 @@ class LiveBitcoinPriceChart:
                 now = datetime.now()
                 
                 with self.data_lock:
-                    # Prevent duplicate data (within 1 minute)
+                    # Prevent duplicate data (within 5 minutes)
                     if (not self.price_history or 
-                        (now - self.price_history[-1][0]).total_seconds() > 60):
+                        (now - self.price_history[-1][0]).total_seconds() > 300):
                         
                         self.price_history.append((now, current_price))
                         self.save_price_data(now, current_price)
@@ -281,7 +288,7 @@ class LiveBitcoinPriceChart:
         # Initialize chart
         self.fig, self.ax = plt.subplots(figsize=(16, 10))
         current_font = plt.rcParams['font.family']
-        self.fig.suptitle('Real-time Bitcoin Price Chart (Auto-update every hour)', 
+        self.fig.suptitle('Real-time Bitcoin Price Chart (Auto-update every 5 minutes)', 
                          fontsize=16, fontweight='bold', fontfamily=current_font)
         
         # Disable matplotlib tooltips to prevent character corruption
@@ -338,7 +345,35 @@ class LiveBitcoinPriceChart:
                         # x-axis setup
                         self.ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily=current_font)
                         self.ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-                        self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+                        
+                        # Safe locator setup to prevent too many ticks
+                        if len(dates) > 0:
+                            time_span = (dates[-1] - dates[0]).total_seconds() / 3600  # hours
+                            
+                            # Calculate safe interval to keep ticks under 1000
+                            total_hours = time_span
+                            max_ticks = 20  # Maximum number of ticks to display
+                            min_interval = max(1, int(total_hours / max_ticks))
+                            
+                            if time_span > 168:  # More than 1 week
+                                interval = max(24, min_interval)  # 24 hours or more
+                            elif time_span > 72:  # More than 3 days
+                                interval = max(12, min_interval)  # 12 hours or more
+                            elif time_span > 24:  # More than 1 day
+                                interval = max(6, min_interval)  # 6 hours or more
+                            elif time_span > 12:  # More than 12 hours
+                                interval = max(2, min_interval)  # 2 hours or more
+                            else:  # Less than 12 hours
+                                interval = max(1, min_interval)  # 1 hour or more
+                            
+                            # Additional safety check
+                            if interval < 1:
+                                interval = 1
+                            
+                            self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=interval))
+                        else:
+                            self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+                        
                         plt.setp(self.ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily=current_font)
                         
                         # y-axis setup
@@ -382,13 +417,95 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
             except Exception as e:
                 print(f"Chart update error: {e}")
         
-        # Start animation
-        self.ani = FuncAnimation(self.fig, animate, interval=5000, blit=False)  # Update every 5 seconds
+        # Start animation with error handling
+        try:
+            self.ani = FuncAnimation(self.fig, animate, interval=300000, blit=False)  # Update every 5 minutes
+            print("Animation started successfully.")
+        except Exception as e:
+            print(f"Animation initialization error: {e}")
+            print("Falling back to manual update mode...")
+            # Fallback to manual updates
+            self.manual_update_mode = True
+            self.animate_manually()
         
         # Show chart
-        plt.show()
+        try:
+            plt.show()
+        except Exception as e:
+            print(f"Chart display error: {e}")
+            print("Please check your display settings.")
         
         return self.fig
+    
+    def animate_manually(self):
+        """Manual animation fallback when automatic animation fails"""
+        print("Starting manual update mode...")
+        print("Press Ctrl+C to stop the program.")
+        
+        try:
+            while True:
+                # Update data
+                self.update_price_data()
+                
+                # Redraw chart
+                with self.data_lock:
+                    if self.price_history:
+                        dates = [item[0] for item in self.price_history]
+                        prices = [item[1] for item in self.price_history]
+                        
+                        # Clear and redraw
+                        self.ax.clear()
+                        self.ax.plot(dates, prices, linewidth=2.5, color='#f7931a', 
+                                   marker='o', markersize=3, markerfacecolor='white', 
+                                   markeredgecolor='#f7931a', markeredgewidth=1)
+                        
+                        # Basic styling with safe locator
+                        self.ax.set_title(f'Bitcoin Real-time Price (Manual Update)', 
+                                        fontsize=14, fontweight='bold')
+                        self.ax.set_xlabel('Time', fontsize=12)
+                        self.ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12)
+                        
+                        # Safe locator setup for manual update mode
+                        if len(dates) > 0:
+                            time_span = (dates[-1] - dates[0]).total_seconds() / 3600  # hours
+                            
+                            # Calculate safe interval to keep ticks under 1000
+                            total_hours = time_span
+                            max_ticks = 20  # Maximum number of ticks to display
+                            min_interval = max(1, int(total_hours / max_ticks))
+                            
+                            if time_span > 168:  # More than 1 week
+                                interval = max(24, min_interval)  # 24 hours or more
+                            elif time_span > 72:  # More than 3 days
+                                interval = max(12, min_interval)  # 12 hours or more
+                            elif time_span > 24:  # More than 1 day
+                                interval = max(6, min_interval)  # 6 hours or more
+                            elif time_span > 12:  # More than 12 hours
+                                interval = max(2, min_interval)  # 2 hours or more
+                            else:  # Less than 12 hours
+                                interval = max(1, min_interval)  # 1 hour or more
+                            
+                            # Additional safety check
+                            if interval < 1:
+                                interval = 1
+                            
+                            self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=interval))
+                        else:
+                            self.ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+                        
+                        self.ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+                        self.ax.grid(True, alpha=0.3)
+                        
+                        # Refresh display
+                        self.fig.canvas.draw()
+                        self.fig.canvas.flush_events()
+                
+                time.sleep(300)  # Update every 5 minutes in manual mode
+                
+        except KeyboardInterrupt:
+            print("\nManual update mode stopped by user.")
+        except Exception as e:
+            print(f"Manual update error: {e}")
     
     def create_manual_chart(self):
         """Create chart manually."""
@@ -420,7 +537,35 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
             ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily=current_font)
             
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-            ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+            
+            # Safe locator setup for manual chart
+            if len(dates) > 0:
+                time_span = (dates[-1] - dates[0]).total_seconds() / 3600  # hours
+                
+                # Calculate safe interval to keep ticks under 1000
+                total_hours = time_span
+                max_ticks = 20  # Maximum number of ticks to display
+                min_interval = max(1, int(total_hours / max_ticks))
+                
+                if time_span > 168:  # More than 1 week
+                    interval = max(24, min_interval)  # 24 hours or more
+                elif time_span > 72:  # More than 3 days
+                    interval = max(12, min_interval)  # 12 hours or more
+                elif time_span > 24:  # More than 1 day
+                    interval = max(6, min_interval)  # 6 hours or more
+                elif time_span > 12:  # More than 12 hours
+                    interval = max(2, min_interval)  # 2 hours or more
+                else:  # Less than 12 hours
+                    interval = max(1, min_interval)  # 1 hour or more
+                
+                # Additional safety check
+                if interval < 1:
+                    interval = 1
+                
+                ax.xaxis.set_major_locator(mdates.HourLocator(interval=interval))
+            else:
+                ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+            
             plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right', fontfamily=current_font)
             plt.setp(ax.yaxis.get_majorticklabels(), fontfamily=current_font)
             
@@ -441,7 +586,7 @@ def main():
     
     try:
         print("\n📊 Select chart option:")
-        print("1. Real-time auto-update chart (auto-refresh every hour)")
+        print("1. Real-time auto-update chart (auto-refresh every 5 minutes)")
         print("2. Manual chart creation (with current data)")
         print("3. Start data collection only (background)")
         print("4. Change settings")
@@ -451,8 +596,8 @@ def main():
         if choice == "1":
             # Real-time auto-update chart
             print("\n🔄 Starting real-time auto-update chart...")
-            print("💡 Chart will auto-refresh every 5 seconds.")
-            print("💡 Price data will be collected automatically every hour.")
+            print("💡 Chart will auto-refresh every 5 minutes.")
+            print("💡 Price data will be collected automatically every 5 minutes.")
             print("💡 Program will exit when chart is closed.")
             
             # Start data collection
@@ -469,14 +614,14 @@ def main():
         elif choice == "3":
             # Start data collection only
             print("\n🔄 Starting background data collection...")
-            print("💡 Data will be collected automatically every hour.")
+            print("💡 Data will be collected automatically every 5 minutes.")
             print("💡 Press Ctrl+C to exit the program.")
             
             live_chart.start_data_collection()
             
             try:
                 while True:
-                    time.sleep(60)  # Print status every minute
+                    time.sleep(300)  # Print status every 5 minutes
                     with live_chart.data_lock:
                         if live_chart.price_history:
                             latest = live_chart.price_history[-1]
@@ -499,8 +644,8 @@ def main():
             
             # Change update interval
             try:
-                new_interval = int(input(f"Update interval (current: {live_chart.update_interval//60} minutes, in minutes): ").strip())
-                if new_interval > 0:
+                new_interval = int(input(f"Update interval (current: {live_chart.update_interval//60} minutes, minimum: 1 minute): ").strip())
+                if new_interval >= 1:
                     live_chart.update_interval = new_interval * 60
                     print(f"Update interval changed to {new_interval} minutes.")
             except ValueError:
