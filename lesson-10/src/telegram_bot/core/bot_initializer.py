@@ -5,61 +5,44 @@
 텔레그램 봇의 초기화 및 설정 관리
 """
 
-from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler
-from telegram.ext.filters import TEXT
+from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters
 from typing import Optional, Dict, Any
 import asyncio
 import logging
 from pathlib import Path
+import os
 
 from ..config.config_manager import ConfigManager
 from ..utils.logger import get_logger, setup_logging
-from ..handlers.basic_commands import (
-    StartCommandHandler, HelpCommandHandler, StatusCommandHandler, CallbackQueryHandler
+from ..handlers.simple_handlers import (
+    start_command, help_command, handle_text_message
 )
+from ..handlers.trading_handlers import (
+    trades_command, profit_command, status_command, settings_command,
+    stop_trading_command, start_trading_command, handle_trading_callback
+)
+from ..notifications.notification_service import NotificationService
 
 class BotInitializer:
-    """텔레그램 봇 초기화 클래스"""
+    """텔레그램 봇 초기화 클래스 (python-telegram-bot 20.x)"""
     
     def __init__(self, config_dir: str = "config"):
-        """
-        봇 초기화자 초기화
-        
-        Args:
-            config_dir: 설정 파일 디렉토리
-        """
         self.config_dir = config_dir
         self.application: Optional[Application] = None
         self.config_manager = ConfigManager(config_dir)
         self.logger = get_logger(__name__)
         self.config: Dict[str, Any] = {}
+        self.notification_service: Optional[NotificationService] = None
         
-    def initialize(self) -> Application:
-        """
-        봇 초기화
-        
-        Returns:
-            초기화된 텔레그램 애플리케이션
-        """
+    async def initialize(self) -> None:
+        """봇 초기화"""
         try:
-            # 1. 설정 로드
             self._load_configuration()
-            
-            # 2. 로깅 시스템 설정
             self._setup_logging()
-            
-            # 3. 텔레그램 애플리케이션 생성
             self._create_application()
-            
-            # 4. 핸들러 등록
             self._register_handlers()
-            
-            # 5. 미들웨어 설정
-            self._setup_middleware()
-            
+            await self._initialize_notification_service()
             self.logger.info("텔레그램 봇 초기화 완료")
-            return self.application
-            
         except Exception as e:
             self.logger.error(f"봇 초기화 오류: {e}")
             raise
@@ -95,94 +78,89 @@ class BotInitializer:
     def _create_application(self) -> None:
         """텔레그램 애플리케이션 생성"""
         try:
-            bot_config = self.config.get('bot', {})
-            bot_token = bot_config.get('token')
-            
+            bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
             if not bot_token:
-                raise ValueError("봇 토큰이 설정되지 않았습니다")
-            
-            # 애플리케이션 생성
+                bot_config = self.config.get('bot', {})
+                bot_token = bot_config.get('token')
+
+            if not bot_token:
+                raise ValueError("봇 토큰이 설정되지 않았습니다. TELEGRAM_BOT_TOKEN 환경 변수를 설정하거나 설정 파일에 토큰을 추가하세요.")
+
             self.application = Application.builder().token(bot_token).build()
-            
             self.logger.info("텔레그램 애플리케이션 생성 완료")
-            
         except Exception as e:
             self.logger.error(f"애플리케이션 생성 오류: {e}")
             raise
     
     def _register_handlers(self) -> None:
-        """핸들러 등록"""
+        """핸들러 등록 (20.x 방식)"""
         try:
             # 기본 명령어 핸들러
-            start_handler = StartCommandHandler()
-            help_handler = HelpCommandHandler()
-            status_handler = StatusCommandHandler()
-            callback_handler = CallbackQueryHandler()
-            
-            # 명령어 핸들러 등록
-            self.application.add_handler(CommandHandler("start", start_handler.execute))
-            self.application.add_handler(CommandHandler("help", help_handler.execute))
-            self.application.add_handler(CommandHandler("status", status_handler.execute))
-            
-            # 콜백 쿼리 핸들러
-            self.application.add_handler(CallbackQueryHandler(callback_handler.handle))
-            
-            # 일반 텍스트 메시지 핸들러
-            self.application.add_handler(MessageHandler(TEXT, self._handle_text_message))
-            
+            self.application.add_handler(CommandHandler("start", start_command))
+            self.application.add_handler(CommandHandler("help", help_command))
+
+            # 거래 관련 명령어 핸들러
+            self.application.add_handler(CommandHandler("trades", trades_command))
+            self.application.add_handler(CommandHandler("profit", profit_command))
+            self.application.add_handler(CommandHandler("status", status_command))
+            self.application.add_handler(CommandHandler("settings", settings_command))
+
+            # 거래 제어 명령어 핸들러
+            self.application.add_handler(CommandHandler("stop", stop_trading_command))
+            self.application.add_handler(CommandHandler("stop_trading", stop_trading_command))
+            self.application.add_handler(CommandHandler("start_trading", start_trading_command))
+
+            # 콜백 쿼리 핸들러 (인라인 키보드)
+            self.application.add_handler(CallbackQueryHandler(handle_trading_callback))
+
+            # 일반 텍스트 메시지 핸들러 (filters 사용)
+            self.application.add_handler(
+                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_message)
+            )
+
             self.logger.info("핸들러 등록 완료")
-            
         except Exception as e:
             self.logger.error(f"핸들러 등록 오류: {e}")
             raise
     
-    def _setup_middleware(self) -> None:
-        """미들웨어 설정"""
+    async def _initialize_notification_service(self) -> None:
+        """알림 서비스 초기화"""
         try:
-            # Updater에서는 미들웨어 설정이 간단함
-            self.logger.info("미들웨어 설정 완료")
-            
-        except Exception as e:
-            self.logger.error(f"미들웨어 설정 오류: {e}")
-            raise
-    
-    
-    def _handle_text_message(self, update, context) -> None:
-        """일반 텍스트 메시지 처리"""
-        try:
-            message_text = update.message.text
-            
-            # 명령어가 아닌 일반 메시지 처리
-            if not message_text.startswith('/'):
-                # 간단한 응답
-                update.message.reply_text(
-                    "안녕하세요! 도움이 필요하시면 /help 명령어를 사용하세요."
+            if self.application and self.application.bot:
+                self.notification_service = NotificationService(
+                    telegram_bot=self.application.bot,
+                    settings_dir="data/user_settings"
                 )
-            
+                # 알림 서비스 시작
+                await self.notification_service.start()
+                self.logger.info("알림 서비스 초기화 및 시작 완료")
         except Exception as e:
-            self.logger.error(f"텍스트 메시지 처리 오류: {e}")
-    
-    
-    def start_bot(self) -> None:
-        """봇 시작"""
+            self.logger.error(f"알림 서비스 초기화 오류: {e}")
+            raise
+
+    async def run(self) -> None:
+        """봇 실행 (20.x 방식)"""
         try:
             if not self.application:
                 raise RuntimeError("봇이 초기화되지 않았습니다. initialize()를 먼저 호출하세요.")
             
-            # 폴링 시작 (동기적으로 실행)
-            self.application.run_polling()
-            
+            self.logger.info("텔레그램 봇 폴링 시작")
+            await self.application.run_polling(drop_pending_updates=True)
         except Exception as e:
             self.logger.error(f"봇 시작 오류: {e}")
             raise
-    
-    def stop_bot(self) -> None:
-        """봇 중지"""
+
+    async def stop(self) -> None:
+        """봇 중지 (20.x 방식)"""
         try:
-            if self.application:
-                self.application.stop()
-                self.logger.info("봇 중지 완료")
+            # 알림 서비스 중지
+            if self.notification_service:
+                await self.notification_service.stop()
             
+            if self.application:
+                await self.application.stop()
+                await self.application.shutdown()
+                self.logger.info("봇 중지 완료")
         except Exception as e:
             self.logger.error(f"봇 중지 오류: {e}")
     

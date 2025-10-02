@@ -296,9 +296,9 @@ class ConfigManager:
         try:
             config = self.load_config(config_name)
             
-            # 필수 설정 항목 검증
+            # 필수 설정 항목 검증 (토큰은 환경변수에서 로드하므로 제외)
             required_fields = {
-                'bot_config': ['bot.token', 'bot.username']
+                'bot_config': ['bot.username']  # token은 환경변수에서 로드
             }
             
             required = required_fields.get(config_name, [])

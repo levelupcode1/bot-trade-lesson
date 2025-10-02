@@ -1,6 +1,6 @@
 # 텔레그램 봇 기본 설정
 bot:
-  token: "8245175655:AAFTnz7OR_JNzeRd0TyzuXkNPzz-CQV-wKQ"  # 환경변수에서 로드
+  # token: 환경변수 TELEGRAM_BOT_TOKEN에서 로드 (보안상 파일에 저장하지 않음)
   username: "gilbert_ai_bot"
   description: "암호화폐 자동매매 시스템 알림 봇"
   

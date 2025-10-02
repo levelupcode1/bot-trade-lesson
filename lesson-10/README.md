@@ -4,11 +4,19 @@
 
 ## 🚀 주요 기능
 
-- **실시간 알림**: 거래 실행, 수익률, 리스크 경고 등
-- **원격 제어**: 거래 시작/중지, 설정 변경
-- **상태 모니터링**: 시스템 상태, 포지션 현황, 수익률 확인
-- **사용자 친화적 UI**: 인라인 키보드, 메시지 템플릿
-- **보안 기능**: 권한 관리, 레이트 리밋, 감사 로그
+### 📊 거래 관리
+- **거래 내역 조회** (`/trades`): 최근 거래 내역 및 상세 정보
+- **수익률 분석** (`/profit`): 실시간 수익률, 승률, 거래 통계
+- **시스템 상태** (`/status`): 거래 시스템 상태 및 모니터링
+
+### 🎛️ 거래 제어
+- **거래 시작/중지**: `/start_trading`, `/stop` 명령어로 원격 제어
+- **설정 관리** (`/settings`): 리스크, 전략, 알림 설정
+
+### 💬 사용자 인터페이스
+- **인라인 키보드**: 버튼 클릭으로 쉬운 조작
+- **실시간 업데이트**: 새로고침 기능
+- **사용자 친화적 메시지**: 이모지와 포맷팅
 
 ## 📁 프로젝트 구조
 
@@ -44,14 +52,47 @@ lesson-10/
 
 ## 🛠️ 설치 및 설정
 
+### 필수 요구사항
+- **Python 3.8 이상** (Python 3.13 권장)
+- **python-telegram-bot 21.10** (Python 3.13 호환)
+- **텔레그램 봇 토큰** ([@BotFather](https://t.me/botfather)에서 발급)
+
 ### 1. 의존성 설치
 
+**방법 1: 직접 설치 (권장)**
 ```bash
+pip install python-telegram-bot[all]==21.10
+pip install PyYAML python-dotenv
+```
+
+**방법 2: requirements.txt 사용**
+```bash
+# httpx 충돌 방지를 위해 순서대로 설치
+pip install python-telegram-bot[all]==21.10
 pip install -r requirements.txt
+```
+
+**⚠️ 의존성 충돌 해결:**
+만약 httpx 충돌이 발생하면:
+```bash
+pip uninstall -y httpx
+pip install httpx~=0.27
+pip install python-telegram-bot[all]==21.10
 ```
 
 ### 2. 환경 변수 설정
 
+**Windows PowerShell:**
+```powershell
+$env:TELEGRAM_BOT_TOKEN="your_bot_token_here"
+```
+
+**Windows CMD:**
+```cmd
+set TELEGRAM_BOT_TOKEN=your_bot_token_here
+```
+
+**Linux/Mac:**
 ```bash
 export TELEGRAM_BOT_TOKEN="your_bot_token_here"
 ```

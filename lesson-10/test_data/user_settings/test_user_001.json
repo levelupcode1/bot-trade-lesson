@@ -1,0 +1,39 @@
+{
+  "user_id": "test_user_001",
+  "enabled_types": [
+    "loss_limit",
+    "profit_achievement",
+    "trade_execution"
+  ],
+  "priority_threshold": 2,
+  "cooldown_settings": {
+    "trade_execution": 300,
+    "profit_achievement": 3600,
+    "loss_limit": 1800,
+    "system_error": 3600,
+    "status_report": 86400,
+    "config_change": 300,
+    "risk_warning": 900
+  },
+  "quiet_hours": {
+    "enabled": false,
+    "start_time": "22:00",
+    "end_time": "08:00",
+    "timezone": "Asia/Seoul"
+  },
+  "batch_mode": true,
+  "summary_mode": false,
+  "language": "ko",
+  "timezone": "Asia/Seoul",
+  "preferred_notification_count": 10,
+  "critical_only_mode": false,
+  "auto_snooze_enabled": true,
+  "snooze_duration": 30,
+  "use_emoji": true,
+  "include_charts": false,
+  "detailed_mode": false,
+  "work_hours_preference": true,
+  "weekend_mode": false,
+  "created_at": "2025-10-01T07:48:33.718998",
+  "updated_at": "2025-10-01T07:48:33.720608"
+}

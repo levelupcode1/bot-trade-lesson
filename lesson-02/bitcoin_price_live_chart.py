@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Real-time Auto-updating Bitcoin Price Chart
-Automatically updates price every 5 minutes and the graph changes automatically.
+Real-time Auto-updating Ethereum Price Chart
+Automatically updates price every 1 minute and the graph changes automatically.
 """
 
 import requests
@@ -28,9 +28,9 @@ import numpy as np
 import os
 import csv
 
-class LiveBitcoinPriceChart:
+class LiveEthereumPriceChart:
     def __init__(self):
-        """Initialize real-time Bitcoin price chart generator"""
+        """Initialize real-time Ethereum price chart generator"""
         self.base_url = "https://api.coingecko.com/api/v3"
         self.session = requests.Session()
         
@@ -42,7 +42,7 @@ class LiveBitcoinPriceChart:
         # Data storage
         self.price_history = []  # List of (time, price) tuples
         self.currency = "krw"
-        self.update_interval = 300  # 5 minutes (in seconds)
+        self.update_interval = 60  # 1 minute (in seconds)
         self.is_running = False
         self.data_lock = threading.Lock()
         self.manual_update_mode = False
@@ -61,7 +61,7 @@ class LiveBitcoinPriceChart:
             pass  # Ignore if style setup fails
         
         # Data file setup
-        self.data_file = f"bitcoin_live_data_{datetime.now().strftime('%Y%m%d')}.csv"
+        self.data_file = f"ethereum_live_data_{datetime.now().strftime('%Y%m%d')}.csv"
         self.setup_data_file()
         
         # Load initial data
@@ -96,7 +96,7 @@ class LiveBitcoinPriceChart:
         """Load initial data (last 24 hours)"""
         try:
             print("Loading initial data...")
-            initial_data = self.get_bitcoin_price_history(1, self.currency)  # 1 day
+            initial_data = self.get_ethereum_price_history(1, self.currency)  # 1 day
             if initial_data:
                 with self.data_lock:
                     self.price_history = initial_data
@@ -106,7 +106,7 @@ class LiveBitcoinPriceChart:
                 print(f"Initial {len(initial_data)} data points loaded")
             else:
                 # If no initial data, start with current price
-                current_price = self.get_current_bitcoin_price(self.currency)
+                current_price = self.get_current_ethereum_price(self.currency)
                 if current_price:
                     now = datetime.now()
                     with self.data_lock:
@@ -159,10 +159,10 @@ class LiveBitcoinPriceChart:
             plt.rcParams['font.family'] = 'DejaVu Sans'
             plt.rcParams['axes.unicode_minus'] = False
     
-    def get_bitcoin_price_history(self, days: int = 1, currency: str = "krw") -> Optional[List[Tuple[datetime, float]]]:
-        """Retrieve Bitcoin historical price data."""
+    def get_ethereum_price_history(self, days: int = 1, currency: str = "krw") -> Optional[List[Tuple[datetime, float]]]:
+        """Retrieve Ethereum historical price data."""
         try:
-            endpoint = "/coins/bitcoin/market_chart"
+            endpoint = "/coins/ethereum/market_chart"
             params = {
                 "vs_currency": currency,
                 "days": days,
@@ -188,12 +188,12 @@ class LiveBitcoinPriceChart:
             print(f"Price data retrieval error: {e}")
             return None
     
-    def get_current_bitcoin_price(self, currency: str = "krw") -> Optional[float]:
-        """Retrieve current Bitcoin price."""
+    def get_current_ethereum_price(self, currency: str = "krw") -> Optional[float]:
+        """Retrieve current Ethereum price."""
         try:
             endpoint = "/simple/price"
             params = {
-                "ids": "bitcoin",
+                "ids": "ethereum",
                 "vs_currencies": currency
             }
             
@@ -202,8 +202,8 @@ class LiveBitcoinPriceChart:
             
             if response.status_code == 200:
                 data = response.json()
-                if "bitcoin" in data and currency in data["bitcoin"]:
-                    return data["bitcoin"][currency]
+                if "ethereum" in data and currency in data["ethereum"]:
+                    return data["ethereum"][currency]
             return None
             
         except Exception as e:
@@ -213,14 +213,14 @@ class LiveBitcoinPriceChart:
     def update_price_data(self):
         """Update price data."""
         try:
-            current_price = self.get_current_bitcoin_price(self.currency)
+            current_price = self.get_current_ethereum_price(self.currency)
             if current_price:
                 now = datetime.now()
                 
                 with self.data_lock:
-                    # Prevent duplicate data (within 5 minutes)
+                    # Prevent duplicate data (within 1 minute)
                     if (not self.price_history or 
-                        (now - self.price_history[-1][0]).total_seconds() > 300):
+                        (now - self.price_history[-1][0]).total_seconds() > 60):
                         
                         self.price_history.append((now, current_price))
                         self.save_price_data(now, current_price)
@@ -288,7 +288,7 @@ class LiveBitcoinPriceChart:
         # Initialize chart
         self.fig, self.ax = plt.subplots(figsize=(16, 10))
         current_font = plt.rcParams['font.family']
-        self.fig.suptitle('Real-time Bitcoin Price Chart (Auto-update every 5 minutes)', 
+        self.fig.suptitle('Real-time Ethereum Price Chart (Auto-update every 1 minute)', 
                          fontsize=16, fontweight='bold', fontfamily=current_font)
         
         # Disable matplotlib tooltips to prevent character corruption
@@ -339,7 +339,7 @@ class LiveBitcoinPriceChart:
                         
                         # Chart styling - use current font family
                         current_font = plt.rcParams['font.family']
-                        self.ax.set_title(f'Bitcoin Real-time Price Movement (Currency: {self.currency.upper()})', 
+                        self.ax.set_title(f'Ethereum Real-time Price Movement (Currency: {self.currency.upper()})', 
                                         fontsize=14, fontweight='bold', pad=20, fontfamily=current_font)
                         
                         # x-axis setup
@@ -419,7 +419,7 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
         
         # Start animation with error handling
         try:
-            self.ani = FuncAnimation(self.fig, animate, interval=300000, blit=False)  # Update every 5 minutes
+            self.ani = FuncAnimation(self.fig, animate, interval=60000, blit=False)  # Update every 1 minute
             print("Animation started successfully.")
         except Exception as e:
             print(f"Animation initialization error: {e}")
@@ -460,7 +460,7 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
                                    markeredgecolor='#f7931a', markeredgewidth=1)
                         
                         # Basic styling with safe locator
-                        self.ax.set_title(f'Bitcoin Real-time Price (Manual Update)', 
+                        self.ax.set_title(f'Ethereum Real-time Price (Manual Update)', 
                                         fontsize=14, fontweight='bold')
                         self.ax.set_xlabel('Time', fontsize=12)
                         self.ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12)
@@ -500,7 +500,7 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
                         self.fig.canvas.draw()
                         self.fig.canvas.flush_events()
                 
-                time.sleep(300)  # Update every 5 minutes in manual mode
+                time.sleep(60)  # Update every 1 minute in manual mode
                 
         except KeyboardInterrupt:
             print("\nManual update mode stopped by user.")
@@ -531,7 +531,7 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
             
             # Chart styling - use current font family
             current_font = plt.rcParams['font.family']
-            ax.set_title(f'Bitcoin Price Movement (Manual)', 
+            ax.set_title(f'Ethereum Price Movement (Manual)', 
                         fontsize=16, fontweight='bold', pad=20, fontfamily=current_font)
             ax.set_xlabel('Time', fontsize=12, fontweight='bold', fontfamily=current_font)
             ax.set_ylabel(f'Price ({self.currency.upper()})', fontsize=12, fontweight='bold', fontfamily=current_font)
@@ -578,15 +578,15 @@ Update: {datetime.now().strftime('%H:%M:%S')}"""
 def main():
     """Main function"""
     print("=" * 80)
-    print("Real-time Auto-updating Bitcoin Price Chart Program")
+    print("Real-time Auto-updating Ethereum Price Chart Program")
     print("=" * 80)
     
     # Initialize real-time chart generator
-    live_chart = LiveBitcoinPriceChart()
+    live_chart = LiveEthereumPriceChart()
     
     try:
         print("\n📊 Select chart option:")
-        print("1. Real-time auto-update chart (auto-refresh every 5 minutes)")
+        print("1. Real-time auto-update chart (auto-refresh every 1 minute)")
         print("2. Manual chart creation (with current data)")
         print("3. Start data collection only (background)")
         print("4. Change settings")
@@ -596,8 +596,8 @@ def main():
         if choice == "1":
             # Real-time auto-update chart
             print("\n🔄 Starting real-time auto-update chart...")
-            print("💡 Chart will auto-refresh every 5 minutes.")
-            print("💡 Price data will be collected automatically every 5 minutes.")
+            print("💡 Chart will auto-refresh every 1 minute.")
+            print("💡 Price data will be collected automatically every 1 minute.")
             print("💡 Program will exit when chart is closed.")
             
             # Start data collection
@@ -614,14 +614,14 @@ def main():
         elif choice == "3":
             # Start data collection only
             print("\n🔄 Starting background data collection...")
-            print("💡 Data will be collected automatically every 5 minutes.")
+            print("💡 Data will be collected automatically every 1 minute.")
             print("💡 Press Ctrl+C to exit the program.")
             
             live_chart.start_data_collection()
             
             try:
                 while True:
-                    time.sleep(300)  # Print status every 5 minutes
+                    time.sleep(60)  # Print status every 1 minute
                     with live_chart.data_lock:
                         if live_chart.price_history:
                             latest = live_chart.price_history[-1]
