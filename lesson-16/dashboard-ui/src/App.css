@@ -1,0 +1,78 @@
+/* App Layout Styles */
+
+.app {
+  min-height: 100vh;
+  background-color: var(--color-bg-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--spacing-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-2xl);
+}
+
+/* Chart Row */
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 472px;
+  gap: var(--spacing-2xl);
+}
+
+.chart-container {
+  min-height: 420px;
+}
+
+.orderbook-container {
+  min-height: 420px;
+}
+
+/* History Container */
+.history-container {
+  min-height: 350px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .chart-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .orderbook-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1400px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--spacing-lg);
+  }
+  
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,26 @@
+# 리스크 관리 규칙
+
+# 포지션 관리
+position:
+  max_position_size: 0.1  # 최대 포지션 크기 (계좌의 10%)
+  max_total_investment: 0.5  # 최대 총 투자 비율 (50%)
+  
+# 손절/익절
+stop_loss:
+  enabled: true
+  ratio: -0.02  # 손절 비율 (-2%)
+  
+take_profit:
+  enabled: true
+  ratio: 0.05   # 익절 비율 (5%)
+  
+# 일일 한도
+daily_limits:
+  max_loss: 0.05  # 일일 최대 손실 (5%)
+  max_trades: 10  # 일일 최대 거래 횟수
+  
+# 리스크 모니터링
+monitoring:
+  max_drawdown: 0.10  # 최대 낙폭 한도 (10%)
+  volatility_threshold: 0.05  # 변동성 한계치
+

@@ -1,0 +1,140 @@
+/* 
+ * Design Tokens - Figma에서 추출한 디자인 시스템
+ * 자동매매 시스템 대시보드
+ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #4389FA; /* Primary Blue (0.26, 0.54, 0.98) */
+  --color-success: #22C55E; /* Success Green (0.13, 0.77, 0.49) */
+  --color-danger: #F54336; /* Danger Red (0.96, 0.26, 0.21) */
+  --color-warning: #FF9900; /* Warning Orange (1, 0.6, 0) */
+  
+  /* Background Colors */
+  --color-bg-dark: #1C2128; /* Background Dark (0.11, 0.13, 0.18) */
+  --color-bg-darker: #262C36; /* Background Darker (0.15, 0.17, 0.22) */
+  --color-bg-light: #F3F3F7; /* Background Light (0.95, 0.95, 0.97) */
+  
+  /* Text Colors */
+  --color-text-primary: #F3F3F7; /* Text Light (0.95, 0.95, 0.97) */
+  --color-text-secondary: #B3B3BF; /* Text Secondary (0.7, 0.7, 0.75) */
+  --color-text-tertiary: #808088; /* Text Tertiary (0.5, 0.5, 0.55) */
+  --color-text-muted: #666670; /* Text Muted (0.4, 0.4, 0.44) */
+  
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+  
+  /* Font Sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 18px;
+  --font-size-3xl: 20px;
+  --font-size-4xl: 24px;
+  --font-size-5xl: 32px;
+  --font-size-6xl: 36px;
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+  --spacing-4xl: 40px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* Dark Theme (Default) */
+body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Light Theme */
+body.light-theme {
+  --color-bg-dark: #FFFFFF;
+  --color-bg-darker: #F3F3F7;
+  --color-bg-light: #1C2128;
+  --color-text-primary: #1C2128;
+  --color-text-secondary: #4D4D5C;
+  --color-text-tertiary: #808088;
+}
+
+/* Utility Classes */
+.text-success {
+  color: var(--color-success);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-success-light {
+  background-color: rgba(34, 197, 94, 0.15);
+}
+
+.bg-danger-light {
+  background-color: rgba(245, 67, 54, 0.15);
+}
+
+.bg-warning-light {
+  background-color: rgba(255, 153, 0, 0.15);
+}
+
+.bg-primary-light {
+  background-color: rgba(67, 137, 250, 0.15);
+}
+

@@ -352,3 +352,9 @@ async def get_real_trades():
 - 봇 업데이트 시 설정 백업
 
 
+
+
+
+
+
+

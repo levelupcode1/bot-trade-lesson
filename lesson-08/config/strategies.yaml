@@ -1,0 +1,27 @@
+# 전략 설정 파일
+
+# 변동성 돌파 전략
+volatility_breakout:
+  enabled: true
+  k_value: 0.5
+  markets:
+    - "KRW-BTC"
+    - "KRW-ETH"
+
+# 이동평균 교차 전략
+ma_crossover:
+  enabled: false
+  short_period: 5
+  long_period: 20
+  markets:
+    - "KRW-BTC"
+
+# RSI 전략
+rsi:
+  enabled: false
+  period: 14
+  oversold: 30
+  overbought: 70
+  markets:
+    - "KRW-BTC"
+

@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+bot-env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 테스트
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# 데이터
+data/user_profiles/*.json
+data/backups/
+*.db
+*.sqlite
+
+# 로그
+logs/
+*.log
+
+# 설정 (민감한 정보)
+.env
+config/secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 임시 파일
+*.tmp
+*.temp
+

@@ -1,0 +1,41 @@
+# 기능 플래그 설정
+# 전체 시스템의 기능 활성화/비활성화
+
+# 기본 기능
+basic_trading: true
+view_dashboard: true
+place_order: true
+view_history: true
+
+# 중급 기능
+custom_strategies: true
+advanced_analytics: true
+portfolio_management: true
+modify_risk_settings: true
+
+# 고급 기능
+api_access: true
+ml_models: false  # ML 모델 기능 (향후)
+code_execution: true
+raw_data_access: true
+system_settings: true
+
+# 향후 기능
+multi_exchange: false
+social_trading: false
+high_frequency_trading: false
+
+# 테스트 기능
+paper_trading: true
+backtesting: true
+
+# 알림 기능
+telegram_notifications: true
+email_notifications: true
+api_webhooks: true
+
+# UI 기능
+web_interface: true
+mobile_interface: false  # 향후
+desktop_app: false  # 향후
+

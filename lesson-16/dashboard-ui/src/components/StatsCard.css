@@ -1,0 +1,62 @@
+/* StatsCard Component Styles - Figma 디자인 기반 */
+
+.stats-card {
+  background-color: var(--color-bg-darker);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-width: 280px;
+  flex: 1;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stats-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-card-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.stats-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-card-value {
+  font-size: var(--font-size-6xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.stats-card-trend {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .stats-card {
+    min-width: 100%;
+  }
+  
+  .stats-card-value {
+    font-size: var(--font-size-4xl);
+  }
+}
+

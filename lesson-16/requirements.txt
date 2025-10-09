@@ -1,0 +1,16 @@
+# MCP (Model Context Protocol) 관련
+mcp>=0.9.0
+
+# 업비트 API
+pyupbit>=0.2.32
+
+# 데이터 처리
+pandas>=2.0.0
+numpy>=1.24.0
+
+# 비동기 처리
+asyncio-mqtt>=0.16.1
+
+# 유틸리티
+python-dotenv>=1.0.0
+

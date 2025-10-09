@@ -1,0 +1,67 @@
+/* Dashboard Layout Styles */
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-3xl);
+  min-height: calc(100vh - 70px);
+  background-color: var(--color-bg-dark);
+}
+
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+/* Scrollbar for side panel */
+.side-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.side-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.side-panel::-webkit-scrollbar-thumb {
+  background: var(--color-text-tertiary);
+  border-radius: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr 350px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .side-panel {
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-lg);
+  }
+}
+

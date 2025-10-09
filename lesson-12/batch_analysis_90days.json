@@ -32,9 +32,9 @@
       "trade_date": "2025-08-30",
       "trade_hour": 6,
       "trade_day_of_week": "Saturday",
-      "pnl": 9482.297967005365,
-      "pnl_percentage": 1.5893105668976588,
-      "holding_period": 839
+      "pnl": -52599.63341727198,
+      "pnl_percentage": -8.816128062617151,
+      "holding_period": 609
     },
     {
       "order_id": "order_0059",
@@ -68,9 +68,9 @@
       "trade_date": "2025-08-31",
       "trade_hour": 5,
       "trade_day_of_week": "Sunday",
-      "pnl": 12747.902191234378,
-      "pnl_percentage": 3.4316758782821726,
-      "holding_period": 415
+      "pnl": 36007.6206176933,
+      "pnl_percentage": 9.6930837132591,
+      "holding_period": 1065
     },
     {
       "order_id": "order_0051",
@@ -86,9 +86,9 @@
       "trade_date": "2025-08-31",
       "trade_hour": 6,
       "trade_day_of_week": "Sunday",
-      "pnl": -9420.954000641512,
-      "pnl_percentage": -8.307523306113232,
-      "holding_period": 1204
+      "pnl": 1554.4081044538118,
+      "pnl_percentage": 1.3706978671249233,
+      "holding_period": 116
     },
     {
       "order_id": "order_0065",
@@ -104,9 +104,9 @@
       "trade_date": "2025-08-31",
       "trade_hour": 18,
       "trade_day_of_week": "Sunday",
-      "pnl": 24966.185763771944,
-      "pnl_percentage": 9.230282683221894,
-      "holding_period": 1040
+      "pnl": 3377.879885852599,
+      "pnl_percentage": 1.2488405922875034,
+      "holding_period": 685
     },
     {
       "order_id": "order_0036",
@@ -122,9 +122,9 @@
       "trade_date": "2025-08-31",
       "trade_hour": 21,
       "trade_day_of_week": "Sunday",
-      "pnl": 5708.185241500575,
-      "pnl_percentage": 3.4283806147596243,
-      "holding_period": 952
+      "pnl": -502.81135331728115,
+      "pnl_percentage": -0.3019924238024302,
+      "holding_period": 25
     },
     {
       "order_id": "order_0029",
@@ -194,9 +194,9 @@
       "trade_date": "2025-09-02",
       "trade_hour": 2,
       "trade_day_of_week": "Tuesday",
-      "pnl": -7608.061911653788,
-      "pnl_percentage": -1.4682521079229447,
-      "holding_period": 681
+      "pnl": 49347.663977647855,
+      "pnl_percentage": 9.523425610571154,
+      "holding_period": 1140
     },
     {
       "order_id": "order_0097",
@@ -266,9 +266,9 @@
       "trade_date": "2025-09-03",
       "trade_hour": 20,
       "trade_day_of_week": "Wednesday",
-      "pnl": 14633.88410314518,
-      "pnl_percentage": 5.930342682966594,
-      "holding_period": 1352
+      "pnl": -6379.933968717109,
+      "pnl_percentage": -2.5854513034622038,
+      "holding_period": 423
     },
     {
       "order_id": "order_0012",
@@ -320,9 +320,9 @@
       "trade_date": "2025-09-04",
       "trade_hour": 13,
       "trade_day_of_week": "Thursday",
-      "pnl": 35007.0844269722,
-      "pnl_percentage": 7.3454749436930005,
-      "holding_period": 404
+      "pnl": -46931.35366506646,
+      "pnl_percentage": -9.84752338171673,
+      "holding_period": 1324
     },
     {
       "order_id": "order_0052",
@@ -338,9 +338,9 @@
       "trade_date": "2025-09-04",
       "trade_hour": 16,
       "trade_day_of_week": "Thursday",
-      "pnl": -9516.636838087232,
-      "pnl_percentage": -5.806774416815468,
-      "holding_period": 883
+      "pnl": 8630.882015681786,
+      "pnl_percentage": 5.266312641314045,
+      "holding_period": 1372
     },
     {
       "order_id": "order_0074",
@@ -356,9 +356,9 @@
       "trade_date": "2025-09-04",
       "trade_hour": 18,
       "trade_day_of_week": "Thursday",
-      "pnl": 3447.8038346773023,
-      "pnl_percentage": 2.623557539583371,
-      "holding_period": 977
+      "pnl": 3987.543843950045,
+      "pnl_percentage": 3.0342650620067966,
+      "holding_period": 402
     },
     {
       "order_id": "order_0072",
@@ -374,9 +374,9 @@
       "trade_date": "2025-09-04",
       "trade_hour": 21,
       "trade_day_of_week": "Thursday",
-      "pnl": 8935.470709048284,
-      "pnl_percentage": 2.137553442525046,
-      "holding_period": 798
+      "pnl": 3565.6569714257903,
+      "pnl_percentage": 0.8529805068261953,
+      "holding_period": 1369
     },
     {
       "order_id": "order_0053",
@@ -392,9 +392,9 @@
       "trade_date": "2025-09-05",
       "trade_hour": 9,
       "trade_day_of_week": "Friday",
-      "pnl": 8498.875252468084,
-      "pnl_percentage": 1.8069756520541076,
-      "holding_period": 907
+      "pnl": 42350.87828685972,
+      "pnl_percentage": 9.004368652809552,
+      "holding_period": 1080
     },
     {
       "order_id": "order_0020",
@@ -410,9 +410,9 @@
       "trade_date": "2025-09-05",
       "trade_hour": 15,
       "trade_day_of_week": "Friday",
-      "pnl": 11091.330344289932,
-      "pnl_percentage": 4.337048652975612,
-      "holding_period": 1404
+      "pnl": -9963.981551451854,
+      "pnl_percentage": -3.896220870226428,
+      "holding_period": 203
     },
     {
       "order_id": "order_0042",
@@ -428,9 +428,9 @@
       "trade_date": "2025-09-05",
       "trade_hour": 16,
       "trade_day_of_week": "Friday",
-      "pnl": -11596.324853142936,
-      "pnl_percentage": -4.4600023723933155,
-      "holding_period": 164
+      "pnl": -3750.7611890715402,
+      "pnl_percentage": -1.442560812446192,
+      "holding_period": 61
     },
     {
       "order_id": "order_0010",
@@ -464,9 +464,9 @@
       "trade_date": "2025-09-07",
       "trade_hour": 7,
       "trade_day_of_week": "Sunday",
-      "pnl": -14513.989004115847,
-      "pnl_percentage": -4.9524376398746695,
-      "holding_period": 1309
+      "pnl": 18323.869388374427,
+      "pnl_percentage": 6.252438281536432,
+      "holding_period": 961
     },
     {
       "order_id": "order_0094",
@@ -500,9 +500,9 @@
       "trade_date": "2025-09-07",
       "trade_hour": 18,
       "trade_day_of_week": "Sunday",
-      "pnl": -2364.7447782518607,
-      "pnl_percentage": -0.4401557071284354,
-      "holding_period": 431
+      "pnl": -13209.905559045495,
+      "pnl_percentage": -2.458791906811961,
+      "holding_period": 1100
     },
     {
       "order_id": "order_0058",
@@ -518,9 +518,9 @@
       "trade_date": "2025-09-08",
       "trade_hour": 10,
       "trade_day_of_week": "Monday",
-      "pnl": 13647.561389566621,
-      "pnl_percentage": 8.208823015115515,
-      "holding_period": 732
+      "pnl": -6939.254976402273,
+      "pnl_percentage": -4.173867721276081,
+      "holding_period": 1164
     },
     {
       "order_id": "order_0030",
@@ -554,9 +554,9 @@
       "trade_date": "2025-09-09",
       "trade_hour": 5,
       "trade_day_of_week": "Tuesday",
-      "pnl": -21206.373319210605,
-      "pnl_percentage": -5.867499927263638,
-      "holding_period": 394
+      "pnl": 18000.55357487622,
+      "pnl_percentage": 4.980495495456222,
+      "holding_period": 271
     },
     {
       "order_id": "order_0047",
@@ -572,9 +572,9 @@
       "trade_date": "2025-09-09",
       "trade_hour": 21,
       "trade_day_of_week": "Tuesday",
-      "pnl": 22446.653083246125,
-      "pnl_percentage": 4.206785780804981,
-      "holding_period": 968
+      "pnl": -111.37861144880657,
+      "pnl_percentage": -0.020873755975600594,
+      "holding_period": 1005
     },
     {
       "order_id": "order_0021",
@@ -590,9 +590,9 @@
       "trade_date": "2025-09-09",
       "trade_hour": 22,
       "trade_day_of_week": "Tuesday",
-      "pnl": 17294.37081144482,
-      "pnl_percentage": 6.044509953759605,
-      "holding_period": 93
+      "pnl": 9890.633141600145,
+      "pnl_percentage": 3.4568491172759925,
+      "holding_period": 1336
     },
     {
       "order_id": "order_0078",
@@ -608,9 +608,9 @@
       "trade_date": "2025-09-10",
       "trade_hour": 3,
       "trade_day_of_week": "Wednesday",
-      "pnl": -3432.7008172106143,
-      "pnl_percentage": -2.5740153849502665,
-      "holding_period": 1002
+      "pnl": -12610.761792157335,
+      "pnl_percentage": -9.456196912416315,
+      "holding_period": 728
     },
     {
       "order_id": "order_0005",
@@ -644,9 +644,9 @@
       "trade_date": "2025-09-11",
       "trade_hour": 7,
       "trade_day_of_week": "Thursday",
-      "pnl": -24586.36446347581,
-      "pnl_percentage": -6.262392629518872,
-      "holding_period": 271
+      "pnl": 11401.902206772911,
+      "pnl_percentage": 2.9041783891336355,
+      "holding_period": 510
     },
     {
       "order_id": "order_0002",
@@ -680,9 +680,9 @@
       "trade_date": "2025-09-11",
       "trade_hour": 12,
       "trade_day_of_week": "Thursday",
-      "pnl": 48968.397950191495,
-      "pnl_percentage": 9.97733425239221,
-      "holding_period": 972
+      "pnl": 30631.384032153263,
+      "pnl_percentage": 6.241158990192927,
+      "holding_period": 894
     },
     {
       "order_id": "order_0017",
@@ -716,9 +716,9 @@
       "trade_date": "2025-09-11",
       "trade_hour": 15,
       "trade_day_of_week": "Thursday",
-      "pnl": -21822.99510359473,
-      "pnl_percentage": -6.999312680921788,
-      "holding_period": 207
+      "pnl": 6043.338880672682,
+      "pnl_percentage": 1.9382865762377577,
+      "holding_period": 41
     },
     {
       "order_id": "order_0048",
@@ -770,9 +770,9 @@
       "trade_date": "2025-09-11",
       "trade_hour": 22,
       "trade_day_of_week": "Thursday",
-      "pnl": -20911.32421529686,
-      "pnl_percentage": -6.619807185385869,
-      "holding_period": 548
+      "pnl": -16335.274517553193,
+      "pnl_percentage": -5.171186985253014,
+      "holding_period": 922
     },
     {
       "order_id": "order_0093",
@@ -824,9 +824,9 @@
       "trade_date": "2025-09-13",
       "trade_hour": 17,
       "trade_day_of_week": "Saturday",
-      "pnl": 9337.00170366966,
-      "pnl_percentage": 9.288457915351088,
-      "holding_period": 1101
+      "pnl": 978.8993813792164,
+      "pnl_percentage": 0.9738100083810111,
+      "holding_period": 524
     },
     {
       "order_id": "order_0092",
@@ -860,9 +860,9 @@
       "trade_date": "2025-09-14",
       "trade_hour": 13,
       "trade_day_of_week": "Sunday",
-      "pnl": -3710.4646658910497,
-      "pnl_percentage": -2.6379425692715257,
-      "holding_period": 1401
+      "pnl": -8485.07104911847,
+      "pnl_percentage": -6.03243316922621,
+      "holding_period": 293
     },
     {
       "order_id": "order_0089",
@@ -878,9 +878,9 @@
       "trade_date": "2025-09-14",
       "trade_hour": 14,
       "trade_day_of_week": "Sunday",
-      "pnl": -12983.735338893885,
-      "pnl_percentage": -7.944526517025244,
-      "holding_period": 840
+      "pnl": -4501.774878765411,
+      "pnl_percentage": -2.7545593748275503,
+      "holding_period": 1047
     },
     {
       "order_id": "order_0045",
@@ -1004,9 +1004,9 @@
       "trade_date": "2025-09-16",
       "trade_hour": 12,
       "trade_day_of_week": "Tuesday",
-      "pnl": -8214.044216397819,
-      "pnl_percentage": -9.053679907457312,
-      "holding_period": 977
+      "pnl": 3914.243192613955,
+      "pnl_percentage": 4.314355269128514,
+      "holding_period": 629
     },
     {
       "order_id": "order_0098",
@@ -1094,9 +1094,9 @@
       "trade_date": "2025-09-18",
       "trade_hour": 2,
       "trade_day_of_week": "Thursday",
-      "pnl": 20050.265707167273,
-      "pnl_percentage": 5.845695200038256,
-      "holding_period": 402
+      "pnl": -32532.38391058678,
+      "pnl_percentage": -9.484881809019528,
+      "holding_period": 61
     },
     {
       "order_id": "order_0073",
@@ -1148,9 +1148,9 @@
       "trade_date": "2025-09-20",
       "trade_hour": 2,
       "trade_day_of_week": "Saturday",
-      "pnl": 21437.698851466288,
-      "pnl_percentage": 8.164357566533528,
-      "holding_period": 371
+      "pnl": -8749.770488235188,
+      "pnl_percentage": -3.3322725254239987,
+      "holding_period": 1439
     },
     {
       "order_id": "order_0080",
@@ -1202,9 +1202,9 @@
       "trade_date": "2025-09-20",
       "trade_hour": 15,
       "trade_day_of_week": "Saturday",
-      "pnl": -15830.820640304368,
-      "pnl_percentage": -3.6678958392493284,
-      "holding_period": 56
+      "pnl": 26655.077159083954,
+      "pnl_percentage": 6.175804074095942,
+      "holding_period": 492
     },
     {
       "order_id": "order_0035",
@@ -1220,9 +1220,9 @@
       "trade_date": "2025-09-21",
       "trade_hour": 5,
       "trade_day_of_week": "Sunday",
-      "pnl": -21599.4089912902,
-      "pnl_percentage": -4.796932561063381,
-      "holding_period": 178
+      "pnl": 9502.347702386593,
+      "pnl_percentage": 2.1103411263939997,
+      "holding_period": 855
     },
     {
       "order_id": "order_0031",
@@ -1238,9 +1238,9 @@
       "trade_date": "2025-09-22",
       "trade_hour": 4,
       "trade_day_of_week": "Monday",
-      "pnl": -20481.589865788974,
-      "pnl_percentage": -4.829257630197099,
-      "holding_period": 467
+      "pnl": 5216.8426089015675,
+      "pnl_percentage": 1.2300547535451178,
+      "holding_period": 980
     },
     {
       "order_id": "order_0032",
@@ -1292,9 +1292,9 @@
       "trade_date": "2025-09-23",
       "trade_hour": 23,
       "trade_day_of_week": "Tuesday",
-      "pnl": 1537.0049892400184,
-      "pnl_percentage": 2.0873080074307215,
-      "holding_period": 446
+      "pnl": 3165.871331649068,
+      "pnl_percentage": 4.299367033488877,
+      "holding_period": 1227
     },
     {
       "order_id": "order_0067",
@@ -1346,9 +1346,9 @@
       "trade_date": "2025-09-24",
       "trade_hour": 21,
       "trade_day_of_week": "Wednesday",
-      "pnl": 9366.564455777569,
-      "pnl_percentage": 5.4552247021837,
-      "holding_period": 335
+      "pnl": 11227.138606687951,
+      "pnl_percentage": 6.5388504132126855,
+      "holding_period": 409
     },
     {
       "order_id": "order_0025",
@@ -1400,9 +1400,9 @@
       "trade_date": "2025-09-25",
       "trade_hour": 7,
       "trade_day_of_week": "Thursday",
-      "pnl": 1780.4526951741348,
-      "pnl_percentage": 3.578355956335683,
-      "holding_period": 183
+      "pnl": 707.8391948365864,
+      "pnl_percentage": 1.422616060419188,
+      "holding_period": 524
     },
     {
       "order_id": "order_0086",
@@ -1436,9 +1436,9 @@
       "trade_date": "2025-09-25",
       "trade_hour": 15,
       "trade_day_of_week": "Thursday",
-      "pnl": 15818.747399079179,
-      "pnl_percentage": 7.499788717910732,
-      "holding_period": 1082
+      "pnl": -13784.99310581841,
+      "pnl_percentage": -6.535570305491587,
+      "holding_period": 867
     },
     {
       "order_id": "order_0043",
@@ -1454,9 +1454,9 @@
       "trade_date": "2025-09-26",
       "trade_hour": 11,
       "trade_day_of_week": "Friday",
-      "pnl": 9292.120091660987,
-      "pnl_percentage": 3.109269537557921,
-      "holding_period": 263
+      "pnl": -13443.992768543249,
+      "pnl_percentage": -4.4985425033296655,
+      "holding_period": 873
     },
     {
       "order_id": "order_0038",
@@ -1526,9 +1526,9 @@
       "trade_date": "2025-09-27",
       "trade_hour": 0,
       "trade_day_of_week": "Saturday",
-      "pnl": -15939.734659373009,
-      "pnl_percentage": -7.748122953596065,
-      "holding_period": 1427
+      "pnl": 13117.232407858966,
+      "pnl_percentage": 6.376136847875485,
+      "holding_period": 593
     },
     {
       "order_id": "order_0095",
@@ -1544,9 +1544,9 @@
       "trade_date": "2025-09-27",
       "trade_hour": 9,
       "trade_day_of_week": "Saturday",
-      "pnl": -44450.91847543857,
-      "pnl_percentage": -9.1612351145126,
-      "holding_period": 1300
+      "pnl": -36532.69091170572,
+      "pnl_percentage": -7.529306081557895,
+      "holding_period": 980
     },
     {
       "order_id": "order_0055",
@@ -1598,9 +1598,9 @@
       "trade_date": "2025-09-27",
       "trade_hour": 21,
       "trade_day_of_week": "Saturday",
-      "pnl": 14683.793987299357,
-      "pnl_percentage": 2.7664199218309706,
-      "holding_period": 44
+      "pnl": 15185.304458768635,
+      "pnl_percentage": 2.8609042601756425,
+      "holding_period": 1026
     },
     {
       "order_id": "order_0026",
@@ -1616,9 +1616,9 @@
       "trade_date": "2025-09-28",
       "trade_hour": 0,
       "trade_day_of_week": "Sunday",
-      "pnl": 26067.886609385165,
-      "pnl_percentage": 5.5348500920372885,
-      "holding_period": 1433
+      "pnl": -2330.9330353595838,
+      "pnl_percentage": -0.49491411093709053,
+      "holding_period": 129
     },
     {
       "order_id": "order_0039",
@@ -1652,9 +1652,9 @@
       "trade_date": "2025-09-28",
       "trade_hour": 8,
       "trade_day_of_week": "Sunday",
-      "pnl": -25684.961970823442,
-      "pnl_percentage": -8.55640538129231,
-      "holding_period": 48
+      "pnl": 18898.715876715596,
+      "pnl_percentage": 6.295710089457438,
+      "holding_period": 284
     },
     {
       "order_id": "order_0099",
@@ -1688,9 +1688,9 @@
       "trade_date": "2025-09-28",
       "trade_hour": 10,
       "trade_day_of_week": "Sunday",
-      "pnl": 6256.245884766497,
-      "pnl_percentage": 1.0125714360359002,
-      "holding_period": 796
+      "pnl": 16933.532807084637,
+      "pnl_percentage": 2.740686978652962,
+      "holding_period": 67
     },
     {
       "order_id": "order_0046",
@@ -1724,9 +1724,9 @@
       "trade_date": "2025-09-28",
       "trade_hour": 18,
       "trade_day_of_week": "Sunday",
-      "pnl": -2489.892640746321,
-      "pnl_percentage": -3.2403013872244646,
-      "holding_period": 764
+      "pnl": 1230.8989962981286,
+      "pnl_percentage": 1.6018697593493503,
+      "holding_period": 841
     },
     {
       "order_id": "order_0033",
@@ -1745,6 +1745,60 @@
       "pnl": 0.0,
       "pnl_percentage": 0.0,
       "holding_period": 0
+    },
+    {
+      "order_id": "order_0090",
+      "symbol": "KRW-XRP",
+      "side": "SELL",
+      "amount": 0.00434,
+      "price": 62628082.0,
+      "status": "filled",
+      "strategy": "ma_crossover",
+      "created_at": "2025-09-29 14:25:59.918769",
+      "updated_at": "2025-09-28 20:10:59",
+      "trade_value": 271805.87588,
+      "trade_date": "2025-09-29",
+      "trade_hour": 14,
+      "trade_day_of_week": "Monday",
+      "pnl": -25087.187475087285,
+      "pnl_percentage": -9.22981793306156,
+      "holding_period": 1114
+    },
+    {
+      "order_id": "order_0084",
+      "symbol": "KRW-BTC",
+      "side": "SELL",
+      "amount": 0.008689,
+      "price": 51076112.0,
+      "status": "filled",
+      "strategy": "volatility_breakout",
+      "created_at": "2025-09-30 00:43:59.918769",
+      "updated_at": "2025-09-28 20:10:59",
+      "trade_value": 443800.33716800006,
+      "trade_date": "2025-09-30",
+      "trade_hour": 0,
+      "trade_day_of_week": "Tuesday",
+      "pnl": 37330.61482885065,
+      "pnl_percentage": 8.411578744411633,
+      "holding_period": 60
+    },
+    {
+      "order_id": "order_0000",
+      "symbol": "KRW-ETH",
+      "side": "SELL",
+      "amount": 0.002585,
+      "price": 53819466.0,
+      "status": "filled",
+      "strategy": "volatility_breakout",
+      "created_at": "2025-09-30 02:29:59.918769",
+      "updated_at": "2025-09-28 20:10:59",
+      "trade_value": 139123.31961,
+      "trade_date": "2025-09-30",
+      "trade_hour": 2,
+      "trade_day_of_week": "Tuesday",
+      "pnl": 11668.77586092782,
+      "pnl_percentage": 8.387361582255606,
+      "holding_period": 554
     }
   ],
   "account_data": [
@@ -2090,18 +2144,18 @@
     "calmar_ratio": -2.3201463797188917,
     "var_95": -0.042347210020498634,
     "cvar_95": -0.04489720490820742,
-    "win_rate": 54.347826086956516,
-    "profit_factor": 1.1700487418279426,
-    "avg_win": 14900.151417729936,
-    "avg_loss": -15160.287655696638,
-    "largest_win": 48968.397950191495,
-    "largest_loss": -44450.91847543857,
-    "total_trades": 97,
-    "winning_trades": 25,
-    "losing_trades": 21,
-    "avg_holding_period": 714.3695652173913,
-    "total_fees": 14195.789925082501,
-    "net_return": -5.517483967479215
+    "win_rate": 59.183673469387756,
+    "profit_factor": 1.3305878039938175,
+    "avg_win": 14443.018942829583,
+    "avg_loss": -15739.19241123617,
+    "largest_win": 49347.663977647855,
+    "largest_loss": -52599.63341727198,
+    "total_trades": 100,
+    "winning_trades": 29,
+    "losing_trades": 20,
+    "avg_holding_period": 707.6326530612245,
+    "total_fees": 14623.1546914115,
+    "net_return": -5.52179593441115
   },
   "symbol_analysis": {
     "KRW-ETH": {
@@ -2115,18 +2169,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 40.0,
-      "profit_factor": 0.3207151945640272,
-      "avg_win": 10181.379945149169,
-      "avg_loss": -21163.90724588629,
-      "largest_win": 14633.88410314518,
-      "largest_loss": -44450.91847543857,
-      "total_trades": 26,
-      "winning_trades": 4,
+      "win_rate": 45.45454545454545,
+      "profit_factor": 1.1213360881175851,
+      "avg_win": 15827.47313284351,
+      "avg_loss": -11762.36195713446,
+      "largest_win": 26655.077159083954,
+      "largest_loss": -36532.69091170572,
+      "total_trades": 27,
+      "winning_trades": 5,
       "losing_trades": 6,
-      "avg_holding_period": 691.0,
-      "total_fees": 3209.9271375685,
-      "net_return": -5.406640302322996
+      "avg_holding_period": 435.90909090909093,
+      "total_fees": 3279.4887973735,
+      "net_return": -5.407342156103284
     },
     "KRW-BTC": {
       "total_return": -5.374253215783295,
@@ -2139,18 +2193,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 56.25,
-      "profit_factor": 1.5498599931027877,
-      "avg_win": 15596.930050115088,
-      "avg_loss": -12938.714379337785,
-      "largest_win": 26067.886609385165,
-      "largest_loss": -21822.99510359473,
-      "total_trades": 32,
+      "win_rate": 52.94117647058824,
+      "profit_factor": 1.3267279297517476,
+      "avg_win": 18803.578379039784,
+      "avg_loss": -15944.509195926868,
+      "largest_win": 49347.663977647855,
+      "largest_loss": -52599.63341727198,
+      "total_trades": 33,
       "winning_trades": 9,
-      "losing_trades": 7,
-      "avg_holding_period": 604.0,
-      "total_fees": 5700.4530225345,
-      "net_return": -5.431768871885127
+      "losing_trades": 8,
+      "avg_holding_period": 714.0,
+      "total_fees": 5922.3531911185,
+      "net_return": -5.43400777004546
     },
     "KRW-XRP": {
       "total_return": -5.374253215783295,
@@ -2163,18 +2217,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 60.0,
-      "profit_factor": 1.8986495759721844,
-      "avg_win": 15950.491267634667,
-      "avg_loss": -12601.4495798684,
-      "largest_win": 48968.397950191495,
-      "largest_loss": -24586.36446347581,
-      "total_trades": 39,
-      "winning_trades": 12,
-      "losing_trades": 8,
-      "avg_holding_period": 814.35,
-      "total_fees": 5285.409764979499,
-      "net_return": -5.427581224837682
+      "win_rate": 71.42857142857143,
+      "profit_factor": 1.46140345439163,
+      "avg_win": 11365.198551098823,
+      "avg_loss": -19442.267152416953,
+      "largest_win": 42350.87828685972,
+      "largest_loss": -46931.35366506646,
+      "total_trades": 40,
+      "winning_trades": 15,
+      "losing_trades": 6,
+      "avg_holding_period": 844.8095238095239,
+      "total_fees": 5421.3127029195,
+      "net_return": -5.428952439828996
     }
   },
   "strategy_analysis": {
@@ -2189,18 +2243,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 47.82608695652174,
-      "profit_factor": 1.3306971527950147,
-      "avg_win": 18472.081342182282,
-      "avg_loss": -12724.714406105095,
-      "largest_win": 48968.397950191495,
-      "largest_loss": -25684.961970823442,
-      "total_trades": 51,
-      "winning_trades": 11,
-      "losing_trades": 12,
-      "avg_holding_period": 685.7826086956521,
-      "total_fees": 7281.21786505,
-      "net_return": -5.44771825813576
+      "win_rate": 54.166666666666664,
+      "profit_factor": 1.26535806660586,
+      "avg_win": 13357.75113889978,
+      "avg_loss": -12475.862430386293,
+      "largest_win": 36007.6206176933,
+      "largest_loss": -46931.35366506646,
+      "total_trades": 52,
+      "winning_trades": 13,
+      "losing_trades": 11,
+      "avg_holding_period": 670.875,
+      "total_fees": 7417.12080299,
+      "net_return": -5.449089473127074
     },
     "volatility_breakout": {
       "total_return": -5.374253215783295,
@@ -2213,18 +2267,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 60.86956521739131,
-      "profit_factor": 1.0219800475556118,
-      "avg_win": 12093.635048517384,
-      "avg_loss": -18407.71865515203,
-      "largest_win": 22446.653083246125,
-      "largest_loss": -44450.91847543857,
-      "total_trades": 46,
-      "winning_trades": 14,
+      "win_rate": 64.0,
+      "profit_factor": 1.3810062873671103,
+      "avg_win": 15324.799033522548,
+      "avg_loss": -19727.70683227491,
+      "largest_win": 49347.663977647855,
+      "largest_loss": -52599.63341727198,
+      "total_trades": 48,
+      "winning_trades": 16,
       "losing_trades": 9,
-      "avg_holding_period": 742.9565217391304,
-      "total_fees": 6914.572060032499,
-      "net_return": -5.444018925126751
+      "avg_holding_period": 742.92,
+      "total_fees": 7206.033888421501,
+      "net_return": -5.446959677067371
     }
   },
   "time_analysis": {
@@ -2239,18 +2293,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 1.635402794742039,
-      "avg_win": 26067.886609385165,
-      "avg_loss": -15939.734659373009,
-      "largest_win": 26067.886609385165,
-      "largest_loss": -15939.734659373009,
-      "total_trades": 4,
-      "winning_trades": 1,
+      "win_rate": 66.66666666666666,
+      "profit_factor": 21.642769857147453,
+      "avg_win": 25223.92361835481,
+      "avg_loss": -2330.9330353595838,
+      "largest_win": 37330.61482885065,
+      "largest_loss": -2330.9330353595838,
+      "total_trades": 5,
+      "winning_trades": 2,
       "losing_trades": 1,
-      "avg_holding_period": 1430.0,
-      "total_fees": 728.736077257,
-      "net_return": -5.381605918005876
+      "avg_holding_period": 260.6666666666667,
+      "total_fees": 950.636245841,
+      "net_return": -5.383844816166209
     },
     "hour_01": {
       "total_return": -5.374253215783295,
@@ -2287,18 +2341,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 66.66666666666666,
-      "profit_factor": 5.453158115746089,
-      "avg_win": 20743.98227931678,
-      "avg_loss": -7608.061911653788,
-      "largest_win": 21437.698851466288,
-      "largest_loss": -7608.061911653788,
-      "total_trades": 3,
+      "win_rate": 50.0,
+      "profit_factor": 1.478034291745124,
+      "avg_win": 30508.21991928784,
+      "avg_loss": -20641.077199410985,
+      "largest_win": 49347.663977647855,
+      "largest_loss": -32532.38391058678,
+      "total_trades": 4,
       "winning_trades": 2,
-      "losing_trades": 1,
-      "avg_holding_period": 484.6666666666667,
-      "total_fees": 561.8700086570001,
-      "net_return": -5.379922295427334
+      "losing_trades": 2,
+      "avg_holding_period": 798.5,
+      "total_fees": 631.4316684620001,
+      "net_return": -5.3806241492076206
     },
     "hour_03": {
       "total_return": -5.374253215783295,
@@ -2314,13 +2368,13 @@
       "win_rate": 0.0,
       "profit_factor": 0.0,
       "avg_win": 0.0,
-      "avg_loss": -3432.7008172106143,
-      "largest_win": -3432.7008172106143,
-      "largest_loss": -3432.7008172106143,
+      "avg_loss": -12610.761792157335,
+      "largest_win": -12610.761792157335,
+      "largest_loss": -12610.761792157335,
       "total_trades": 2,
       "winning_trades": 0,
       "losing_trades": 1,
-      "avg_holding_period": 1002.0,
+      "avg_holding_period": 728.0,
       "total_fees": 194.51599370300002,
       "net_return": -5.376215816817967
     },
@@ -2335,16 +2389,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 0.0,
-      "profit_factor": 0.0,
-      "avg_win": 0.0,
-      "avg_loss": -20481.589865788974,
-      "largest_win": -20481.589865788974,
-      "largest_loss": -20481.589865788974,
+      "win_rate": 100.0,
+      "profit_factor": Infinity,
+      "avg_win": 5216.8426089015675,
+      "avg_loss": 0.0,
+      "largest_win": 5216.8426089015675,
+      "largest_loss": 5216.8426089015675,
       "total_trades": 4,
-      "winning_trades": 0,
-      "losing_trades": 1,
-      "avg_holding_period": 467.0,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "avg_holding_period": 980.0,
       "total_fees": 783.1315933945,
       "net_return": -5.382154750491168
     },
@@ -2359,16 +2413,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 33.33333333333333,
-      "profit_factor": 0.2978079479721868,
-      "avg_win": 12747.902191234378,
-      "avg_loss": -21402.891155250403,
-      "largest_win": 12747.902191234378,
-      "largest_loss": -21599.4089912902,
+      "win_rate": 100.0,
+      "profit_factor": Infinity,
+      "avg_win": 21170.17396498537,
+      "avg_loss": 0.0,
+      "largest_win": 36007.6206176933,
+      "largest_loss": 9502.347702386593,
       "total_trades": 6,
-      "winning_trades": 1,
-      "losing_trades": 2,
-      "avg_holding_period": 329.0,
+      "winning_trades": 3,
+      "losing_trades": 0,
+      "avg_holding_period": 730.3333333333334,
       "total_fees": 1124.1880329955002,
       "net_return": -5.385595895399101
     },
@@ -2384,15 +2438,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 50.0,
-      "profit_factor": 1.0065114389009515,
-      "avg_win": 9482.297967005365,
-      "avg_loss": -9420.954000641512,
-      "largest_win": 9482.297967005365,
-      "largest_loss": -9420.954000641512,
+      "profit_factor": 0.029551690828769076,
+      "avg_win": 1554.4081044538118,
+      "avg_loss": -52599.63341727198,
+      "largest_win": 1554.4081044538118,
+      "largest_loss": -52599.63341727198,
       "total_trades": 4,
       "winning_trades": 1,
       "losing_trades": 1,
-      "avg_holding_period": 1021.5,
+      "avg_holding_period": 362.5,
       "total_fees": 692.831193343,
       "net_return": -5.381243649788349
     },
@@ -2407,16 +2461,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 33.33333333333333,
-      "profit_factor": 0.04553546291211571,
-      "avg_win": 1780.4526951741348,
-      "avg_loss": -19550.17673379583,
-      "largest_win": 1780.4526951741348,
-      "largest_loss": -24586.36446347581,
+      "win_rate": 100.0,
+      "profit_factor": Infinity,
+      "avg_win": 10144.536929994641,
+      "avg_loss": 0.0,
+      "largest_win": 18323.869388374427,
+      "largest_loss": 707.8391948365864,
       "total_trades": 3,
-      "winning_trades": 1,
-      "losing_trades": 2,
-      "avg_holding_period": 587.6666666666666,
+      "winning_trades": 3,
+      "losing_trades": 0,
+      "avg_holding_period": 665.0,
       "total_fees": 367.71355578299995,
       "net_return": -5.377963322038848
     },
@@ -2431,16 +2485,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 0.0,
-      "profit_factor": 0.0,
-      "avg_win": 0.0,
-      "avg_loss": -25684.961970823442,
-      "largest_win": -25684.961970823442,
-      "largest_loss": -25684.961970823442,
+      "win_rate": 100.0,
+      "profit_factor": Infinity,
+      "avg_win": 18898.715876715596,
+      "avg_loss": 0.0,
+      "largest_win": 18898.715876715596,
+      "largest_loss": 18898.715876715596,
       "total_trades": 4,
-      "winning_trades": 0,
-      "losing_trades": 1,
-      "avg_holding_period": 48.0,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "avg_holding_period": 284.0,
       "total_fees": 400.50985020400003,
       "net_return": -5.378294225632629
     },
@@ -2456,15 +2510,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 50.0,
-      "profit_factor": 0.1911968423591551,
-      "avg_win": 8498.875252468084,
-      "avg_loss": -44450.91847543857,
-      "largest_win": 8498.875252468084,
-      "largest_loss": -44450.91847543857,
+      "profit_factor": 1.1592597542079701,
+      "avg_win": 42350.87828685972,
+      "avg_loss": -36532.69091170572,
+      "largest_win": 42350.87828685972,
+      "largest_loss": -36532.69091170572,
       "total_trades": 5,
       "winning_trades": 1,
       "losing_trades": 1,
-      "avg_holding_period": 1103.5,
+      "avg_holding_period": 1030.0,
       "total_fees": 772.549233423,
       "net_return": -5.382047978033881
     },
@@ -2479,16 +2533,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 100.0,
-      "profit_factor": Infinity,
-      "avg_win": 9951.903637166559,
-      "avg_loss": 0.0,
-      "largest_win": 13647.561389566621,
-      "largest_loss": 6256.245884766497,
+      "win_rate": 50.0,
+      "profit_factor": 2.4402522842393086,
+      "avg_win": 16933.532807084637,
+      "avg_loss": -6939.254976402273,
+      "largest_win": 16933.532807084637,
+      "largest_loss": -6939.254976402273,
       "total_trades": 5,
-      "winning_trades": 2,
-      "losing_trades": 0,
-      "avg_holding_period": 764.0,
+      "winning_trades": 1,
+      "losing_trades": 1,
+      "avg_holding_period": 615.5,
       "total_fees": 1076.660931871,
       "net_return": -5.3851163629140535
     },
@@ -2503,16 +2557,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 100.0,
-      "profit_factor": Infinity,
-      "avg_win": 9292.120091660987,
-      "avg_loss": 0.0,
-      "largest_win": 9292.120091660987,
-      "largest_loss": 9292.120091660987,
+      "win_rate": 0.0,
+      "profit_factor": 0.0,
+      "avg_win": 0.0,
+      "avg_loss": -13443.992768543249,
+      "largest_win": -13443.992768543249,
+      "largest_loss": -13443.992768543249,
       "total_trades": 2,
-      "winning_trades": 1,
-      "losing_trades": 0,
-      "avg_holding_period": 263.0,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "avg_holding_period": 873.0,
       "total_fees": 226.826916348,
       "net_return": -5.376541823173573
     },
@@ -2527,16 +2581,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 5.96154545314416,
-      "avg_win": 48968.397950191495,
-      "avg_loss": -8214.044216397819,
-      "largest_win": 48968.397950191495,
-      "largest_loss": -8214.044216397819,
+      "win_rate": 100.0,
+      "profit_factor": Infinity,
+      "avg_win": 17272.81361238361,
+      "avg_loss": 0.0,
+      "largest_win": 30631.384032153263,
+      "largest_loss": 3914.243192613955,
       "total_trades": 7,
-      "winning_trades": 1,
-      "losing_trades": 1,
-      "avg_holding_period": 974.5,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_holding_period": 761.5,
       "total_fees": 918.6217846700001,
       "net_return": -5.383521801007288
     },
@@ -2551,16 +2605,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 9.434690147781106,
-      "avg_win": 35007.0844269722,
-      "avg_loss": -3710.4646658910497,
-      "largest_win": 35007.0844269722,
-      "largest_loss": -3710.4646658910497,
+      "win_rate": 0.0,
+      "profit_factor": 0.0,
+      "avg_win": 0.0,
+      "avg_loss": -27708.212357092467,
+      "largest_win": -8485.07104911847,
+      "largest_loss": -46931.35366506646,
       "total_trades": 4,
-      "winning_trades": 1,
-      "losing_trades": 1,
-      "avg_holding_period": 902.5,
+      "winning_trades": 0,
+      "losing_trades": 2,
+      "avg_holding_period": 808.5,
       "total_fees": 626.6050227449999,
       "net_return": -5.380575449973703
     },
@@ -2578,15 +2632,15 @@
       "win_rate": 0.0,
       "profit_factor": 0.0,
       "avg_win": 0.0,
-      "avg_loss": -12983.735338893885,
-      "largest_win": -12983.735338893885,
-      "largest_loss": -12983.735338893885,
-      "total_trades": 4,
+      "avg_loss": -14794.481176926347,
+      "largest_win": -4501.774878765411,
+      "largest_loss": -25087.187475087285,
+      "total_trades": 5,
       "winning_trades": 0,
-      "losing_trades": 1,
-      "avg_holding_period": 840.0,
-      "total_fees": 486.8096043350001,
-      "net_return": -5.379164961162007
+      "losing_trades": 2,
+      "avg_holding_period": 1080.5,
+      "total_fees": 622.712542275,
+      "net_return": -5.380536176153322
     },
     "hour_15": {
       "total_return": -5.374253215783295,
@@ -2600,15 +2654,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 50.0,
-      "profit_factor": 0.7146706704679524,
-      "avg_win": 13455.038871684555,
-      "avg_loss": -18826.90787194955,
-      "largest_win": 15818.747399079179,
-      "largest_loss": -21822.99510359473,
+      "profit_factor": 1.376834853362677,
+      "avg_win": 16349.208019878319,
+      "avg_loss": -11874.487328635132,
+      "largest_win": 26655.077159083954,
+      "largest_loss": -13784.99310581841,
       "total_trades": 7,
       "winning_trades": 2,
       "losing_trades": 2,
-      "avg_holding_period": 687.25,
+      "avg_holding_period": 400.75,
       "total_fees": 1015.484824407,
       "net_return": -5.384499116540013
     },
@@ -2623,16 +2677,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 0.0,
-      "profit_factor": 0.0,
-      "avg_win": 0.0,
-      "avg_loss": -10556.480845615084,
-      "largest_win": -9516.636838087232,
-      "largest_loss": -11596.324853142936,
+      "win_rate": 50.0,
+      "profit_factor": 2.3011014513078787,
+      "avg_win": 8630.882015681786,
+      "avg_loss": -3750.7611890715402,
+      "largest_win": 8630.882015681786,
+      "largest_loss": -3750.7611890715402,
       "total_trades": 4,
-      "winning_trades": 0,
-      "losing_trades": 2,
-      "avg_holding_period": 523.5,
+      "winning_trades": 1,
+      "losing_trades": 1,
+      "avg_holding_period": 716.5,
       "total_fees": 367.9395125885,
       "net_return": -5.377965601867113
     },
@@ -2649,14 +2703,14 @@
       "cvar_95": -0.04489720490820742,
       "win_rate": 100.0,
       "profit_factor": Infinity,
-      "avg_win": 9337.00170366966,
+      "avg_win": 978.8993813792164,
       "avg_loss": 0.0,
-      "largest_win": 9337.00170366966,
-      "largest_loss": 9337.00170366966,
+      "largest_win": 978.8993813792164,
+      "largest_loss": 978.8993813792164,
       "total_trades": 3,
       "winning_trades": 1,
       "losing_trades": 0,
-      "avg_holding_period": 1101.0,
+      "avg_holding_period": 524.0,
       "total_fees": 200.77174216100005,
       "net_return": -5.376278935218478
     },
@@ -2671,16 +2725,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 5.852958140036099,
-      "avg_win": 14206.994799224623,
-      "avg_loss": -2427.318709499091,
-      "largest_win": 24966.185763771944,
-      "largest_loss": -2489.892640746321,
+      "win_rate": 75.0,
+      "profit_factor": 0.650748234926966,
+      "avg_win": 2865.4409087002573,
+      "avg_loss": -13209.905559045495,
+      "largest_win": 3987.543843950045,
+      "largest_loss": -13209.905559045495,
       "total_trades": 6,
-      "winning_trades": 2,
-      "losing_trades": 2,
-      "avg_holding_period": 803.0,
+      "winning_trades": 3,
+      "losing_trades": 1,
+      "avg_holding_period": 757.0,
       "total_fees": 745.8718894365,
       "net_return": -5.381778812594508
     },
@@ -2719,16 +2773,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 100.0,
-      "profit_factor": Infinity,
-      "avg_win": 14633.88410314518,
-      "avg_loss": 0.0,
-      "largest_win": 14633.88410314518,
-      "largest_loss": 14633.88410314518,
+      "win_rate": 0.0,
+      "profit_factor": 0.0,
+      "avg_win": 0.0,
+      "avg_loss": -6379.933968717109,
+      "largest_win": -6379.933968717109,
+      "largest_loss": -6379.933968717109,
       "total_trades": 4,
-      "winning_trades": 1,
-      "losing_trades": 0,
-      "avg_holding_period": 1352.0,
+      "winning_trades": 0,
+      "losing_trades": 1,
+      "avg_holding_period": 423.0,
       "total_fees": 592.162320183,
       "net_return": -5.380227934674841
     },
@@ -2743,16 +2797,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 100.0,
-      "profit_factor": Infinity,
-      "avg_win": 12228.133495374383,
-      "avg_loss": 0.0,
-      "largest_win": 22446.653083246125,
-      "largest_loss": 5708.185241500575,
+      "win_rate": 60.0,
+      "profit_factor": 48.809166148293286,
+      "avg_win": 9992.700012294126,
+      "avg_loss": -307.0949823830439,
+      "largest_win": 15185.304458768635,
+      "largest_loss": -502.81135331728115,
       "total_trades": 6,
-      "winning_trades": 5,
-      "losing_trades": 0,
-      "avg_holding_period": 619.4,
+      "winning_trades": 3,
+      "losing_trades": 2,
+      "avg_holding_period": 766.8,
       "total_fees": 1132.180205607,
       "net_return": -5.385676533736022
     },
@@ -2768,15 +2822,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 50.0,
-      "profit_factor": 0.8270337465665518,
-      "avg_win": 17294.37081144482,
-      "avg_loss": -20911.32421529686,
-      "largest_win": 17294.37081144482,
-      "largest_loss": -20911.32421529686,
+      "profit_factor": 0.6054770081134596,
+      "avg_win": 9890.633141600145,
+      "avg_loss": -16335.274517553193,
+      "largest_win": 9890.633141600145,
+      "largest_loss": -16335.274517553193,
       "total_trades": 3,
       "winning_trades": 1,
       "losing_trades": 1,
-      "avg_holding_period": 320.5,
+      "avg_holding_period": 1129.0,
       "total_fees": 344.9696412335,
       "net_return": -5.3777338435811775
     },
@@ -2793,14 +2847,14 @@
       "cvar_95": -0.04489720490820742,
       "win_rate": 100.0,
       "profit_factor": Infinity,
-      "avg_win": 1537.0049892400184,
+      "avg_win": 3165.871331649068,
       "avg_loss": 0.0,
-      "largest_win": 1537.0049892400184,
-      "largest_loss": 1537.0049892400184,
+      "largest_win": 3165.871331649068,
+      "largest_loss": 3165.871331649068,
       "total_trades": 3,
       "winning_trades": 1,
       "losing_trades": 0,
-      "avg_holding_period": 446.0,
+      "avg_holding_period": 1227.0,
       "total_fees": 310.121182731,
       "net_return": -5.3773822343411775
     },
@@ -2815,16 +2869,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 75.0,
-      "profit_factor": 2.490644756350635,
-      "avg_win": 9627.441896139668,
-      "avg_loss": -11596.324853142936,
-      "largest_win": 11091.330344289932,
-      "largest_loss": -11596.324853142936,
+      "win_rate": 25.0,
+      "profit_factor": 1.5593832883979943,
+      "avg_win": 42350.87828685972,
+      "avg_loss": -9052.911836355548,
+      "largest_win": 42350.87828685972,
+      "largest_loss": -13443.992768543249,
       "total_trades": 10,
-      "winning_trades": 3,
-      "losing_trades": 1,
-      "avg_holding_period": 684.5,
+      "winning_trades": 1,
+      "losing_trades": 3,
+      "avg_holding_period": 554.25,
       "total_fees": 1735.649778924,
       "net_return": -5.391765339013358
     },
@@ -2839,18 +2893,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 0.6663331059256566,
-      "avg_win": 13647.561389566621,
-      "avg_loss": -20481.589865788974,
-      "largest_win": 13647.561389566621,
-      "largest_loss": -20481.589865788974,
-      "total_trades": 12,
+      "win_rate": 33.33333333333333,
+      "profit_factor": 0.1628917297574814,
+      "avg_win": 5216.8426089015675,
+      "avg_loss": -16013.221225744779,
+      "largest_win": 5216.8426089015675,
+      "largest_loss": -25087.187475087285,
+      "total_trades": 13,
       "winning_trades": 1,
-      "losing_trades": 1,
-      "avg_holding_period": 599.5,
-      "total_fees": 1298.6540923644998,
-      "net_return": -5.387356199331515
+      "losing_trades": 2,
+      "avg_holding_period": 1086.0,
+      "total_fees": 1434.5570303045,
+      "net_return": -5.3887274143228305
     },
     "day_Saturday": {
       "total_return": -5.374253215783295,
@@ -2864,15 +2918,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 57.14285714285714,
-      "profit_factor": 0.7208046471462641,
-      "avg_win": 13735.198127360169,
-      "avg_loss": -25407.157925038646,
-      "largest_win": 21437.698851466288,
-      "largest_loss": -44450.91847543857,
+      "profit_factor": 0.5714682906158455,
+      "avg_win": 13984.128351772692,
+      "avg_loss": -32627.364939070965,
+      "largest_win": 26655.077159083954,
+      "largest_loss": -52599.63341727198,
       "total_trades": 14,
       "winning_trades": 4,
       "losing_trades": 3,
-      "avg_holding_period": 734.0,
+      "avg_holding_period": 809.0,
       "total_fees": 2162.6273691840006,
       "net_return": -5.3960733994688175
     },
@@ -2887,16 +2941,16 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 38.46153846153847,
-      "profit_factor": 0.8165130441339116,
-      "avg_win": 15149.281138131711,
-      "avg_loss": -11596.018923831765,
-      "largest_win": 26067.886609385165,
-      "largest_loss": -25684.961970823442,
+      "win_rate": 61.53846153846154,
+      "profit_factor": 3.6454517977347174,
+      "avg_win": 13228.659172357386,
+      "avg_loss": -5806.099175121249,
+      "largest_win": 36007.6206176933,
+      "largest_loss": -13209.905559045495,
       "total_trades": 19,
-      "winning_trades": 5,
-      "losing_trades": 8,
-      "avg_holding_period": 831.6153846153846,
+      "winning_trades": 8,
+      "losing_trades": 5,
+      "avg_holding_period": 574.4615384615385,
       "total_fees": 2709.8469527645007,
       "net_return": -5.401594661245204
     },
@@ -2912,15 +2966,15 @@
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
       "win_rate": 63.63636363636363,
-      "profit_factor": 1.744051219384086,
-      "avg_win": 19144.031817472838,
-      "avg_loss": -19209.330155113657,
-      "largest_win": 48968.397950191495,
-      "largest_loss": -24586.36446347581,
+      "profit_factor": 0.5928652363773176,
+      "avg_win": 9281.221020784724,
+      "avg_loss": -27396.00129975621,
+      "largest_win": 30631.384032153263,
+      "largest_loss": -46931.35366506646,
       "total_trades": 21,
       "winning_trades": 7,
       "losing_trades": 4,
-      "avg_holding_period": 611.5454545454545,
+      "avg_holding_period": 753.2727272727273,
       "total_fees": 3219.5437425460004,
       "net_return": -5.40673733063681
     },
@@ -2935,18 +2989,18 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 50.0,
-      "profit_factor": 1.1147643516585974,
-      "avg_win": 13759.342961310322,
-      "avg_loss": -12342.826482420738,
-      "largest_win": 22446.653083246125,
-      "largest_loss": -21206.373319210605,
-      "total_trades": 10,
-      "winning_trades": 3,
-      "losing_trades": 3,
-      "avg_holding_period": 593.1666666666666,
-      "total_fees": 1498.1786990495,
-      "net_return": -5.389369335588683
+      "win_rate": 87.5,
+      "profit_factor": 1196.983461851142,
+      "avg_win": 19045.479415452246,
+      "avg_loss": -111.37861144880657,
+      "largest_win": 49347.663977647855,
+      "largest_loss": -111.37861144880657,
+      "total_trades": 12,
+      "winning_trades": 7,
+      "losing_trades": 1,
+      "avg_holding_period": 777.75,
+      "total_fees": 1789.6405274385002,
+      "net_return": -5.392310087529304
     },
     "day_Wednesday": {
       "total_return": -5.374253215783295,
@@ -2959,23 +3013,23 @@
       "calmar_ratio": -2.3201463797188917,
       "var_95": -0.042347210020498634,
       "cvar_95": -0.04489720490820742,
-      "win_rate": 66.66666666666666,
-      "profit_factor": 6.9917099790902615,
-      "avg_win": 12000.224279461374,
-      "avg_loss": -3432.7008172106143,
-      "largest_win": 14633.88410314518,
-      "largest_loss": -3432.7008172106143,
+      "win_rate": 33.33333333333333,
+      "profit_factor": 0.5911915365322554,
+      "avg_win": 11227.138606687951,
+      "avg_loss": -9495.34788043722,
+      "largest_win": 11227.138606687951,
+      "largest_loss": -12610.761792157335,
       "total_trades": 11,
-      "winning_trades": 2,
-      "losing_trades": 1,
-      "avg_holding_period": 896.3333333333334,
+      "winning_trades": 1,
+      "losing_trades": 2,
+      "avg_holding_period": 520.0,
       "total_fees": 1571.2892902500002,
       "net_return": -5.390106996894595
     }
   },
-  "performance_summary": "=== 자동매매 성과 분석 리포트 ===\n\n📊 수익률 지표\n- 총 수익률: -5.37%\n- 연환산 수익률: -48.96%\n- 평균 일일 수익률: -0.1460%\n- 평균 월간 수익률: -1.59%\n\n⚠️ 리스크 지표\n- 최대 낙폭 (MDD): 21.10%\n- 샤프 비율: -0.96\n- 소르티노 비율: -2.12\n- 칼마 비율: -2.32\n- VaR (95%): -0.0423\n- CVaR (95%): -0.0449\n\n📈 거래 지표\n- 승률: 54.35%\n- 프로핏 팩터: 1.17\n- 평균 수익: 14,900원\n- 평균 손실: -15,160원\n- 최대 수익: 48,968원\n- 최대 손실: -44,451원\n- 총 거래 건수: 97건\n- 수익 거래: 25건\n- 손실 거래: 21건\n\n⏱️ 기간 지표\n- 평균 보유 기간: 714.4분\n- 총 수수료: 14,196원\n- 순수익률: -5.52%",
+  "performance_summary": "=== 자동매매 성과 분석 리포트 ===\n\n📊 수익률 지표\n- 총 수익률: -5.37%\n- 연환산 수익률: -48.96%\n- 평균 일일 수익률: -0.1460%\n- 평균 월간 수익률: -1.59%\n\n⚠️ 리스크 지표\n- 최대 낙폭 (MDD): 21.10%\n- 샤프 비율: -0.96\n- 소르티노 비율: -2.12\n- 칼마 비율: -2.32\n- VaR (95%): -0.0423\n- CVaR (95%): -0.0449\n\n📈 거래 지표\n- 승률: 59.18%\n- 프로핏 팩터: 1.33\n- 평균 수익: 14,443원\n- 평균 손실: -15,739원\n- 최대 수익: 49,348원\n- 최대 손실: -52,600원\n- 총 거래 건수: 100건\n- 수익 거래: 29건\n- 손실 거래: 20건\n\n⏱️ 기간 지표\n- 평균 보유 기간: 707.6분\n- 총 수수료: 14,623원\n- 순수익률: -5.52%",
   "statistical_analysis": {
-    "timestamp": "2025-09-29T05:11:50.403274",
+    "timestamp": "2025-10-08T21:30:40.134187",
     "data_summary": {
       "total_observations": 29,
       "mean": -0.1460095484004123,
@@ -3009,20 +3063,20 @@
       "pnl": [
         {
           "test_name": "Shapiro-Wilk",
-          "statistic": 0.9854282578254475,
-          "p_value": 0.8265742761683716,
+          "statistic": 0.9690628993848966,
+          "p_value": 0.2221732172376618,
           "conclusion": "정규분포"
         },
         {
           "test_name": "Jarque-Bera",
-          "statistic": 0.012091433924304371,
-          "p_value": 0.9939725216110471,
+          "statistic": 1.791017949092829,
+          "p_value": 0.4083996806906294,
           "conclusion": "정규분포"
         },
         {
           "test_name": "Kolmogorov-Smirnov",
-          "statistic": 0.08999545311111379,
-          "p_value": 0.8180014962270318,
+          "statistic": 0.09647073197802017,
+          "p_value": 0.7155211959679126,
           "conclusion": "정규분포"
         }
       ]
@@ -3075,8 +3129,8 @@
     "hypothesis_tests": {
       "pnl_mean": {
         "test_name": "One-sample t-test",
-        "statistic": 0.43544888580537333,
-        "p_value": 0.6653182138693491,
+        "statistic": 0.7250056355190033,
+        "p_value": 0.47196829562623366,
         "conclusion": "기댓값과 같음"
       }
     },
@@ -3124,74 +3178,74 @@
     },
     "symbol_analysis": {
       "KRW-ETH": {
-        "count": 26,
-        "mean": -3317.612449796964,
-        "std": 12178.335739331296,
+        "count": 27,
+        "mean": 317.1553304226219,
+        "std": 11111.539839598518,
         "normality": [
           {
             "test_name": "Shapiro-Wilk",
-            "p_value": 3.428879124575961e-05,
+            "p_value": 3.932875867367527e-05,
             "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Jarque-Bera",
-            "p_value": 2.007449652839865e-06,
+            "p_value": 0.00010234944130068818,
             "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Kolmogorov-Smirnov",
-            "p_value": 0.000804102935377915,
+            "p_value": 0.004651463465397354,
             "conclusion": "정규분포 아님"
           }
         ]
       },
       "KRW-BTC": {
-        "count": 32,
-        "mean": 1556.2928061147281,
-        "std": 11551.458621502648,
+        "count": 33,
+        "mean": 1262.9130861800927,
+        "std": 17538.303108122258,
         "normality": [
           {
             "test_name": "Shapiro-Wilk",
-            "p_value": 0.0020671145002945273,
+            "p_value": 1.9124275393627104e-05,
             "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Jarque-Bera",
-            "p_value": 0.9792557584649805,
-            "conclusion": "정규분포"
+            "p_value": 0.0006789213841118773,
+            "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Kolmogorov-Smirnov",
-            "p_value": 0.013762602324001172,
+            "p_value": 0.012822062764134667,
             "conclusion": "정규분포 아님"
           }
         ]
       },
       "KRW-XRP": {
-        "count": 39,
-        "mean": 2322.9307326325325,
-        "std": 13343.912998413825,
+        "count": 40,
+        "mean": 1345.6093837995145,
+        "std": 13608.073202814676,
         "normality": [
           {
             "test_name": "Shapiro-Wilk",
-            "p_value": 3.739619412483855e-05,
+            "p_value": 8.246722731108874e-06,
             "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Jarque-Bera",
-            "p_value": 1.1674812305014057e-06,
+            "p_value": 2.4928926363296515e-08,
             "conclusion": "정규분포 아님"
           },
           {
             "test_name": "Kolmogorov-Smirnov",
-            "p_value": 0.007697615929810664,
+            "p_value": 0.00063146195253172,
             "conclusion": "정규분포 아님"
           }
         ]
       }
     }
   },
-  "statistical_report": "=== 자동매매 통계 분석 리포트 ===\n생성 시간: 2025-09-29T05:11:50.403274\n\n📊 데이터 요약\n\n- 관측치 수: 29개\n- 평균: -0.1460%\n- 표준편차: 3.0293%\n- 최소값: -4.6067%\n- 최대값: 4.4017%\n- 왜도: 0.1049\n- 첨도: -1.4024\n\n🔍 정규성 검정 결과\n\nDAILY_RETURNS:\n- Shapiro-Wilk: 정규분포 아님 (p-value: 0.0235)\n- Jarque-Bera: 정규분포 (p-value: 0.2968)\n- Kolmogorov-Smirnov: 정규분포 (p-value: 0.3636)\n\nPNL:\n- Shapiro-Wilk: 정규분포 (p-value: 0.8266)\n- Jarque-Bera: 정규분포 (p-value: 0.9940)\n- Kolmogorov-Smirnov: 정규분포 (p-value: 0.8180)\n\n⚠️ 리스크 통계\n- 샤프 비율: -0.7656\n- 소르티노 비율: -1.6950\n- 칼마 비율: -0.0238\n- 최대 낙폭: -1544.7858\n- VaR (95%): -4.2347\n- CVaR (95%): -4.4897\n\n📈 시계열 분석\n- 정상성: 정상성 (ADF p-value: 0.0002)\n\n🧪 가설 검정\n- One-sample t-test: 기댓값과 같음 (p-value: 0.6653)",
+  "statistical_report": "=== 자동매매 통계 분석 리포트 ===\n생성 시간: 2025-10-08T21:30:40.134187\n\n📊 데이터 요약\n\n- 관측치 수: 29개\n- 평균: -0.1460%\n- 표준편차: 3.0293%\n- 최소값: -4.6067%\n- 최대값: 4.4017%\n- 왜도: 0.1049\n- 첨도: -1.4024\n\n🔍 정규성 검정 결과\n\nDAILY_RETURNS:\n- Shapiro-Wilk: 정규분포 아님 (p-value: 0.0235)\n- Jarque-Bera: 정규분포 (p-value: 0.2968)\n- Kolmogorov-Smirnov: 정규분포 (p-value: 0.3636)\n\nPNL:\n- Shapiro-Wilk: 정규분포 (p-value: 0.2222)\n- Jarque-Bera: 정규분포 (p-value: 0.4084)\n- Kolmogorov-Smirnov: 정규분포 (p-value: 0.7155)\n\n⚠️ 리스크 통계\n- 샤프 비율: -0.7656\n- 소르티노 비율: -1.6950\n- 칼마 비율: -0.0238\n- 최대 낙폭: -1544.7858\n- VaR (95%): -4.2347\n- CVaR (95%): -4.4897\n\n📈 시계열 분석\n- 정상성: 정상성 (ADF p-value: 0.0002)\n\n🧪 가설 검정\n- One-sample t-test: 기댓값과 같음 (p-value: 0.4720)",
   "charts_generated": {
     "equity_curve": "charts/equity_curve.png",
     "drawdown": "charts/drawdown.png",
@@ -3211,8 +3265,8 @@
     }
   ],
   "reports": {
-    "html": "reports\\trading_report_20250929_051202.html",
-    "json": "reports\\trading_report_20250929_051202.json",
-    "summary": "=== 자동매매 분석 요약 리포트 ===\n생성 시간: 2025-09-29 05:12:02\n\n📊 핵심 지표\n- 총 수익률: -5.37%\n- 승률: 54.3%\n- 최대 낙폭: 21.10%\n- 샤프 비율: -0.96\n- 총 거래 수: 97건\n\n⚠️ 리스크 지표\n- VaR (95%): -0.0423\n- CVaR (95%): -0.0449\n- 평균 일일 수익률: 0.0000%\n- 일일 수익률 변동성: 0.0000%\n\n📈 거래 분석\n- 수익 거래: 25건\n- 손실 거래: 21건\n- 프로핏 팩터: 1.17\n- 평균 보유 기간: 714분\n\n💡 주요 인사이트\n1. 높은 최대 낙폭 위험: 최대 낙폭이 21.10%로 리스크 관리가 필요합니다."
+    "html": "reports\\trading_report_20251008_213048.html",
+    "json": "reports\\trading_report_20251008_213048.json",
+    "summary": "=== 자동매매 분석 요약 리포트 ===\n생성 시간: 2025-10-08 21:30:48\n\n📊 핵심 지표\n- 총 수익률: -5.37%\n- 승률: 59.2%\n- 최대 낙폭: 21.10%\n- 샤프 비율: -0.96\n- 총 거래 수: 100건\n\n⚠️ 리스크 지표\n- VaR (95%): -0.0423\n- CVaR (95%): -0.0449\n- 평균 일일 수익률: 0.0000%\n- 일일 수익률 변동성: 0.0000%\n\n📈 거래 분석\n- 수익 거래: 29건\n- 손실 거래: 20건\n- 프로핏 팩터: 1.33\n- 평균 보유 기간: 708분\n\n💡 주요 인사이트\n1. 높은 최대 낙폭 위험: 최대 낙폭이 21.10%로 리스크 관리가 필요합니다."
   }
 }

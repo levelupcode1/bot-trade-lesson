@@ -1,0 +1,62 @@
+# 자동 리포트 시스템 설정 파일
+# 실제 사용시 config.yaml로 복사하여 수정하세요
+
+# 리포트 설정
+report:
+  output_dir: "auto_reports"  # 리포트 저장 디렉토리
+  output_formats:  # 생성할 리포트 포맷
+    - html
+    # - pdf  # PDF 생성 (reportlab 필요)
+    # - excel  # Excel 생성 (openpyxl 필요)
+  send_email: false  # 이메일 발송 여부
+  send_telegram: false  # 텔레그램 발송 여부
+  recipients:  # 이메일 수신자 목록
+    # - "trader@example.com"
+    # - "manager@example.com"
+
+# 스케줄 설정
+schedule:
+  # 일간 리포트
+  daily:
+    enabled: true  # 일간 리포트 활성화
+    hour: 23  # 실행 시간 (23시)
+    minute: 0  # 실행 분 (0분)
+  
+  # 주간 리포트
+  weekly:
+    enabled: false  # 주간 리포트 비활성화
+    day_of_week: 6  # 요일 (0=월요일, 6=일요일)
+    hour: 23
+    minute: 30
+  
+  # 월간 리포트
+  monthly:
+    enabled: false  # 월간 리포트 비활성화
+    day: 1  # 매월 1일
+    hour: 1
+    minute: 0
+  
+  # 이상 상황 알림
+  alert:
+    enabled: true  # 알림 활성화
+    interval_minutes: 5  # 체크 주기 (5분)
+
+# 알림 임계값
+alerts:
+  max_drawdown: 10.0  # 최대 낙폭 임계값 (%)
+  daily_loss: 5.0  # 일일 손실 임계값 (%)
+  win_rate_drop: 40.0  # 승률 하락 임계값 (%)
+
+# 텔레그램 설정
+telegram:
+  token: ""  # 봇 토큰 (BotFather에서 발급)
+  chat_id: ""  # 채팅 ID
+
+# 이메일 설정
+email:
+  smtp_server: "smtp.gmail.com"  # SMTP 서버
+  smtp_port: 587  # SMTP 포트
+  username: ""  # 이메일 주소
+  password: ""  # 앱 비밀번호
+  from_address: ""  # 발신자 주소
+

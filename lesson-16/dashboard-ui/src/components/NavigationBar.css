@@ -1,0 +1,157 @@
+/* NavigationBar Component Styles */
+
+.navigation-bar {
+  background-color: var(--color-bg-darker);
+  height: 70px;
+  padding: 0 var(--spacing-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.nav-logo-text {
+  font-size: var(--font-size-3xl);
+}
+
+/* Menu */
+.nav-menu {
+  display: flex;
+  gap: var(--spacing-2xl);
+}
+
+.nav-menu-item {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.nav-menu-item:hover {
+  color: var(--color-text-primary);
+}
+
+.nav-menu-item.active {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.nav-menu-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+}
+
+/* Quick Trade Button */
+.quick-trade-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-trade-btn:hover {
+  background-color: #3B7DE0;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-trade-btn:active {
+  transform: translateY(0);
+}
+
+/* Notification Button */
+.notification-btn {
+  background: none;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.notification-btn:hover {
+  border-color: var(--color-text-primary);
+  transform: scale(1.05);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: var(--color-danger);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  min-width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navigation-bar {
+    padding: 0 var(--spacing-lg);
+  }
+
+  .nav-center {
+    display: none;
+  }
+
+  .nav-logo-text {
+    display: none;
+  }
+
+  .quick-trade-btn span {
+    display: none;
+  }
+}
+

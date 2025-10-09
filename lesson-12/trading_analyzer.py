@@ -208,35 +208,35 @@ class TradingAnalyzer:
                     account, save_file="equity_curve"
                 )
                 if equity_fig:
-                    charts_info['equity_curve'] = "charts/equity_curve.png"
+                    charts_info['equity_curve'] = "../charts/equity_curve.png"
                 
                 # 낙폭 차트
                 drawdown_fig = self.visualizer.create_drawdown_chart(
                     account, save_file="drawdown"
                 )
                 if drawdown_fig:
-                    charts_info['drawdown'] = "charts/drawdown.png"
+                    charts_info['drawdown'] = "../charts/drawdown.png"
                 
                 # 거래 분포
                 distribution_fig = self.visualizer.create_trade_distribution(
                     trades, save_file="trade_distribution"
                 )
                 if distribution_fig:
-                    charts_info['trade_distribution'] = "charts/trade_distribution.png"
+                    charts_info['trade_distribution'] = "../charts/trade_distribution.png"
                 
                 # 일일 수익률 히스토그램
                 returns_fig = self.visualizer.create_daily_returns_histogram(
                     account, save_file="daily_returns"
                 )
                 if returns_fig:
-                    charts_info['daily_returns'] = "charts/daily_returns.png"
+                    charts_info['daily_returns'] = "../charts/daily_returns.png"
                 
                 # 종합 대시보드
                 dashboard_fig = self.visualizer.create_comprehensive_dashboard(
                     trades, account, save_file="dashboard"
                 )
                 if dashboard_fig:
-                    charts_info['dashboard'] = "charts/dashboard.png"
+                    charts_info['dashboard'] = "../charts/dashboard.png"
                 
                 # 심볼별 분석 차트
                 if 'symbol_analysis' in self.analysis_results:
@@ -248,7 +248,7 @@ class TradingAnalyzer:
                         symbol_metrics, save_file="risk_return_scatter"
                     )
                     if risk_return_fig:
-                        charts_info['risk_return_scatter'] = "charts/risk_return_scatter.png"
+                        charts_info['risk_return_scatter'] = "../charts/risk_return_scatter.png"
                 
                 # 전략별 비교 차트
                 if 'strategy_analysis' in self.analysis_results:
@@ -260,7 +260,7 @@ class TradingAnalyzer:
                         strategy_metrics, save_file="strategy_comparison"
                     )
                     if strategy_fig:
-                        charts_info['strategy_comparison'] = "charts/strategy_comparison.png"
+                        charts_info['strategy_comparison'] = "../charts/strategy_comparison.png"
             
             self.charts_generated = charts_info
             
@@ -500,6 +500,11 @@ if __name__ == "__main__":
         print("\n분석이 완료되었습니다!")
     else:
         print(f"분석 중 오류 발생: {results['error']}")
+
+
+
+
+
 
 
 

@@ -1,0 +1,67 @@
+# 고급자 프로필 설정
+
+trading:
+  max_position_size: 0.80  # 80% 최대 포지션 (사용자 정의 가능)
+  min_cash_ratio: 0.10     # 10% 현금 유지
+  daily_trade_limit: 9999   # 무제한
+  stop_loss: -0.15         # -15% 손절 (사용자 정의)
+  take_profit: 0.20        # 20% 익절 (사용자 정의)
+  daily_loss_limit: -0.20  # -20% 일일 손실 한도
+  allow_custom_limits: true
+
+ui:
+  complexity_level: expert
+  layout: professional_multi_monitor
+  show_tooltips: false
+  show_explanations: false
+  tutorial_mode: false
+  safe_mode: false
+  color_scheme: dark_professional
+  font_size: small
+  enable_custom_layout: true
+  enable_code_editor: true
+  enable_terminal: true
+  show_technical_indicators: true
+  show_advanced_charts: true
+  multi_monitor_support: true
+  real_time_analytics: true
+  
+  dashboard_widgets:
+    - account_summary
+    - portfolio_overview
+    - performance_chart
+    - active_strategies
+    - order_book
+    - market_depth
+    - technical_analysis
+    - risk_metrics
+    - code_editor
+    - terminal
+    - api_console
+    - ml_dashboard
+    - custom_widgets
+
+notifications:
+  weekly_report: true
+  risk_alerts: true  # 중요 리스크만
+  critical_only: true
+  notification_frequency: low
+  channels:
+    - api_webhook
+    - email
+
+strategies:
+  allowed:
+    - "*"  # 모든 전략 허용
+
+coins:
+  allowed:
+    - "*"  # 모든 KRW 마켓 허용
+
+advanced_features:
+  api_access: true
+  ml_models: true
+  custom_strategy_upload: true
+  raw_data_access: true
+  system_settings_modify: true
+
