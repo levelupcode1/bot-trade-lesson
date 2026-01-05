@@ -1,0 +1,75 @@
+[
+  {
+    "user_id": "test_user_1763308036.736951",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:16.743524",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "test_user_1763308036.736951",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:16.770360",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "volatility_breakout"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "test_user_1763308036.736951",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:16.779148",
+    "content": {
+      "action": "add_favorite_coin",
+      "context": {
+        "coin": "KRW-BTC"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "add_favorite_coin"
+    }
+  },
+  {
+    "user_id": "test_user_1763308036.736951",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:16.791514",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC",
+        "timeframe": "1d"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "test_user_1763308036.736951",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:47:16.808687",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "volatility_breakout",
+      "rating": 5,
+      "comment": "Great strategy!"
+    },
+    "metadata": {}
+  }
+]

@@ -1,0 +1,39 @@
+# 인증 파일
+credentials.json
+service_account.json
+google-credentials.json
+*.json
+!package.json
+!requirements.txt
+
+# 환경변수
+.env
+.env.local
+
+# 리포트
+reports/
+*.md
+!README.md
+!PART*.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 데이터
+*.csv
+*.xlsx
+

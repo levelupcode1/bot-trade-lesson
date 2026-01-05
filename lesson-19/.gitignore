@@ -1,0 +1,32 @@
+# 인증 파일
+credentials.json
+service_account.json
+google-credentials.json
+*.json
+!requirements.txt
+!package.json
+
+# 디버그 파일
+debug_html.html
+
+# 크롤링 결과
+melon_new_songs_*.json
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+

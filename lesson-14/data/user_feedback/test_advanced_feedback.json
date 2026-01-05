@@ -1,0 +1,100 @@
+[
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.379494",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.426473",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "custom"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.498634",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC",
+        "indicators": [
+          "RSI",
+          "MACD",
+          "Bollinger"
+        ]
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.551242",
+    "content": {
+      "action": "view_analytics",
+      "context": {
+        "type": "advanced"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_analytics"
+    }
+  },
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.570689",
+    "content": {
+      "action": "view_statistics",
+      "context": {
+        "metrics": [
+          "sharpe",
+          "max_drawdown"
+        ]
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_statistics"
+    }
+  },
+  {
+    "user_id": "test_advanced",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.601453",
+    "content": {
+      "action": "view_risk_metrics",
+      "context": {
+        "type": "detailed"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_risk_metrics"
+    }
+  }
+]

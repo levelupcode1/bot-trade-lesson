@@ -1,0 +1,82 @@
+{
+  "user_id": "test_user_1763308246.770745",
+  "trained_at": "2025-11-17T00:50:47.430858",
+  "behavior_patterns": {
+    "action_preferences": {
+      "action_0": 0.2,
+      "action_1": 0.2,
+      "action_2": 0.2,
+      "action_3": 0.2,
+      "action_4": 0.2
+    },
+    "time_preferences": {
+      "0": 1.0
+    },
+    "feature_usage": {},
+    "navigation_patterns": {
+      "common_paths": [],
+      "entry_points": [],
+      "exit_points": []
+    }
+  },
+  "preference_patterns": {
+    "risk_tolerance": "low",
+    "trading_style": "conservative",
+    "favorite_coins": [],
+    "favorite_strategies": [
+      "strategy_4"
+    ],
+    "dashboard_customization": {
+      "layout": "grid",
+      "theme": "dark",
+      "enabled_widgets": []
+    },
+    "notification_preferences": {
+      "telegram": true,
+      "immediate_alerts": true,
+      "daily_summary": true
+    }
+  },
+  "performance_patterns": {
+    "profitable_strategies": [
+      {
+        "strategy": "test_strategy",
+        "avg_profit": 2.0,
+        "win_rate": 1.0
+      }
+    ],
+    "profitable_coins": [
+      {
+        "coin": "KRW-BTC",
+        "avg_profit": 2.0,
+        "trade_count": 10
+      }
+    ],
+    "optimal_timeframes": [
+      {
+        "hour": 0,
+        "avg_profit": 2.0,
+        "trade_count": 10
+      }
+    ],
+    "risk_adjusted_returns": {
+      "avg_return": 2.0,
+      "volatility": 0.0,
+      "sharpe_ratio": 0,
+      "max_drawdown": 0
+    }
+  },
+  "feedback_patterns": {
+    "satisfaction_score": 0.5,
+    "preferred_features": [],
+    "disliked_features": [],
+    "improvement_suggestions": []
+  },
+  "weights": {
+    "behavior_weight": 0.4,
+    "preference_weight": 0.3,
+    "performance_weight": 0.2,
+    "feedback_weight": 0.1
+  },
+  "confidence_score": 0.8
+}

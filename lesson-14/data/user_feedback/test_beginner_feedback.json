@@ -1,0 +1,32 @@
+[
+  {
+    "user_id": "test_beginner",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.150304",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "test_beginner",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.153941",
+    "content": {
+      "action": "view_tutorial",
+      "context": {
+        "topic": "basics"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_tutorial"
+    }
+  }
+]

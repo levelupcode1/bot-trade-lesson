@@ -1,0 +1,308 @@
+[
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:40:06.861594",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard",
+        "feature": "portfolio"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:40:06.865918",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "volatility_breakout"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:40:06.873539",
+    "content": {
+      "action": "add_favorite_coin",
+      "context": {
+        "coin": "KRW-BTC"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "add_favorite_coin"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:40:06.887270",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC",
+        "timeframe": "1d"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:40:06.901784",
+    "content": {
+      "action": "place_order",
+      "context": {
+        "coin": "KRW-BTC",
+        "amount": 100000
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "place_order"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:50.982949",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard",
+        "feature": "portfolio"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:50.988710",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "volatility_breakout"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:50.995813",
+    "content": {
+      "action": "add_favorite_coin",
+      "context": {
+        "coin": "KRW-BTC"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "add_favorite_coin"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:51.019257",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC",
+        "timeframe": "1d"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:51.028581",
+    "content": {
+      "action": "place_order",
+      "context": {
+        "coin": "KRW-BTC",
+        "amount": 100000
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "place_order"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:42:51.093386",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "volatility_breakout",
+      "rating": 5,
+      "comment": "매우 만족합니다!"
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "feature_feedback",
+    "timestamp": "2025-11-17T00:42:51.114116",
+    "content": {
+      "feature": "portfolio_value",
+      "rating": 4,
+      "usefulness": 5,
+      "ease_of_use": 4,
+      "comment": "유용한 기능입니다"
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:42:51.123797",
+    "content": {
+      "recommendation_id": "volatility_breakout",
+      "accepted": true,
+      "reason": "추천이 적절했습니다"
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.678941",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard",
+        "feature": "portfolio"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.685748",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "volatility_breakout"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.706525",
+    "content": {
+      "action": "add_favorite_coin",
+      "context": {
+        "coin": "KRW-BTC"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "add_favorite_coin"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.754148",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC",
+        "timeframe": "1d"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.762911",
+    "content": {
+      "action": "place_order",
+      "context": {
+        "coin": "KRW-BTC",
+        "amount": 100000
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "place_order"
+    }
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:47:07.829201",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "volatility_breakout",
+      "rating": 5,
+      "comment": "매우 만족합니다!"
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "feature_feedback",
+    "timestamp": "2025-11-17T00:47:07.849804",
+    "content": {
+      "feature": "portfolio_value",
+      "rating": 4,
+      "usefulness": 5,
+      "ease_of_use": 4,
+      "comment": "유용한 기능입니다"
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "user001",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:47:07.863587",
+    "content": {
+      "recommendation_id": "ma_crossover",
+      "accepted": true,
+      "reason": "추천이 적절했습니다"
+    },
+    "metadata": {}
+  }
+]

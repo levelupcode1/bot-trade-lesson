@@ -1,0 +1,807 @@
+[
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.782652",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 0
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.802062",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 1
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.808876",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 2
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.814719",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 3
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.821968",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 4
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.827453",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 5
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.845405",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 6
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.853004",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 7
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.859621",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 8
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.866595",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 9
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.873206",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 10
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.879672",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 11
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.890869",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 12
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.898292",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 13
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.905477",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 14
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.912824",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 15
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.920972",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 16
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.929261",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 17
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.939597",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 18
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.948421",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 19
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.956681",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 20
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.967669",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 21
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.976194",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 22
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:46.987858",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 23
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.001700",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 24
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.011346",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 25
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.023042",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 26
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.034539",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 27
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.044205",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 28
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.054698",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 29
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.065417",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 30
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.083015",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 31
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.094507",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 32
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.105615",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 33
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.119912",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 34
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.135357",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 35
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.146689",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 36
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.161809",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 37
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.175287",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 38
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.187787",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 39
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.200871",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 40
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.216315",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 41
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.229099",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 42
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.242391",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 43
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.262750",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 44
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.277342",
+    "content": {
+      "action": "action_0",
+      "context": {
+        "iteration": 45
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_0"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.292189",
+    "content": {
+      "action": "action_1",
+      "context": {
+        "iteration": 46
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_1"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.308167",
+    "content": {
+      "action": "action_2",
+      "context": {
+        "iteration": 47
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_2"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.323832",
+    "content": {
+      "action": "action_3",
+      "context": {
+        "iteration": 48
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_3"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.338085",
+    "content": {
+      "action": "action_4",
+      "context": {
+        "iteration": 49
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "action_4"
+    }
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.351588",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "strategy_0",
+      "rating": 4
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.367765",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "strategy_1",
+      "rating": 5
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.382957",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "strategy_2",
+      "rating": 4
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.399301",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "strategy_3",
+      "rating": 5
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308246.770745",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.415326",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "strategy_4",
+      "rating": 4
+    },
+    "metadata": {}
+  }
+]

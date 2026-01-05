@@ -1,0 +1,101 @@
+=== n8n AI Assistant에 복사하여 붙여넣을 프롬프트 ===
+
+매일 아침 8시에 멜론 차트를 크롤링하고, 구글 시트에 저장한 후, Gemini AI로 분석하는 완전 자동화 n8n 워크플로우를 생성해주세요.
+
+**워크플로우 구성:**
+
+1. **Schedule Trigger**
+   - 매일 오전 8시 (KST) 실행
+   - Cron 표현식: 0 8 * * *
+   - 활성화 상태
+
+2. **HTTP Request (멜론 차트 크롤링)**
+   - Method: GET
+   - URL: https://www.melon.com/chart/index.htm
+   - Headers:
+     * User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+     * Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+     * Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+     * Referer: https://www.melon.com/
+   - Timeout: 10000ms
+
+3. **Code Node (HTML 파싱)**
+   - Mode: JavaScript
+   - 순수 JavaScript 사용 (Cheerio 없이 정규표현식으로 HTML 파싱)
+   - 입력: HTTP Request의 data 또는 body (HTML 문자열)
+   - 출력: 곡 정보 배열 (n8n 형식)
+   - 추출할 데이터:
+     * rank (순위) - td.rank에서 추출
+     * song_title (곡명) - .ellipsis.rank01 a에서 추출
+     * artist (아티스트) - .ellipsis.rank02 a에서 추출
+     * album (앨범) - .ellipsis.rank03 a에서 추출
+     * song_id (곡 ID) - href에서 songId=(\d+) 추출
+     * album_id (앨범 ID) - href에서 albumId=(\d+) 추출
+     * album_image (앨범 이미지 URL) - img src에서 추출
+     * rank_change (순위 변동) - .rank_wrap .rank에서 추출 (상승/하락/진입)
+     * snapshot_date (스냅샷 날짜) - 오늘 날짜 YYYY-MM-DD 형식
+     * crawled_at (크롤링 시간) - 현재 시간 ISO 8601 형식
+   - 에러 처리 포함
+   - 빈 데이터 필터링
+   - 순위별로 정렬
+
+4. **Google Sheets (데이터 저장)**
+   - Operation: Append or Update
+   - Spreadsheet ID: 1aGXXGPK_PbbTnVKtjQyXwY35KUpyOLX8zhZEinFsm6Q
+   - Sheet Name: 멜론차트
+   - Columns 매핑:
+     * 순위 = {{ $json.rank }}
+     * 곡명 = {{ $json.song_title }}
+     * 아티스트 = {{ $json.artist }}
+     * 앨범 = {{ $json.album }}
+     * 곡ID = {{ $json.song_id }}
+     * 앨범ID = {{ $json.album_id }}
+     * 앨범이미지 = {{ $json.album_image }}
+     * 순위변동 = {{ $json.rank_change }}
+     * 스냅샷날짜 = {{ $json.snapshot_date }}
+     * 크롤링시간 = {{ $json.crawled_at }}
+   - Google Service Account 인증 사용
+
+5. **Google Sheets (데이터 읽기) - 선택사항**
+   - Operation: Read
+   - 같은 Spreadsheet ID
+   - Sheet: 멜론차트
+   - 최근 100개 행 읽기
+
+6. **HTTP Request (Gemini AI 분석) - 선택사항**
+   - Method: POST
+   - URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+   - Query Parameters:
+     * key = {{ $env.GEMINI_API_KEY }}
+   - Headers:
+     * Content-Type: application/json
+   - Body (JSON):
+     {
+       "contents": [{
+         "parts": [{
+           "text": "다음 멜론 차트 데이터를 분석해주세요:\n\n{{ JSON.stringify($json) }}\n\n다음 항목을 포함하여 마크다운 형식으로 리포트를 작성해주세요:\n1. 개요 (총 곡 수, 분석 기간)\n2. 주요 트렌드 (3-5개)\n3. 인기 아티스트 TOP 5\n4. 순위 변동 패턴\n5. 인사이트 및 예측"
+         }]
+       }]
+     }
+
+7. **Code Node (리포트 처리) - 선택사항**
+   - Gemini API 응답에서 텍스트 추출
+   - 마크다운 형식 확인
+   - 타임스탬프 추가
+
+8. **Google Sheets (분석 결과 저장) - 선택사항**
+   - Operation: Append
+   - Sheet: 분석결과
+   - 분석 리포트 저장
+
+**노드 연결 순서:**
+Schedule Trigger → HTTP Request → Code (파싱) → Google Sheets (저장) → [선택] Google Sheets (읽기) → [선택] HTTP Request (Gemini) → [선택] Code (리포트) → [선택] Google Sheets (분석결과)
+
+**요구사항:**
+- 모든 노드에 적절한 이름 부여
+- 에러 처리 포함
+- 각 노드의 상세 설정 제공
+- 실행 가능한 완전한 코드 제공
+
+각 노드의 설정 JSON과 JavaScript 코드를 상세히 제공해주세요.
+

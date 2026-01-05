@@ -1,0 +1,70 @@
+{
+  "user_id": "intermediate_user",
+  "created_at": "2025-11-17T01:01:55.407568",
+  "updated_at": "2025-11-17T01:01:55.407571",
+  "investment_profile": {
+    "goal": "capital_preservation",
+    "risk_tolerance": "low",
+    "trading_style": "conservative",
+    "target_return": 5.0,
+    "max_drawdown": -10.0,
+    "investment_horizon": 12
+  },
+  "dashboard_prefs": {
+    "layout": "grid",
+    "theme": "dark",
+    "language": "ko",
+    "enabled_widgets": [],
+    "widget_order": [],
+    "widget_sizes": {},
+    "default_chart_type": "candlestick",
+    "chart_timeframe": "1d",
+    "chart_indicators": [],
+    "show_portfolio_value": true,
+    "show_profit_loss": true,
+    "show_recent_trades": true,
+    "show_market_news": false
+  },
+  "notification_prefs": {
+    "telegram_enabled": true,
+    "email_enabled": false,
+    "push_enabled": false,
+    "trade_notifications": true,
+    "price_alerts": true,
+    "news_alerts": false,
+    "performance_reports": true,
+    "immediate_alerts": true,
+    "daily_summary": true,
+    "weekly_report": true,
+    "monthly_report": false,
+    "min_price_change": 0.05,
+    "min_profit_loss": 0.02,
+    "quiet_hours_start": 22,
+    "quiet_hours_end": 8
+  },
+  "trading_prefs": {
+    "favorite_coins": [],
+    "blacklist_coins": [],
+    "favorite_strategies": [],
+    "preferred_trading_hours": [],
+    "avoid_trading_hours": [],
+    "auto_trading": false,
+    "auto_rebalance": false,
+    "auto_stop_loss": true,
+    "auto_take_profit": true,
+    "prefer_quick_trades": false,
+    "prefer_stable_coins": true,
+    "diversification_level": 3
+  },
+  "learning_prefs": {
+    "learning_level": "beginner",
+    "interested_topics": [],
+    "prefer_video": true,
+    "prefer_article": true,
+    "prefer_interactive": false,
+    "learning_goals": [],
+    "completed_courses": []
+  },
+  "behavior_history": [],
+  "preference_score": 0.0
+}

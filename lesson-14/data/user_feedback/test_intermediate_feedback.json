@@ -1,0 +1,62 @@
+[
+  {
+    "user_id": "test_intermediate",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.234638",
+    "content": {
+      "action": "view_dashboard",
+      "context": {
+        "page": "dashboard"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_dashboard"
+    }
+  },
+  {
+    "user_id": "test_intermediate",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.267840",
+    "content": {
+      "action": "view_strategy",
+      "context": {
+        "strategy": "volatility_breakout"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_strategy"
+    }
+  },
+  {
+    "user_id": "test_intermediate",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.303510",
+    "content": {
+      "action": "view_chart",
+      "context": {
+        "coin": "KRW-BTC"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_chart"
+    }
+  },
+  {
+    "user_id": "test_intermediate",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:53:15.319070",
+    "content": {
+      "action": "view_analytics",
+      "context": {
+        "type": "performance"
+      }
+    },
+    "metadata": {
+      "source": "implicit",
+      "action": "view_analytics"
+    }
+  }
+]

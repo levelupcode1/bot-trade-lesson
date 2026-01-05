@@ -1,0 +1,110 @@
+{
+  "user_id": "user001",
+  "trained_at": "2025-11-17T00:47:07.790541",
+  "behavior_patterns": {
+    "action_preferences": {
+      "view_dashboard": 0.2,
+      "view_strategy": 0.2,
+      "add_favorite_coin": 0.2,
+      "view_chart": 0.2,
+      "place_order": 0.2
+    },
+    "time_preferences": {
+      "0": 1.0
+    },
+    "feature_usage": {
+      "portfolio": 3
+    },
+    "navigation_patterns": {
+      "common_paths": [
+        {
+          "path": "dashboard -> dashboard",
+          "count": 2
+        }
+      ],
+      "entry_points": [
+        {
+          "page": "dashboard",
+          "count": 1
+        }
+      ],
+      "exit_points": []
+    }
+  },
+  "preference_patterns": {
+    "risk_tolerance": "moderate",
+    "trading_style": "balanced",
+    "favorite_coins": [
+      "KRW-BTC",
+      "KRW-ETH",
+      "KRW-XRP"
+    ],
+    "favorite_strategies": [
+      "volatility_breakout"
+    ],
+    "dashboard_customization": {
+      "layout": "grid",
+      "theme": "dark",
+      "enabled_widgets": [
+        "portfolio_value"
+      ]
+    },
+    "notification_preferences": {
+      "telegram": true,
+      "immediate_alerts": true,
+      "daily_summary": true
+    }
+  },
+  "performance_patterns": {
+    "profitable_strategies": [
+      {
+        "strategy": "volatility_breakout",
+        "avg_profit": 2.8,
+        "win_rate": 1.0
+      }
+    ],
+    "profitable_coins": [
+      {
+        "coin": "KRW-BTC",
+        "avg_profit": 2.8,
+        "trade_count": 2
+      }
+    ],
+    "optimal_timeframes": [
+      {
+        "hour": 9,
+        "avg_profit": 3.1,
+        "trade_count": 1
+      },
+      {
+        "hour": 10,
+        "avg_profit": 2.5,
+        "trade_count": 1
+      },
+      {
+        "hour": 14,
+        "avg_profit": -1.2,
+        "trade_count": 1
+      }
+    ],
+    "risk_adjusted_returns": {
+      "avg_return": 1.4667,
+      "volatility": 2.3288,
+      "sharpe_ratio": 0.6298,
+      "max_drawdown": 1.2
+    }
+  },
+  "feedback_patterns": {
+    "satisfaction_score": 0.5,
+    "preferred_features": [],
+    "disliked_features": [],
+    "improvement_suggestions": []
+  },
+  "weights": {
+    "behavior_weight": 0.4,
+    "preference_weight": 0.3,
+    "performance_weight": 0.2,
+    "feedback_weight": 0.1
+  },
+  "confidence_score": 0.9
+}

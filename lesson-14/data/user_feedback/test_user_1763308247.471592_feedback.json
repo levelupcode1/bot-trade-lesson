@@ -1,0 +1,36 @@
+[
+  {
+    "user_id": "test_user_1763308247.471592",
+    "feedback_type": "rating",
+    "timestamp": "2025-11-17T00:50:47.479721",
+    "content": {
+      "item_type": "strategy",
+      "item_id": "test_strategy",
+      "rating": 5
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308247.471592",
+    "feedback_type": "feature_feedback",
+    "timestamp": "2025-11-17T00:50:47.486051",
+    "content": {
+      "feature": "portfolio_value",
+      "rating": 4,
+      "usefulness": 5,
+      "ease_of_use": 4
+    },
+    "metadata": {}
+  },
+  {
+    "user_id": "test_user_1763308247.471592",
+    "feedback_type": "recommendation_feedback",
+    "timestamp": "2025-11-17T00:50:47.505101",
+    "content": {
+      "recommendation_id": "rec_1",
+      "accepted": true,
+      "reason": "Good recommendation"
+    },
+    "metadata": {}
+  }
+]

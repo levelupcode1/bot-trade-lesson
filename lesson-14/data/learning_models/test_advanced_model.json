@@ -1,0 +1,86 @@
+{
+  "user_id": "test_advanced",
+  "trained_at": "2025-11-17T00:53:15.636259",
+  "behavior_patterns": {
+    "action_preferences": {
+      "view_dashboard": 0.16666666666666666,
+      "view_strategy": 0.16666666666666666,
+      "view_chart": 0.16666666666666666,
+      "view_analytics": 0.16666666666666666,
+      "view_statistics": 0.16666666666666666,
+      "view_risk_metrics": 0.16666666666666666
+    },
+    "time_preferences": {
+      "0": 1.0
+    },
+    "feature_usage": {},
+    "navigation_patterns": {
+      "common_paths": [],
+      "entry_points": [
+        {
+          "page": "dashboard",
+          "count": 1
+        }
+      ],
+      "exit_points": []
+    }
+  },
+  "preference_patterns": {
+    "risk_tolerance": "high",
+    "trading_style": "aggressive",
+    "favorite_coins": [],
+    "favorite_strategies": [],
+    "dashboard_customization": {
+      "layout": "grid",
+      "theme": "dark",
+      "enabled_widgets": []
+    },
+    "notification_preferences": {
+      "telegram": true,
+      "immediate_alerts": true,
+      "daily_summary": true
+    }
+  },
+  "performance_patterns": {
+    "profitable_strategies": [
+      {
+        "strategy": "volatility_breakout",
+        "avg_profit": 2.5,
+        "win_rate": 1.0
+      }
+    ],
+    "profitable_coins": [
+      {
+        "coin": "KRW-BTC",
+        "avg_profit": 2.5,
+        "trade_count": 5
+      }
+    ],
+    "optimal_timeframes": [
+      {
+        "hour": 0,
+        "avg_profit": 2.5,
+        "trade_count": 5
+      }
+    ],
+    "risk_adjusted_returns": {
+      "avg_return": 2.5,
+      "volatility": 0.0,
+      "sharpe_ratio": 0,
+      "max_drawdown": 0
+    }
+  },
+  "feedback_patterns": {
+    "satisfaction_score": 0.5,
+    "preferred_features": [],
+    "disliked_features": [],
+    "improvement_suggestions": []
+  },
+  "weights": {
+    "behavior_weight": 0.4,
+    "preference_weight": 0.3,
+    "performance_weight": 0.2,
+    "feedback_weight": 0.1
+  },
+  "confidence_score": 0.7
+}

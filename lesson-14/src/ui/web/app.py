@@ -12,6 +12,7 @@ from ...user.profile.user_profile import UserType
 from ...user.auth.authorization import Authorization
 from ...strategy.strategy_loader import StrategyLoader
 from ...config.config_manager import ConfigManager
+from ...personalization import PersonalizationSystem
 
 
 # 로깅 설정
@@ -32,6 +33,7 @@ profile_manager = ProfileManager()
 authorization = Authorization()
 strategy_loader = StrategyLoader()
 config_manager = ConfigManager()
+personalization = PersonalizationSystem()
 
 
 @app.route('/')
@@ -57,10 +59,18 @@ def index():
     
     template = template_map.get(profile.user_type, 'beginner/dashboard.html')
     
+    # 개인화된 대시보드 정보 가져오기
+    personalized_dashboard = {}
+    try:
+        personalized_dashboard = personalization.get_personalized_dashboard(user_id)
+    except Exception as e:
+        logger.warning(f"개인화 대시보드 로드 실패: {e}")
+    
     return render_template(
         template,
         profile=profile,
-        user_id=user_id
+        user_id=user_id,
+        personalized_dashboard=personalized_dashboard
     )
 
 
@@ -88,6 +98,13 @@ def login():
         # 세션에 저장
         session['user_id'] = user_id
         session['user_type'] = profile.user_type.value
+        
+        # 개인화 시스템 초기화
+        try:
+            personalization.initialize_user(user_id)
+            logger.info(f"개인화 시스템 초기화: {user_id}")
+        except Exception as e:
+            logger.warning(f"개인화 시스템 초기화 실패: {e}")
         
         return redirect(url_for('index'))
     
@@ -192,6 +209,13 @@ def api_upgrade_profile():
     
     if new_profile:
         session['user_type'] = new_profile.user_type.value
+        
+        # 개인화 시스템 대시보드 캐시 무효화
+        try:
+            personalization.refresh_dashboard(user_id)
+        except Exception as e:
+            logger.warning(f"대시보드 새로고침 실패: {e}")
+        
         return jsonify({
             "success": True,
             "new_type": new_profile.user_type.value
@@ -201,6 +225,51 @@ def api_upgrade_profile():
             "success": False,
             "error": "이미 최고 레벨입니다"
         })
+
+
+@app.route('/api/personalized_dashboard')
+def api_personalized_dashboard():
+    """개인화된 대시보드 API"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    try:
+        dashboard = personalization.get_personalized_dashboard(user_id)
+        return jsonify(dashboard)
+    except Exception as e:
+        logger.error(f"대시보드 로드 오류: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/recommendations')
+def api_recommendations():
+    """맞춤 추천 API"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    try:
+        recommendations = personalization.get_recommendations(user_id, limit=10)
+        return jsonify({"recommendations": recommendations})
+    except Exception as e:
+        logger.error(f"추천 로드 오류: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/personalization_score')
+def api_personalization_score():
+    """개인화 점수 API"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    try:
+        score = personalization.get_personalization_score(user_id)
+        return jsonify(score)
+    except Exception as e:
+        logger.error(f"개인화 점수 계산 오류: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 def create_app(config=None):

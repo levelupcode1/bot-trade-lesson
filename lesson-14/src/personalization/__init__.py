@@ -3,16 +3,25 @@
 """
 
 from .user_preferences import UserPreferences, PreferenceManager
-from .recommendation_engine import RecommendationEngine
+from .recommendation_engine import RecommendationEngine, RecommendationType
 from .behavior_analyzer import BehaviorAnalyzer
 from .learning_engine import LearningEngine
+from .feedback_collector import FeedbackCollector, FeedbackType
+from .dashboard_generator import DashboardGenerator
+from .personalization_system import PersonalizationSystem
 
 __all__ = [
     "UserPreferences",
     "PreferenceManager",
     "RecommendationEngine",
+    "RecommendationType",
     "BehaviorAnalyzer",
     "LearningEngine",
+    "FeedbackCollector",
+    "FeedbackType",
+    "DashboardGenerator",
+    "PersonalizationSystem",
 ]
+
 
 

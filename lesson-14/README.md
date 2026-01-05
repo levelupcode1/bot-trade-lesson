@@ -29,6 +29,13 @@
 - 반응형 웹 인터페이스
 - 직관적인 대시보드
 
+### 6. 🎨 개인화 시스템 (NEW!)
+- **사용자 행동 분석**: 행동 패턴 분석 및 인사이트 제공
+- **맞춤 추천**: 전략, 코인, 교육 콘텐츠 추천
+- **학습 알고리즘**: 머신러닝 기반 선호도 학습
+- **피드백 수집**: 체계적인 피드백 수집 및 반영
+- **개인화된 대시보드**: 사용자 맞춤 대시보드 자동 생성
+
 ## 📁 프로젝트 구조
 
 ```
@@ -43,6 +50,15 @@ lesson-14/
 │   │   │   └── profile_manager.py
 │   │   └── auth/             # 권한 관리
 │   │       └── authorization.py
+│   │
+│   ├── personalization/      # 개인화 시스템 (NEW!)
+│   │   ├── behavior_analyzer.py      # 행동 분석
+│   │   ├── recommendation_engine.py   # 추천 시스템
+│   │   ├── learning_engine.py         # 학습 알고리즘
+│   │   ├── feedback_collector.py     # 피드백 수집
+│   │   ├── dashboard_generator.py     # 대시보드 생성
+│   │   ├── personalization_system.py  # 통합 시스템
+│   │   └── user_preferences.py        # 선호도 관리
 │   │
 │   ├── strategy/              # 전략 시스템
 │   │   ├── basic/            # 기본 전략
@@ -72,10 +88,14 @@ lesson-14/
 │   └── integration/          # 통합 테스트
 │
 ├── examples/                  # 예제 코드
-│   └── basic_usage.py
+│   ├── basic_usage.py
+│   └── personalization_example.py  # 개인화 시스템 예제
 │
 └── data/                      # 데이터
-    └── user_profiles/        # 사용자 프로필 저장소
+    ├── user_profiles/        # 사용자 프로필 저장소
+    ├── user_preferences/     # 사용자 선호도 저장소
+    ├── user_feedback/        # 피드백 저장소
+    └── learning_models/      # 학습 모델 저장소
 ```
 
 ## 🚀 시작하기
@@ -93,8 +113,11 @@ pip install -r requirements.txt
 ### 2. 기본 사용 예제 실행
 
 ```bash
-# 예제 스크립트 실행
+# 기본 사용 예제
 python examples/basic_usage.py
+
+# 개인화 시스템 예제 (NEW!)
+python examples/personalization_example.py
 ```
 
 ### 3. 웹 인터페이스 실행
@@ -261,23 +284,47 @@ else:
 
 ## 🧪 테스트
 
-### 단위 테스트 실행
+### 빠른 테스트 실행
 
 ```bash
+# 전체 테스트
+python run_tests.py
+
+# 단위 테스트만
+python run_tests.py unit
+
+# 통합 테스트만
+python run_tests.py integration
+
+# 개인화 시스템 테스트만
+python run_tests.py personalization
+
+# 커버리지 포함
+python run_tests.py coverage
+```
+
+### 상세 테스트 실행
+
+```bash
+# 단위 테스트 실행
 pytest tests/unit/ -v
-```
 
-### 통합 테스트 실행
-
-```bash
+# 통합 테스트 실행
 pytest tests/integration/ -v
+
+# 개인화 시스템 단위 테스트
+pytest tests/unit/test_personalization.py -v
+
+# 개인화 시스템 통합 테스트
+pytest tests/integration/test_personalization_integration.py -v
+
+# 전체 테스트 실행 (커버리지 포함)
+pytest tests/ -v --cov=src --cov-report=html
 ```
 
-### 전체 테스트 실행
+### 테스트 가이드
 
-```bash
-pytest tests/ -v --cov=src
-```
+자세한 테스트 방법은 [테스트 가이드](./tests/README.md)를 참고하세요.
 
 ## ⚙️ 설정
 
@@ -370,6 +417,7 @@ class MyCustomStrategy(BaseStrategy):
 - [사용자 가이드](./USER_GUIDE.md)
 - [API 문서](./API_DOCUMENTATION.md)
 - [개발자 가이드](./DEVELOPER_GUIDE.md)
+- [개인화 시스템 문서](./docs/PERSONALIZATION_SYSTEM.md) (NEW!)
 
 ## 🤝 기여
 

@@ -1,0 +1,423 @@
+{
+  "user_id": "test_user_1763308246.770745",
+  "created_at": "2025-11-17T00:50:46.771854",
+  "updated_at": "2025-11-17T00:50:47.427103",
+  "investment_profile": {
+    "goal": "capital_preservation",
+    "risk_tolerance": "low",
+    "trading_style": "conservative",
+    "target_return": 5.0,
+    "max_drawdown": -10.0,
+    "investment_horizon": 12
+  },
+  "dashboard_prefs": {
+    "layout": "grid",
+    "theme": "dark",
+    "language": "ko",
+    "enabled_widgets": [],
+    "widget_order": [],
+    "widget_sizes": {},
+    "default_chart_type": "candlestick",
+    "chart_timeframe": "1d",
+    "chart_indicators": [],
+    "show_portfolio_value": true,
+    "show_profit_loss": true,
+    "show_recent_trades": true,
+    "show_market_news": false
+  },
+  "notification_prefs": {
+    "telegram_enabled": true,
+    "email_enabled": false,
+    "push_enabled": false,
+    "trade_notifications": true,
+    "price_alerts": true,
+    "news_alerts": false,
+    "performance_reports": true,
+    "immediate_alerts": true,
+    "daily_summary": true,
+    "weekly_report": true,
+    "monthly_report": false,
+    "min_price_change": 0.05,
+    "min_profit_loss": 0.02,
+    "quiet_hours_start": 22,
+    "quiet_hours_end": 8
+  },
+  "trading_prefs": {
+    "favorite_coins": [],
+    "blacklist_coins": [],
+    "favorite_strategies": [
+      "strategy_4"
+    ],
+    "preferred_trading_hours": [],
+    "avoid_trading_hours": [],
+    "auto_trading": false,
+    "auto_rebalance": false,
+    "auto_stop_loss": true,
+    "auto_take_profit": true,
+    "prefer_quick_trades": false,
+    "prefer_stable_coins": true,
+    "diversification_level": 3
+  },
+  "learning_prefs": {
+    "learning_level": "beginner",
+    "interested_topics": [],
+    "prefer_video": true,
+    "prefer_article": true,
+    "prefer_interactive": false,
+    "learning_goals": [],
+    "completed_courses": []
+  },
+  "behavior_history": [
+    {
+      "timestamp": "2025-11-17T00:50:46.779498",
+      "action": "action_0",
+      "context": {
+        "iteration": 0
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.785667",
+      "action": "action_1",
+      "context": {
+        "iteration": 1
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.806852",
+      "action": "action_2",
+      "context": {
+        "iteration": 2
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.812912",
+      "action": "action_3",
+      "context": {
+        "iteration": 3
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.820092",
+      "action": "action_4",
+      "context": {
+        "iteration": 4
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.825901",
+      "action": "action_0",
+      "context": {
+        "iteration": 5
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.832411",
+      "action": "action_1",
+      "context": {
+        "iteration": 6
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.851007",
+      "action": "action_2",
+      "context": {
+        "iteration": 7
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.857721",
+      "action": "action_3",
+      "context": {
+        "iteration": 8
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.864932",
+      "action": "action_4",
+      "context": {
+        "iteration": 9
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.871627",
+      "action": "action_0",
+      "context": {
+        "iteration": 10
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.877986",
+      "action": "action_1",
+      "context": {
+        "iteration": 11
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.888458",
+      "action": "action_2",
+      "context": {
+        "iteration": 12
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.896128",
+      "action": "action_3",
+      "context": {
+        "iteration": 13
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.903814",
+      "action": "action_4",
+      "context": {
+        "iteration": 14
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.911101",
+      "action": "action_0",
+      "context": {
+        "iteration": 15
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.919256",
+      "action": "action_1",
+      "context": {
+        "iteration": 16
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.926630",
+      "action": "action_2",
+      "context": {
+        "iteration": 17
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.937786",
+      "action": "action_3",
+      "context": {
+        "iteration": 18
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.946214",
+      "action": "action_4",
+      "context": {
+        "iteration": 19
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.954888",
+      "action": "action_0",
+      "context": {
+        "iteration": 20
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.965653",
+      "action": "action_1",
+      "context": {
+        "iteration": 21
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.974351",
+      "action": "action_2",
+      "context": {
+        "iteration": 22
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.984853",
+      "action": "action_3",
+      "context": {
+        "iteration": 23
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:46.999821",
+      "action": "action_4",
+      "context": {
+        "iteration": 24
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.009379",
+      "action": "action_0",
+      "context": {
+        "iteration": 25
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.020331",
+      "action": "action_1",
+      "context": {
+        "iteration": 26
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.032062",
+      "action": "action_2",
+      "context": {
+        "iteration": 27
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.042291",
+      "action": "action_3",
+      "context": {
+        "iteration": 28
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.052628",
+      "action": "action_4",
+      "context": {
+        "iteration": 29
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.063179",
+      "action": "action_0",
+      "context": {
+        "iteration": 30
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.079772",
+      "action": "action_1",
+      "context": {
+        "iteration": 31
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.092220",
+      "action": "action_2",
+      "context": {
+        "iteration": 32
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.103590",
+      "action": "action_3",
+      "context": {
+        "iteration": 33
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.116978",
+      "action": "action_4",
+      "context": {
+        "iteration": 34
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.129521",
+      "action": "action_0",
+      "context": {
+        "iteration": 35
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.144292",
+      "action": "action_1",
+      "context": {
+        "iteration": 36
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.157723",
+      "action": "action_2",
+      "context": {
+        "iteration": 37
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.173123",
+      "action": "action_3",
+      "context": {
+        "iteration": 38
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.185305",
+      "action": "action_4",
+      "context": {
+        "iteration": 39
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.198523",
+      "action": "action_0",
+      "context": {
+        "iteration": 40
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.212423",
+      "action": "action_1",
+      "context": {
+        "iteration": 41
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.226650",
+      "action": "action_2",
+      "context": {
+        "iteration": 42
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.239713",
+      "action": "action_3",
+      "context": {
+        "iteration": 43
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.252308",
+      "action": "action_4",
+      "context": {
+        "iteration": 44
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.274698",
+      "action": "action_0",
+      "context": {
+        "iteration": 45
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.289555",
+      "action": "action_1",
+      "context": {
+        "iteration": 46
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.304552",
+      "action": "action_2",
+      "context": {
+        "iteration": 47
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.321414",
+      "action": "action_3",
+      "context": {
+        "iteration": 48
+      }
+    },
+    {
+      "timestamp": "2025-11-17T00:50:47.335604",
+      "action": "action_4",
+      "context": {
+        "iteration": 49
+      }
+    }
+  ],
+  "preference_score": 0.0
+}
