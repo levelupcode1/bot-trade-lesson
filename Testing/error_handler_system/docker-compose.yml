@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  error-handler:
+    build: .
+    container_name: error-handler-service
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - UPBIT_ACCESS_KEY=${UPBIT_ACCESS_KEY}
+      - UPBIT_SECRET_KEY=${UPBIT_SECRET_KEY}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_TO=${EMAIL_TO}
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    networks:
+      - trading-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  trading-network:
+    driver: bridge
